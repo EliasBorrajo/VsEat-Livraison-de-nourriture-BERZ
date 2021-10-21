@@ -21,7 +21,6 @@
             this.Mail = Mail;
             this.Password = Password;
             this.Adresse = Adresse;
-            string test = "test";
         }
     }
 }
