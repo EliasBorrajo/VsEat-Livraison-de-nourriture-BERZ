@@ -49,5 +49,28 @@ namespace DAL
             catch (Exception e) { throw e; }
             return client;
         }
+        public Client AddClient(Client NewClient)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "insert into Client (locID, cliNom, cliPrenom, cliTelephone, cliMail, cliAdresse, cliPassword) values (@locID, @cliNom, @cliPrenom, @cliTelephone, @cliMail, @cliAdresse, @cliPassword);select scope_identity()";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@locID", NewClient.Localite.ID);
+                    cmd.Parameters.AddWithValue("@cliNom", NewClient.Nom);
+                    cmd.Parameters.AddWithValue("@cliPrenom", NewClient.Prenom);
+                    cmd.Parameters.AddWithValue("@cliTelephone", NewClient.Telephone);
+                    cmd.Parameters.AddWithValue("@cliMail", NewClient.Mail);
+                    cmd.Parameters.AddWithValue("@cliAdresse", NewClient.Adresse);
+                    cmd.Parameters.AddWithValue("@cliPassword", NewClient.Password);
+                    cn.Open();
+                    int newid = Convert.ToInt32(cmd.ExecuteScalar());
+                    return GetClient(newid);
+                }
+            }
+            catch (Exception e) { throw e; }
+        }
     }
 }

@@ -50,5 +50,26 @@ namespace DAL
             catch (Exception e) { throw e; }
             return staff;
         }
+        public Staff AddStaff(Staff NewStaff)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "insert into Staff (staNom, staPrenom, staTelephone, staMail, staPassword) values (@staNom, @staPrenom, @staTelephone, @staMail, @staPassword);select scope_identity()";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@staNom", NewStaff.Nom);
+                    cmd.Parameters.AddWithValue("@staPrenom", NewStaff.Nom);
+                    cmd.Parameters.AddWithValue("@staTelephone", NewStaff.Telephone);
+                    cmd.Parameters.AddWithValue("@staMail", NewStaff.Mail);
+                    cmd.Parameters.AddWithValue("@staPassword", NewStaff.Password);
+                    cn.Open();
+                    int newid = Convert.ToInt32(cmd.ExecuteScalar());
+                    return GetStaff(newid);
+                }
+            }
+            catch (Exception e) { throw e; }
+        }
     }
 }

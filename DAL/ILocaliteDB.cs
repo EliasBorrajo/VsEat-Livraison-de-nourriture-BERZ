@@ -12,5 +12,6 @@ namespace DAL
         Localite GetLocalite(int ID);
         Localite[] GetLocalites();
         Localite[] GetStaffLocalites(int ID);
+        Localite[] SetStaffLocalites(int ID, Localite[] Localites);
     }
 }

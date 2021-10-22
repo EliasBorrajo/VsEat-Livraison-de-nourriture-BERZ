@@ -88,5 +88,25 @@ namespace DAL
             catch (Exception e) { throw e; }
             return localites.ToArray();
         }
+        public void SetStaffLocalites(int ID, Localite[] Localites)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    cn.Open();
+                    foreach (Localite localite in Localites)
+                    {
+                        string query = "insert into StaffLocalite (staID, locID) values (@staID, @locID)";
+                        SqlCommand cmd = new SqlCommand(query, cn);
+                        cmd.Parameters.AddWithValue("@staID", ID);
+                        cmd.Parameters.AddWithValue("@locID", localite.ID);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e) { throw e; }
+        }
     }
 }
