@@ -8,5 +8,6 @@ namespace DAL
 {
     public interface IStaffDB
     {
+        Staff GetStaff(int ID);
     }
 }

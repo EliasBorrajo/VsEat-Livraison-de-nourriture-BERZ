@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace DAL
 {
     public interface IClientDB
-    { 
+    {
+        Client GetClient(int ID);
     }
 }

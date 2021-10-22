@@ -53,5 +53,75 @@ namespace DAL
             catch (Exception e) { throw e; }
             return plats.ToArray();
         }
+        public Plat[] GetCommandePlats(int ID)
+        {
+            List<Plat> plats = new List<Plat>();
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "select comID, platID, cpQuantite from CommandePlat where comID=@ID";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Plat plat = GetPlat((int)dr["platID"]);
+                            int? quantite = null;
+                            if (dr["cpQuantite"] != DBNull.Value) { quantite = (int)dr["platDescription"]; }
+                            plats.Add(new Plat(
+                                plat.ID,
+                                plat.Restaurant,
+                                plat.Nom,
+                                plat.Prix,
+                                plat.Description,
+                                quantite
+                                //,image
+                                ));
+                        }
+                    }
+                }
+            }
+            catch (Exception e) { throw e; }
+            return plats.ToArray();
+        }
+        public Plat GetPlat(int ID)
+        {
+            Plat plat = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "select platID, resID, platNom, platPrix, platDescription from Plat where platID=@ID";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            string description = string.Empty;
+                            if (dr["platDescription"] != DBNull.Value) { description = (string)dr["platDescription"]; }
+                            //Image image = null;
+                            //if (dr["platImage"] != DBNull.Value) { image = (Image)dr["platImage"]; }
+                            plat = new Plat(
+                                (int)dr["platID"],
+                                RestaurantDB.GetRestaurant((int)dr["resID"]),
+                                (string)dr["platNom"],
+                                (double)dr["platPrix"],
+                                description
+                                //,image
+                                );
+                        }
+                    }
+                }
+            }
+            catch (Exception e) { throw e; }
+            return plat;
+        }
     }
 }
