@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DTO;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,8 +12,8 @@ namespace DAL
     public class RestaurantDB : IRestaurantDB
     {
         private IConfiguration Configuration { get; }
-        private LocaliteDB LocaliteDB { get; }
-        private PlatDB PlatDB { get; }
+        private ILocaliteDB LocaliteDB { get; }
+        private IPlatDB PlatDB { get; }
         
         public RestaurantDB(IConfiguration Configuration)
         {

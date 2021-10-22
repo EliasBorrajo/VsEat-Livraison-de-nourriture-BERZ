@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DTO;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,9 +12,9 @@ namespace DAL
     public class CommandeDB : ICommandeDB
     {
         private IConfiguration Configuration { get; }
-        private StaffDB StaffDB { get; }
-        private ClientDB ClientDB { get; }
-        private PlatDB PlatDB { get; }
+        private IStaffDB StaffDB { get; }
+        private IClientDB ClientDB { get; }
+        private IPlatDB PlatDB { get; }
 
         public CommandeDB(IConfiguration Configuration)
         {

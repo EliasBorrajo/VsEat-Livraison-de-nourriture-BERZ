@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DTO;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,7 +12,7 @@ namespace DAL
     public class PlatDB : IPlatDB
     {
         private IConfiguration Configuration { get; }
-        private RestaurantDB RestaurantDB { get; }
+        private IRestaurantDB RestaurantDB { get; }
 
         public PlatDB(IConfiguration Configuration)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DTO;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Data.SqlClient;
 
@@ -7,7 +8,7 @@ namespace DAL
     public class ClientDB : IClientDB
     {
         private IConfiguration Configuration { get; }
-        private LocaliteDB LocaliteDB { get; }
+        private ILocaliteDB LocaliteDB { get; }
 
         public ClientDB(IConfiguration Configuration)
         {
