@@ -1,9 +1,4 @@
 ﻿using DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -11,6 +6,6 @@ namespace DAL
     {
         Plat GetPlat(int ID);
         Plat[] GetRestaurantPlats(int ID);
-        Plat[] GetCommandePlats(int ID);
+        CommandePlat[] GetCommandePlats(int ID);
     }
 }

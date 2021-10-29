@@ -1,0 +1,6 @@
+﻿namespace BLL
+{
+    interface ICommandeManager
+    {
+    }
+}

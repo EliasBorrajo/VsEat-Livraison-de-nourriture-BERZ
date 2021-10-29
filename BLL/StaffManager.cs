@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
+﻿using DAL;
 using DTO;
 using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class StaffManager
+    public class StaffManager : IStaffManager
     {
         private IStaffDB StaffDB { get; }
         private ILocaliteDB LocaliteDB { get; }

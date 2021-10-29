@@ -3,9 +3,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -19,6 +16,7 @@ namespace DAL
             this.Configuration = Configuration;
             RestaurantDB = new RestaurantDB(Configuration);
         }
+
         public Plat[] GetRestaurantPlats(int ID)
         {
             List<Plat> plats = new List<Plat>();
@@ -54,15 +52,15 @@ namespace DAL
             catch (Exception e) { throw e; }
             return plats.ToArray();
         }
-        public Plat[] GetCommandePlats(int ID)
+        public CommandePlat[] GetCommandePlats(int ID)
         {
-            List<Plat> plats = new List<Plat>();
+            List<CommandePlat> plats = new List<CommandePlat>();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select comID, platID, cpQuantite from CommandePlat where comID=@ID";
+                    string query = "select cpID, comID, platID, cpQuantite from CommandePlat where comID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -70,18 +68,7 @@ namespace DAL
                     {
                         while (dr.Read())
                         {
-                            Plat plat = GetPlat((int)dr["platID"]);
-                            int? quantite = null;
-                            if (dr["cpQuantite"] != DBNull.Value) { quantite = (int)dr["platDescription"]; }
-                            plats.Add(new Plat(
-                                plat.ID,
-                                plat.Restaurant,
-                                plat.Nom,
-                                plat.Prix,
-                                plat.Description,
-                                quantite
-                                //,image
-                                ));
+                            plats.Add(new CommandePlat((int)dr["cpID"], GetPlat((int)dr["platID"]), (int)dr["cpQuantite"]));
                         }
                     }
                 }

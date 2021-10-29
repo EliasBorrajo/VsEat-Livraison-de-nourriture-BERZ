@@ -1,11 +1,7 @@
 ﻿using DTO;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -39,14 +35,18 @@ namespace DAL
                     {
                         if (dr.Read())
                         {
+                            Staff staff = null;
+                            if (dr["staID"] != DBNull.Value) { staff = StaffDB.GetStaff((int)dr["staID"]); }
+                            DateTime heurePaiement = DateTime.MinValue;
+                            if (dr["comHeurePaiement"] != DBNull.Value) { heurePaiement = (DateTime)dr["comHeurePaiement"]; }
                             commande = new Commande(
                                 (int)dr["comID"],
-                                StaffDB.GetStaff((int)dr["staID"]),//
+                                staff,
                                 ClientDB.GetClient((int)dr["cliID"]),
                                 PlatDB.GetCommandePlats((int)dr["comID"]),
                                 (DateTime)dr["comHeure"],
                                 (DateTime)dr["comHeureLivraison"],
-                                (DateTime)dr["comHeurePaiement"],//
+                                heurePaiement,
                                 (double)dr["comSomme"],
                                 (int)dr["comAnnule"] == 1);
                         }

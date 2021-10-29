@@ -1,11 +1,10 @@
 ﻿using DAL;
 using DTO;
 using Microsoft.Extensions.Configuration;
-using System;
 
 namespace BLL
 {
-    public class ClientManager
+    public class ClientManager : IClientManager
     {
         private IClientDB ClientDB { get; }
 
