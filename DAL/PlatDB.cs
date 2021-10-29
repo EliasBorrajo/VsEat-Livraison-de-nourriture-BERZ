@@ -9,12 +9,10 @@ namespace DAL
     public class PlatDB : IPlatDB
     {
         private IConfiguration Configuration { get; }
-        private IRestaurantDB RestaurantDB { get; }
 
         public PlatDB(IConfiguration Configuration)
         {
             this.Configuration = Configuration;
-            RestaurantDB = new RestaurantDB(Configuration);
         }
 
         public Plat[] GetRestaurantPlats(int ID)
@@ -39,7 +37,6 @@ namespace DAL
                             //if (dr["platImage"] != DBNull.Value) { image = (Image)dr["platImage"]; }
                             plats.Add(new Plat(
                                 (int)dr["platID"],
-                                RestaurantDB.GetRestaurant((int)dr["resID"]),
                                 (string)dr["platNom"],
                                 (double)dr["platPrix"],
                                 description
@@ -98,7 +95,6 @@ namespace DAL
                             //if (dr["platImage"] != DBNull.Value) { image = (Image)dr["platImage"]; }
                             plat = new Plat(
                                 (int)dr["platID"],
-                                RestaurantDB.GetRestaurant((int)dr["resID"]),
                                 (string)dr["platNom"],
                                 (double)dr["platPrix"],
                                 description
