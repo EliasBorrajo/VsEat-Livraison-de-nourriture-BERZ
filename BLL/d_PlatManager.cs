@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class PlatManager : IPlatManager
+    public class d_PlatManager : d_IPlatManager
     {
         private IPlatDB PlatDB { get; }
 
-        public PlatManager(IConfiguration Configuration)
+        public d_PlatManager(IConfiguration Configuration)
         {
             PlatDB = new PlatDB(Configuration);
         }

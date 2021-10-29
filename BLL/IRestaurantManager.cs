@@ -1,6 +1,9 @@
-﻿namespace BLL
+﻿using DTO;
+
+namespace BLL
 {
-    interface IRestaurantManager
+    public interface IRestaurantManager
     {
+        Restaurant[] GetRestaurants();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace BLL
 {
-    interface IPlatManager
+    interface d_IPlatManager
     {
     }
 }

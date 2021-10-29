@@ -72,5 +72,79 @@ namespace DAL
             }
             catch (Exception e) { throw e; }
         }
+        public Client GetClient(string Mail, string Password)
+        {
+            Client client = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "select cliID, locID, cliNom, cliPrenom, cliTelephone, cliMail, cliAdresse, cliPassword from Client where cliMail=@cliMail and cliPassword=@cliPass";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@cliMail", Mail);
+                    cmd.Parameters.AddWithValue("@cliPass", Password);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            string telephone = string.Empty;
+                            if (dr["cliTelephone"] != DBNull.Value) { telephone = (string)dr["cliTelephone"]; }
+                            client = new Client(
+                                (int)dr["cliID"],
+                                LocaliteDB.GetLocalite((int)dr["locID"]),
+                                (string)dr["cliNom"],
+                                (string)dr["cliPrenom"],
+                                telephone,
+                                (string)dr["cliMail"],
+                                (string)dr["cliPassword"],
+                                (string)dr["cliAdresse"]);
+                        }
+                    }
+                }
+            }
+            catch (Exception e) { throw e; }
+            return client;
+        }
+        public void UpdateClient(Client Client)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "update Client set locID=@loc, cliNom=@nom, cliPrenom=@pre, cliTelephone=@tel, cliMail=@mai, cliAdresse=@add, cliPassword=@pas where cliID=@ID";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID", Client.ID);
+                    cmd.Parameters.AddWithValue("@loc", Client.Localite.ID);
+                    cmd.Parameters.AddWithValue("@nom", Client.Nom);
+                    cmd.Parameters.AddWithValue("@pre", Client.Prenom);
+                    cmd.Parameters.AddWithValue("@tel", Client.Telephone);
+                    cmd.Parameters.AddWithValue("@mai", Client.Mail);
+                    cmd.Parameters.AddWithValue("@add", Client.Adresse);
+                    cmd.Parameters.AddWithValue("@pas", Client.Password);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e) { throw e; }
+        }
+        public void DeleteClient(Client Client)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "delete from Client where cliID=@ID";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID", Client.ID);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e) { throw e; }
+        }
     }
 }

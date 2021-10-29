@@ -1,6 +1,9 @@
-﻿namespace BLL
+﻿using DTO;
+
+namespace BLL
 {
-    interface ILocaliteManager
+    public interface ILocaliteManager
     {
+        Localite[] GetLocalites();
     }
 }
