@@ -24,7 +24,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select staID, locID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff where staID=@ID";
+                    string query = "select staID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff where staID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -76,7 +76,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select staID, locID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff where staMail=@staMail and staPassword=@staPassword";
+                    string query = "select staID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff where staMail=@staMail and staPassword=@staPassword";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@staMail", Mail);
                     cmd.Parameters.AddWithValue("@staPassword", Password);
@@ -108,7 +108,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select staID, locID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff";
+                    string query = "select staID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -175,7 +175,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select staID, locID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff";
+                    string query = "select staID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())

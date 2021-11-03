@@ -49,7 +49,7 @@ namespace DAL
                                 (DateTime)dr["comHeureLivraison"],
                                 heurePaiement,
                                 (double)dr["comSomme"],
-                                (int)dr["comAnnule"] == 1);
+                                (byte)dr["comAnnule"] == 1);
                         }
                     }
                 }
@@ -84,7 +84,7 @@ namespace DAL
                                 (DateTime)dr["comHeureLivraison"],
                                 heurePaiement,
                                 (double)dr["comSomme"],
-                                (int)dr["comAnnule"] == 1));
+                                (byte)dr["comAnnule"] == 1));
                         }
                     }
                 }
@@ -121,7 +121,7 @@ namespace DAL
                                 (DateTime)dr["comHeureLivraison"],
                                 heurePaiement,
                                 (double)dr["comSomme"],
-                                (int)dr["comAnnule"] == 1));
+                                (byte)dr["comAnnule"] == 1));
                         }
                     }
                 }
@@ -151,7 +151,7 @@ namespace DAL
                         heurePaiement2 = "comHeurePaiement, ";
                         heurePaiement3 = "@comHeurePaiement, ";
                     }
-                    string.Format(query, staff0, staff1, heurePaiement2, heurePaiement3);
+                    query = string.Format(query, staff0, staff1, heurePaiement2, heurePaiement3);
                     SqlCommand cmd = new SqlCommand(query, cn);
                     if (NewCommande.Staff != null) { cmd.Parameters.AddWithValue("@staID", NewCommande.Staff.ID); }
                     cmd.Parameters.AddWithValue("@cliID", NewCommande.Client.ID);
