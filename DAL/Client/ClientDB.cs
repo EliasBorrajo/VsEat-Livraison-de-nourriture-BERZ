@@ -23,6 +23,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
+                    // on énumère chaque colonne plutôt que de faire un select * parce que c'est plus performant !
                     string query = "select cliID, locID, cliNom, cliPrenom, cliTelephone, cliMail, cliAdresse, cliPassword from Client where cliID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
@@ -35,7 +36,7 @@ namespace DAL
                             if (dr["cliTelephone"] != DBNull.Value) { telephone = (string)dr["cliTelephone"]; }
                             client = new Client(
                                 (int)dr["cliID"],
-                                LocaliteDB.GetLocalite((int)dr["locID"]),
+                                LocaliteDB.GetLocalite((int)dr["locID"]),// on va récupérer et enregistrer la localité correspondante à locID dans cet objet client
                                 (string)dr["cliNom"],
                                 (string)dr["cliPrenom"],
                                 telephone,
@@ -56,6 +57,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
+                    // on ne récupère pas l'ID du nouveau client car il sera créé dans la BD.
                     string query = "insert into Client (locID, cliNom, cliPrenom, cliTelephone, cliMail, cliAdresse, cliPassword) values (@locID, @cliNom, @cliPrenom, @cliTelephone, @cliMail, @cliAdresse, @cliPassword);select scope_identity()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@locID", NewClient.Localite.ID);
@@ -67,6 +69,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@cliPassword", NewClient.Password);
                     cn.Open();
                     int newid = Convert.ToInt32(cmd.ExecuteScalar());
+                    // on renvoie le client nouvellement inséré, avec l'id généré par la BD (récupéré avec le select scope_identity()).
                     return GetClient(newid);
                 }
             }

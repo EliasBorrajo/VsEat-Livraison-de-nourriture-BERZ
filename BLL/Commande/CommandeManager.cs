@@ -85,15 +85,20 @@ namespace BLL
             }
             return commandes;
         }
-        public Commande AddCommande(Client Client, CommandePlat[] Plats, DateTime Heure, DateTime HeureLivraison, double Somme)
+        public Commande AddCommande(Client Client, CommandePlat[] Plats, DateTime Heure, DateTime HeureLivraison)
         {
             Commande commande = null;
+            double somme = 0;
+            foreach (CommandePlat commandePlat in Plats)
+            {
+                somme += commandePlat.Plat.Prix * commandePlat.Quantite;
+            }
             Staff[] dispStaffs = StaffDB.GetDispStaffs(Client.Localite);
             foreach (Staff staff in dispStaffs)
             {
                 if (GetStaffCommandes(staff.ID, true).Length < 5)
                 {
-                    commande = new Commande(-1, staff, Client, Plats, Heure, HeureLivraison, DateTime.MinValue, Somme, false);
+                    commande = new Commande(-1, staff, Client, Plats, Heure, HeureLivraison, DateTime.MinValue, somme, false);
                     return CommandeDB.AddCommande(commande);
                 }
             }

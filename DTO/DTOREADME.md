@@ -1,0 +1,9 @@
+﻿En prenant un attribut de type Localite à la place d''un int pour stocker le locid
+
+//à la place de ces trois lignes...
+//LocaliteManager lm = new LocaliteManager(Configuration);
+//Localite loc = lm.GetLocalite(c.LocID);
+//loc.NPA....
+
+//...on en a qu'une
+// c.Localite.NPA...
