@@ -5,8 +5,8 @@ namespace DAL
     public interface ILocaliteDB
     {
         Localite GetLocalite(int ID);
-        Localite[] GetLocalites();
         Localite[] GetStaffLocalites(int ID);
+        Localite[] GetLocalites();
         void SetStaffLocalites(int ID, Localite[] Localites);
     }
 }

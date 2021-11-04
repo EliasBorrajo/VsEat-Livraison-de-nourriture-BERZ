@@ -6,8 +6,7 @@ namespace DAL
     {
         Client GetClient(int ID);
         Client GetClient(string Mail, string Password);
-        Client AddClient(Client NewClient);
+        Client AddClient(Client Client);
         void UpdateClient(Client Client);
-        void DeleteClient(Client Client);
     }
 }

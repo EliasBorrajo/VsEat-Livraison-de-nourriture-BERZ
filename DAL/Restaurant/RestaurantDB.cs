@@ -18,6 +18,15 @@ namespace DAL
             LocaliteDB = new LocaliteDB(Configuration);
             PlatDB = new PlatDB(Configuration);
         }
+        private Restaurant GetRestaurantFromDataReader(SqlDataReader dr)
+        {
+            int id = (int)dr["resID"];
+            Localite localite = LocaliteDB.GetLocalite((int)dr["locID"]);
+            string nom = (string)dr["resNom"];
+            string adresse = (string)dr["resAdresse"];
+            Plat[] plats = PlatDB.GetRestaurantPlats(id);
+            return new Restaurant(id, localite, nom, adresse, plats);
+        }
         public Restaurant[] GetRestaurants()
         {
             List<Restaurant> restaurants = new List<Restaurant>();
@@ -26,19 +35,15 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select resID, locID, resNom, resAdresse from Restaurant";
+                    string query = @"select resID, locID, resNom, resAdresse 
+                                            from Restaurant";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())
                         {
-                            restaurants.Add(new Restaurant(
-                                (int)dr["resID"],
-                                LocaliteDB.GetLocalite((int)dr["locID"]),
-                                (string)dr["resNom"],
-                                (string)dr["resAdresse"],
-                                PlatDB.GetRestaurantPlats((int)dr["resID"])));
+                            restaurants.Add(GetRestaurantFromDataReader(dr));
                         }
                     }
                 }
@@ -54,7 +59,8 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select resID, locID, resNom, resAdresse from Restaurant where resID=@ID";
+                    string query = @"select resID, locID, resNom, resAdresse 
+                                            from Restaurant where resID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -62,13 +68,7 @@ namespace DAL
                     {
                         if (dr.Read())
                         {
-                            restaurant = new Restaurant(
-                                (int)dr["resID"],
-                                LocaliteDB.GetLocalite((int)dr["locID"]),
-                                (string)dr["resNom"],
-                                (string)dr["resAdresse"],
-                                PlatDB.GetRestaurantPlats((int)dr["resID"]));
-
+                            restaurant = GetRestaurantFromDataReader(dr);
                         }
                     }
                 }

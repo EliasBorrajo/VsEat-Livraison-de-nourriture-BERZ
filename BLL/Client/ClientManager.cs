@@ -20,7 +20,7 @@ namespace BLL
         }
         public Client AddClient(string Nom, string Prenom, string Telephone, string Mail, string Password, string Adresse, Localite Localite)
         {
-            Client newClient = new Client(-1, Localite, Nom, Prenom, Telephone, Mail, Password, Adresse);
+            Client newClient = new Client(-1, Localite, Nom, Prenom, Telephone, Mail, Password, Adresse, true);
             return ClientDB.AddClient(newClient);
         }
         public Client GetClient(string Mail, string Password)
@@ -31,10 +31,10 @@ namespace BLL
         {
             ClientDB.UpdateClient(Client);
         }
-        public void DeleteClient(Client Client)
+        public void DisableClient(Client Client)
         {
-            CommandeDB.DeleteCommandes(Client);
-            ClientDB.DeleteClient(Client);
+            Client.Status = false;
+            UpdateClient(Client);
         }
     }
 }

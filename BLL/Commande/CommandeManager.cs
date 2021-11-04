@@ -63,7 +63,7 @@ namespace BLL
                     List<Commande> cmdEnCours = new List<Commande>();
                     foreach (Commande cmd in commandes)
                     {
-                        if (cmd.HeurePaiement > DateTime.MinValue)
+                        if (cmd.HeurePaiement == DateTime.MinValue)
                         {
                             cmdEnCours.Add(cmd);
                         }
@@ -75,7 +75,7 @@ namespace BLL
                     List<Commande> cmdTerminees = new List<Commande>();
                     foreach (Commande cmd in commandes)
                     {
-                        if (cmd.HeurePaiement == DateTime.MinValue)
+                        if (cmd.HeurePaiement > DateTime.MinValue)
                         {
                             cmdTerminees.Add(cmd);
                         }
@@ -85,28 +85,36 @@ namespace BLL
             }
             return commandes;
         }
-        public Commande AddCommande(Client Client, CommandePlat[] Plats, DateTime Heure, DateTime HeureLivraison)
+        public Commande AddCommande(Client Client, Restaurant Restaurant, CommandePlat[] Plats, DateTime HeureLivraison)
         {
             Commande commande = null;
             double somme = 0;
             foreach (CommandePlat commandePlat in Plats)
             {
-                somme += commandePlat.Plat.Prix * commandePlat.Quantite;
+                somme += commandePlat.Prix * commandePlat.Quantite;
             }
-            Staff[] dispStaffs = StaffDB.GetDispStaffs(Client.Localite);
+            Staff[] dispStaffs = StaffDB.GetStaffWorkingIn(Restaurant.Localite);
             foreach (Staff staff in dispStaffs)
             {
                 if (GetStaffCommandes(staff.ID, true).Length < 5)
                 {
-                    commande = new Commande(-1, staff, Client, Plats, Heure, HeureLivraison, DateTime.MinValue, somme, false);
-                    return CommandeDB.AddCommande(commande);
+                    commande = new Commande(-1, staff, Client, Plats, DateTime.Now, HeureLivraison, DateTime.MinValue, somme, false);
+                    commande = CommandeDB.AddCommande(commande);
                 }
             }
             return commande;
         }
-        public void CancelCommande(Commande Commande)
+        public void CancelCommande(int ID, string Nom, string Prenom)
         {
-            CommandeDB.CancelCommande(Commande);
+            Commande commande = CommandeDB.GetCommande(ID);
+            if (commande != null)
+            {
+                if (commande.Client.Nom == Nom && commande.Client.Prenom == Prenom && commande.HeureLivraison.AddHours(-3) > DateTime.Now)
+                {
+                    commande.Annule = true;
+                    CommandeDB.UpdateCommande(commande);
+                }
+            }
         }
     }
 }

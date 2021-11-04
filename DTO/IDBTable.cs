@@ -4,7 +4,7 @@
     /// Interface implémentée par tous les objets stockés dans la base de données.
     /// Utilisé pour instancier un object stocké dans la base de données et faire du polymorphisme.
     /// </summary>
-    public interface IDBItem
+    public interface IDBTable
     {
         /// <summary>
         /// Identifiant unique de l'enregistrement.

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace DAL
 {
@@ -14,6 +15,13 @@ namespace DAL
         {
             this.Configuration = Configuration;
         }
+        private Localite GetLocaliteFromDataReader(SqlDataReader dr)
+        {
+            int id = (int)dr["locID"];
+            string nom = (string)dr["locNom"];
+            string npa = (string)dr["locNPA"];
+            return new Localite(id, nom, npa);
+        }
         public Localite GetLocalite(int ID)
         {
             Localite localite = null;
@@ -22,7 +30,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select locID, locNom, locNPA from Localite where locID=@ID";
+                    string query = @"select locID, locNom, locNPA 
+                                            from Localite 
+                                            where locID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -30,7 +40,7 @@ namespace DAL
                     {
                         if (dr.Read())
                         {
-                            localite = new Localite((int)dr["locID"], (string)dr["locNom"], (string)dr["locNPA"]);
+                            localite = GetLocaliteFromDataReader(dr);
                         }
                     }
                 }
@@ -46,7 +56,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select staID, locID from StaffLocalite where staID=@ID";
+                    string query = @"select staID, locID 
+                                            from StaffLocalite 
+                                            where staID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -70,14 +82,15 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select locID, locNom, locNPA from Localite";
+                    string query = @"select locID, locNom, locNPA 
+                                            from Localite";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())
                         {
-                            localites.Add(new Localite((int)dr["locID"], (string)dr["locNom"], (string)dr["locNPA"]));
+                            localites.Add(GetLocaliteFromDataReader(dr));
                         }
                     }
                 }
@@ -88,18 +101,35 @@ namespace DAL
         public void SetStaffLocalites(int ID, Localite[] Localites)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            Localite[] currStaffLocs = GetStaffLocalites(ID);
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
                     cn.Open();
+                    foreach (Localite localite in currStaffLocs)
+                    {
+                        if (!Localites.Contains(localite))
+                        {
+                            string query = @"delete from StaffLocalite
+                                                    where staID=@sid and locID=@lid";
+                            SqlCommand cmd = new SqlCommand(query, cn);
+                            cmd.Parameters.AddWithValue("@sid", ID);
+                            cmd.Parameters.AddWithValue("@lid", localite.ID);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
                     foreach (Localite localite in Localites)
                     {
-                        string query = "insert into StaffLocalite (staID, locID) values (@staID, @locID)";
-                        SqlCommand cmd = new SqlCommand(query, cn);
-                        cmd.Parameters.AddWithValue("@staID", ID);
-                        cmd.Parameters.AddWithValue("@locID", localite.ID);
-                        cmd.ExecuteNonQuery();
+                        if (!currStaffLocs.Contains(localite))
+                        {
+                            string query = @"insert into StaffLocalite (staID, locID) 
+                                                values (@staID, @locID)";
+                            SqlCommand cmd = new SqlCommand(query, cn);
+                            cmd.Parameters.AddWithValue("@staID", ID);
+                            cmd.Parameters.AddWithValue("@locID", localite.ID);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
             }

@@ -14,7 +14,7 @@ namespace BLL
         /// <returns></returns>
         Commande[] GetStaffCommandes(int ID, bool? EnCours);
         Commande[] GetClientCommandes(int ID, bool? EnCours);
-        Commande AddCommande(Client Client, CommandePlat[] Plats, DateTime Heure, DateTime HeureLivraison);
-        void CancelCommande(Commande Commande);
+        Commande AddCommande(Client Client, Restaurant Restaurant, CommandePlat[] Plats, DateTime HeureLivraison);
+        void CancelCommande(int ID, string Nom, string Prenom);
     }
 }

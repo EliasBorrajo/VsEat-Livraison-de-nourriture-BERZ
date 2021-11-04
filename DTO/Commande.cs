@@ -2,7 +2,7 @@
 
 namespace DTO
 {
-    public class Commande : IDBItem
+    public class Commande : IDBTable
     {
         public int ID { get; }
         public Staff Staff { get; set; }
