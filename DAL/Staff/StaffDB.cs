@@ -99,36 +99,6 @@ namespace DAL
             catch (Exception e) { throw e; }
             return staff;
         }
-        //public Staff[] GetStaffs()
-        //{
-        //    List<Staff> staffs = new List<Staff>();
-        //    string connectionString = Configuration.GetConnectionString("DefaultConnection");
-        //    try
-        //    {
-        //        using (SqlConnection cn = new SqlConnection(connectionString))
-        //        {
-        //            string query = "select staID, staNom, staPrenom, staTelephone, staMail, staPassword from Staff";
-        //            SqlCommand cmd = new SqlCommand(query, cn);
-        //            cn.Open();
-        //            using (SqlDataReader dr = cmd.ExecuteReader())
-        //            {
-        //                while (dr.Read())
-        //                {
-        //                    staffs.Add(new Staff(
-        //                        (int)dr["staID"],
-        //                        (string)dr["staNom"],
-        //                        (string)dr["staPrenom"],
-        //                        (string)dr["staTelephone"],
-        //                        (string)dr["staMail"],
-        //                        (string)dr["staPassword"],
-        //                        LocaliteDB.GetStaffLocalites((int)dr["staID"])));
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e) { throw e; }
-        //    return staffs.ToArray();
-        //}
         public Staff[] GetStaffWorkingIn(Localite Localite)
         {
             List<Staff> staffs = new List<Staff>();

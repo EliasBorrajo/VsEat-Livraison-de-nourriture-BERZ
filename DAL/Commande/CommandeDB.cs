@@ -6,13 +6,32 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
+    /// <summary>
+    /// Classe qui implémente l'interface ICommandeDB, permettant la récupération et la modification des informations de la table Commande.
+    /// </summary>
     public class CommandeDB : ICommandeDB
     {
+        /// <summary>
+        /// Objet de configuration permettant la récupération de la chaîne de connexion à la DB.
+        /// </summary>
         private IConfiguration Configuration { get; }
+        /// <summary>
+        /// Objet permettant de récupérer des objets de type Staff.
+        /// </summary>
         private IStaffDB StaffDB { get; }
+        /// <summary>
+        /// Objet permettant de récupérer des objets de type Client.
+        /// </summary>
         private IClientDB ClientDB { get; }
+        /// <summary>
+        /// Objet permettant de récupérer des objets de type Plat.
+        /// </summary>
         private IPlatDB PlatDB { get; }
 
+        /// <summary>
+        /// Constructeur pour créer un objet CommandeDB.
+        /// </summary>
+        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
         public CommandeDB(IConfiguration Configuration)
         {
             this.Configuration = Configuration;
@@ -20,6 +39,11 @@ namespace DAL
             ClientDB = new ClientDB(Configuration);
             PlatDB = new PlatDB(Configuration);
         }
+        /// <summary>
+        /// Méthode permettant de générer un objet de type Commande depuis un SqlDataReader.
+        /// </summary>
+        /// <param name="dr">SqlDataReader provenant d'une requête select sur la table Commande.</param>
+        /// <returns>Objet de type Commande contenant les informations récupérées depuis la table Commande.</returns>
         private Commande GetCommandeFromDataReader(SqlDataReader dr)
         {
             int id = (int)dr["comID"];

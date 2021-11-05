@@ -20,7 +20,6 @@ namespace DAL
         /// <param name="Password">Mot de passe du staff.</param>
         /// <returns>Objet de type Staff contenant les informations de l'enregistrement. Retourne null si l'enregistrement n'existe pas.</returns>
         Staff GetStaff(string Mail, string Password);
-        //Staff[] GetStaffs();
         /// <summary>
         /// Méthode permettant de récupérer les staffs qui travaillent dans une localité.
         /// </summary>

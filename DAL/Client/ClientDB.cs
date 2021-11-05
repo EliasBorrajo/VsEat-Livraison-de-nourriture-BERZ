@@ -5,16 +5,34 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
+    /// <summary>
+    /// Classe qui implémente l'interface IClientDB, permettant la récupération et la modification des informations de la table Client.
+    /// </summary>
     public class ClientDB : IClientDB
     {
+        /// <summary>
+        /// Objet de configuration permettant la récupération de la chaîne de connexion à la DB.
+        /// </summary>
         private IConfiguration Configuration { get; }
+        /// <summary>
+        /// Objet permettant de récupérer des objets de type Localite.
+        /// </summary>
         private ILocaliteDB LocaliteDB { get; }
 
+        /// <summary>
+        /// Constructeur pour créer un objet ClientDB.
+        /// </summary>
+        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
         public ClientDB(IConfiguration Configuration)
         {
             this.Configuration = Configuration;
             LocaliteDB = new LocaliteDB(Configuration);
         }
+        /// <summary>
+        /// Méthode permettant de générer un objet de type Client depuis un SqlDataReader.
+        /// </summary>
+        /// <param name="dr">SqlDataReader provenant d'une requête select sur la table Client.</param>
+        /// <returns>Objet de type Client contenant les informations récupérées depuis la table Client.</returns>
         private Client GetClientFromDataReader(SqlDataReader dr)
         {
             int id = (int)dr["cliID"];

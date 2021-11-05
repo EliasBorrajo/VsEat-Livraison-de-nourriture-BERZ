@@ -7,14 +7,29 @@ using System.Linq;
 
 namespace DAL
 {
+    /// <summary>
+    /// Classe qui implémente l'interface ILocaliteDB, permettant la récupération et la modification des informations de la table Localite.
+    /// </summary>
     public class LocaliteDB : ILocaliteDB
     {
+        /// <summary>
+        /// Objet de configuration permettant la récupération de la chaîne de connexion à la DB.
+        /// </summary>
         private IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Constructeur pour créer un objet LocaliteDB.
+        /// </summary>
+        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
         public LocaliteDB(IConfiguration Configuration)
         {
             this.Configuration = Configuration;
         }
+        /// <summary>
+        /// Méthode permettant de générer un objet de type Localite depuis un SqlDataReader.
+        /// </summary>
+        /// <param name="dr">SqlDataReader provenant d'une requête select sur la table Localite.</param>
+        /// <returns>Objet de type Localite contenant les informations récupérées depuis la table Localite.</returns>
         private Localite GetLocaliteFromDataReader(SqlDataReader dr)
         {
             int id = (int)dr["locID"];
