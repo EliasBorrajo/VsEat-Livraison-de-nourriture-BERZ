@@ -2,11 +2,33 @@
 
 namespace DAL
 {
+    /// <summary>
+    /// Interface permettant de récupérer ou modifier des informations de la table Localite.
+    /// </summary>
     public interface ILocaliteDB
     {
+        /// <summary>
+        /// Méthode permettant de récupérer une localité par son identifiant unique.
+        /// </summary>
+        /// <param name="ID">Identifiant unique de la localité.</param>
+        /// <returns>Objet de type Localite contenant les informations de l'enregistrement. Retourne null si l'enregistrement n'existe pas.</returns>
         Localite GetLocalite(int ID);
+        /// <summary>
+        /// Méthode permettant de récupérer les localités dans lesquelles un staff travaille.
+        /// </summary>
+        /// <param name="ID">Identifiant unique du staff.</param>
+        /// <returns>Tableau de Localite où le staff travaille.</returns>
         Localite[] GetStaffLocalites(int ID);
+        /// <summary>
+        /// Méthode permettant de récupérer les localités.
+        /// </summary>
+        /// <returns>Tableau de Localite contenant toutes les localités enregistrées dans la DB.</returns>
         Localite[] GetLocalites();
+        /// <summary>
+        /// Méthode permettant de définir dans quelles localités un staff travaille.
+        /// </summary>
+        /// <param name="ID">Identifiant unique du staff.</param>
+        /// <param name="Localites">Localités dans lesquelles le staff travaille.</param>
         void SetStaffLocalites(int ID, Localite[] Localites);
     }
 }

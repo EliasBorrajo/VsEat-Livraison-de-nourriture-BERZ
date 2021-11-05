@@ -9,14 +9,29 @@ using System.Linq;
 
 namespace DAL
 {
+    /// <summary>
+    /// Classe qui implémente l'interface IPlatDB, permettant la récupération et la modification des informations de la table Plat.
+    /// </summary>
     public class PlatDB : IPlatDB
     {
+        /// <summary>
+        /// Objet de configuration permettant la récupération de la chaîne de connexion à la DB.
+        /// </summary>
         private IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Constructeur pour créer un objet PlatDB.
+        /// </summary>
+        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
         public PlatDB(IConfiguration Configuration)
         {
             this.Configuration = Configuration;
         }
+        /// <summary>
+        /// Méthode permettant de générer un objet de type Plat depuis un SqlDataReader.
+        /// </summary>
+        /// <param name="dr">SqlDataReader provenant d'une requête select sur la table Plat.</param>
+        /// <returns>Objet de type Plat contenant les informations récupérées depuis la table Plat.</returns>
         private Plat GetPlatFromDataReader(SqlDataReader dr)
         {
             int id = (int)dr["platID"];
