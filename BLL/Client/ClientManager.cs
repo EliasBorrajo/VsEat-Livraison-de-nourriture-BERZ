@@ -4,11 +4,24 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
+    /// <summary>
+    /// Classe qui implémente l'interface IClientManager, permettant la gestion de tout ce qui concerne les clients.
+    /// </summary>
     public class ClientManager : IClientManager
     {
+        /// <summary>
+        /// Objet permettant d'interagir avec la table Client.
+        /// </summary>
         private IClientDB ClientDB { get; }
+        /// <summary>
+        /// Objet permettant d'interagir avec la table Commande.
+        /// </summary>
         private ICommandeDB CommandeDB { get; }
 
+        /// <summary>
+        /// Constructeur pour créer un objet ClientManager.
+        /// </summary>
+        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
         public ClientManager(IConfiguration Configuration)
         {
             ClientDB = new ClientDB(Configuration);

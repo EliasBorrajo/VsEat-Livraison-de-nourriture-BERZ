@@ -6,11 +6,24 @@ using System.Collections.Generic;
 
 namespace BLL
 {
+    /// <summary>
+    /// Classe qui implémente l'interface ICommandeManager, permettant la gestion de tout ce qui concerne les commandes.
+    /// </summary>
     public class CommandeManager : ICommandeManager
     {
+        /// <summary>
+        /// Objet permettant d'interagir avec la table Commande.
+        /// </summary>
         private ICommandeDB CommandeDB { get; }
+        /// <summary>
+        /// Objet permettant d'interagir avec la table Staff.
+        /// </summary>
         private IStaffDB StaffDB { get; }
 
+        /// <summary>
+        /// Constructeur pour créer un objet CommandeManager.
+        /// </summary>
+        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
         public CommandeManager(IConfiguration Configuration)
         {
             CommandeDB = new CommandeDB(Configuration);
