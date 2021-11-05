@@ -1,6 +1,6 @@
 ﻿namespace DTO
 {
-    public class Localite : IDBItem
+    public class Localite : IDBTable
     {
         public int ID { get; }
         public string Nom { get; set; }

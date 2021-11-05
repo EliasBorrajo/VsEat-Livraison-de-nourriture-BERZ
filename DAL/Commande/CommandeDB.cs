@@ -20,6 +20,21 @@ namespace DAL
             ClientDB = new ClientDB(Configuration);
             PlatDB = new PlatDB(Configuration);
         }
+        private Commande GetCommandeFromDataReader(SqlDataReader dr)
+        {
+            int id = (int)dr["comID"];
+            Staff staff = null;
+            if (dr["staID"] != DBNull.Value) { staff = StaffDB.GetStaff((int)dr["staID"]); }
+            Client client = ClientDB.GetClient((int)dr["cliID"]);
+            CommandePlat[] cp = PlatDB.GetCommandePlats(id);
+            DateTime heure = (DateTime)dr["comHeure"];
+            DateTime heureLivraison = (DateTime)dr["comHeureLivraison"];
+            DateTime heurePaiement = DateTime.MinValue;
+            if (dr["comHeurePaiement"] != DBNull.Value) { heurePaiement = (DateTime)dr["comHeurePaiement"]; }
+            double somme = (double)dr["comSomme"];
+            bool annule = (byte)dr["comAnnule"] == 1;
+            return new Commande(id, staff, client, cp, heure, heureLivraison, heurePaiement, somme, annule);
+        }
         public Commande GetCommande(int ID)
         {
             Commande commande = null;
@@ -28,7 +43,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select comID, staID, cliID, comHeure, comHeureLivraison, comHeurePaiement, comSomme, comAnnule from Commande where comID=@ID";
+                    string query = @"select comID, staID, cliID, comHeure, comHeureLivraison, comHeurePaiement, comSomme, comAnnule 
+                                            from Commande 
+                                            where comID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -36,20 +53,7 @@ namespace DAL
                     {
                         if (dr.Read())
                         {
-                            Staff staff = null;
-                            if (dr["staID"] != DBNull.Value) { staff = StaffDB.GetStaff((int)dr["staID"]); }
-                            DateTime heurePaiement = DateTime.MinValue;
-                            if (dr["comHeurePaiement"] != DBNull.Value) { heurePaiement = (DateTime)dr["comHeurePaiement"]; }
-                            commande = new Commande(
-                                (int)dr["comID"],
-                                staff,
-                                ClientDB.GetClient((int)dr["cliID"]),
-                                PlatDB.GetCommandePlats((int)dr["comID"]),
-                                (DateTime)dr["comHeure"],
-                                (DateTime)dr["comHeureLivraison"],
-                                heurePaiement,
-                                (double)dr["comSomme"],
-                                (byte)dr["comAnnule"] == 1);
+                            commande = GetCommandeFromDataReader(dr);
                         }
                     }
                 }
@@ -65,7 +69,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select comID, staID, cliID, comHeure, comHeureLivraison, comHeurePaiement, comSomme, comAnnule from Commande where staID=@ID";
+                    string query = @"select comID, staID, cliID, comHeure, comHeureLivraison, comHeurePaiement, comSomme, comAnnule 
+                                            from Commande 
+                                            where staID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -73,18 +79,7 @@ namespace DAL
                     {
                         while (dr.Read())
                         {
-                            DateTime heurePaiement = DateTime.MinValue;
-                            if (dr["comHeurePaiement"] != DBNull.Value) { heurePaiement = (DateTime)dr["comHeurePaiement"]; }
-                            commandes.Add(new Commande(
-                                (int)dr["comID"],
-                                StaffDB.GetStaff((int)dr["staID"]),
-                                ClientDB.GetClient((int)dr["cliID"]),
-                                PlatDB.GetCommandePlats((int)dr["comID"]),
-                                (DateTime)dr["comHeure"],
-                                (DateTime)dr["comHeureLivraison"],
-                                heurePaiement,
-                                (double)dr["comSomme"],
-                                (byte)dr["comAnnule"] == 1));
+                            commandes.Add(GetCommandeFromDataReader(dr));
                         }
                     }
                 }
@@ -100,7 +95,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "select comID, staID, cliID, comHeure, comHeureLivraison, comHeurePaiement, comSomme, comAnnule from Commande where cliID=@ID";
+                    string query = @"select comID, staID, cliID, comHeure, comHeureLivraison, comHeurePaiement, comSomme, comAnnule 
+                                            from Commande 
+                                            where cliID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cn.Open();
@@ -108,20 +105,7 @@ namespace DAL
                     {
                         while (dr.Read())
                         {
-                            Staff staff = null;
-                            if (dr["staID"] != null) { staff = StaffDB.GetStaff((int)dr["staID"]); }
-                            DateTime heurePaiement = DateTime.MinValue;
-                            if (dr["comHeurePaiement"] != DBNull.Value) { heurePaiement = (DateTime)dr["comHeurePaiement"]; }
-                            commandes.Add(new Commande(
-                                (int)dr["comID"],
-                                staff,
-                                ClientDB.GetClient((int)dr["cliID"]),
-                                PlatDB.GetCommandePlats((int)dr["comID"]),
-                                (DateTime)dr["comHeure"],
-                                (DateTime)dr["comHeureLivraison"],
-                                heurePaiement,
-                                (double)dr["comSomme"],
-                                (byte)dr["comAnnule"] == 1));
+                            commandes.Add(GetCommandeFromDataReader(dr));
                         }
                     }
                 }
@@ -129,87 +113,66 @@ namespace DAL
             catch (Exception e) { throw e; }
             return commandes.ToArray();
         }
-        public Commande AddCommande(Commande NewCommande)
+        public Commande AddCommande(Commande Commande)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "insert into Commande ({0}cliID, comHeure, comHeureLivraison, {2}comSomme, comAnnule) values ({1}@cliID, @comHeure, @comHeureLivraison, {3}@comSomme, @comAnnule);select scope_identity()";
+                    string query = @"insert into Commande ({0}cliID, comHeure, comHeureLivraison, {2}comSomme, comAnnule) 
+                                            values ({1}@cliID, @comHeure, @comHeureLivraison, {3}@comSomme, @comAnnule);
+                                            select scope_identity()";
                     string staff0 = string.Empty;
                     string staff1 = string.Empty;
                     string heurePaiement2 = string.Empty;
                     string heurePaiement3 = string.Empty;
-                    if (NewCommande.Staff != null)
+                    if (Commande.Staff != null)
                     {
                         staff0 = "staID, ";
                         staff1 = "@staID, ";
                     }
-                    if (NewCommande.HeurePaiement > DateTime.MinValue)
+                    if (Commande.HeurePaiement > DateTime.MinValue)
                     {
                         heurePaiement2 = "comHeurePaiement, ";
                         heurePaiement3 = "@comHeurePaiement, ";
                     }
                     query = string.Format(query, staff0, staff1, heurePaiement2, heurePaiement3);
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    if (NewCommande.Staff != null) { cmd.Parameters.AddWithValue("@staID", NewCommande.Staff.ID); }
-                    cmd.Parameters.AddWithValue("@cliID", NewCommande.Client.ID);
-                    cmd.Parameters.AddWithValue("@comHeure", NewCommande.Heure);
-                    cmd.Parameters.AddWithValue("@comHeureLivraison", NewCommande.HeureLivraison);
-                    if (NewCommande.HeurePaiement > DateTime.MinValue) { cmd.Parameters.AddWithValue("@comHeurePaiement", NewCommande.HeurePaiement); }
-                    cmd.Parameters.AddWithValue("@comSomme", NewCommande.Somme);
-                    cmd.Parameters.AddWithValue("@comAnnule", NewCommande.Annule ? "1" : "0");
+                    if (Commande.Staff != null) { cmd.Parameters.AddWithValue("@staID", Commande.Staff.ID); }
+                    cmd.Parameters.AddWithValue("@cliID", Commande.Client.ID);
+                    cmd.Parameters.AddWithValue("@comHeure", Commande.Heure);
+                    cmd.Parameters.AddWithValue("@comHeureLivraison", Commande.HeureLivraison);
+                    if (Commande.HeurePaiement > DateTime.MinValue) { cmd.Parameters.AddWithValue("@comHeurePaiement", Commande.HeurePaiement); }
+                    cmd.Parameters.AddWithValue("@comSomme", Commande.Somme);
+                    cmd.Parameters.AddWithValue("@comAnnule", Commande.Annule ? "1" : "0");
                     cn.Open();
                     int newid = Convert.ToInt32(cmd.ExecuteScalar());
+                    PlatDB.SetCommandePlats(newid, Commande.Plats);
                     return GetCommande(newid);
                 }
             }
             catch (Exception e) { throw e; }
         }
-        public void CancelCommande(Commande Commande)
+        public void UpdateCommande(Commande Commande)
         {
+            PlatDB.SetCommandePlats(Commande.ID, Commande.Plats);
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "update Commande set comAnnule=1 where comID=@ID";
+                    string query = @"update Commande set staID=@sta, cliID=@cli, comHeure=@h, comHeureLivraison=@hl, comHeurePaiement=@hp, comSomme=@som, comAnnule=@ca 
+                                            where comID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", Commande.ID);
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception e) { throw e; }
-        }
-        public void DeleteCommandes(Staff Staff)
-        {
-            Commande[] staffCommandes = GetStaffCommandes(Staff.ID);
-            foreach (Commande commande in staffCommandes)
-            {
-                DeleteCommande(commande);
-            }
-        }
-        public void DeleteCommandes(Client Client)
-        {
-            Commande[] clientCommandes = GetClientCommandes(Client.ID);
-            foreach (Commande commande in clientCommandes)
-            {
-                DeleteCommande(commande);
-            }
-        }
-
-        private void DeleteCommande(Commande Commande)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "delete from Commande where comID=@ID";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID", Commande.ID);
+                    cmd.Parameters.AddWithValue("@sta", Commande.Staff.ID);
+                    cmd.Parameters.AddWithValue("@cli", Commande.Client.ID);
+                    cmd.Parameters.AddWithValue("@h", Commande.Heure);
+                    cmd.Parameters.AddWithValue("@hl", Commande.HeureLivraison);
+                    cmd.Parameters.AddWithValue("@hp", Commande.HeurePaiement);
+                    cmd.Parameters.AddWithValue("@som", Commande.Somme);
+                    cmd.Parameters.AddWithValue("@ca", Commande.Annule ? "1" : "0");
                     cn.Open();
                     cmd.ExecuteNonQuery();
                 }

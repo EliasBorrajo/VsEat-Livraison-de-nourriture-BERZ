@@ -1,6 +1,6 @@
 ﻿namespace DTO
 {
-    public class Client : IDBItem
+    public class Client : IDBTable
     {
         public int ID { get; }
         public Localite Localite { get; set; }
@@ -10,8 +10,9 @@
         public string Mail { get; set; }
         public string Password { get; set; }
         public string Adresse { get; set; }
+        public bool Status { get; set; }
 
-        public Client(int ID, Localite Localite, string Nom, string Prenom, string Telephone, string Mail, string Password, string Adresse)
+        public Client(int ID, Localite Localite, string Nom, string Prenom, string Telephone, string Mail, string Password, string Adresse, bool Status)
         {
             this.ID = ID;
             this.Localite = Localite;
@@ -21,6 +22,7 @@
             this.Mail = Mail;
             this.Password = Password;
             this.Adresse = Adresse;
+            this.Status = Status;
         }
     }
 }

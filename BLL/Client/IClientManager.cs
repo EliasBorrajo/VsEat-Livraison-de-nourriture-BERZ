@@ -8,6 +8,6 @@ namespace BLL
         Client AddClient(string Nom, string Prenom, string Mail, string Password, string Adresse, Localite Localite);
         Client AddClient(string Nom, string Prenom, string Telephone, string Mail, string Password, string Adresse, Localite Localite);
         void UpdateClient(Client Client);
-        void DeleteClient(Client Client);
+        void DisableClient(Client Client);
     }
 }

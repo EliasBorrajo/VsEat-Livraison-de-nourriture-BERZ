@@ -7,9 +7,7 @@ namespace DAL
         Commande GetCommande(int ID);
         Commande[] GetStaffCommandes(int ID);
         Commande[] GetClientCommandes(int ID);
-        Commande AddCommande(Commande NewCommande);
-        void CancelCommande(Commande Commande);
-        void DeleteCommandes(Staff Staff);
-        void DeleteCommandes(Client Client);
+        Commande AddCommande(Commande Commande);
+        void UpdateCommande(Commande Commande);
     }
 }
