@@ -38,12 +38,22 @@ namespace PlateformeLivraison
         //*******************************************************************************************************
         static void Main(string[] args)
         {
+            Console.WriteLine("SCENARIO : CLIENT PASSE COMMANDE");
+            Console.WriteLine("*************************************************************************************");
             scenClientPasseCommande( );
+            Console.WriteLine("*************************************************************************************");
+
+
+            Console.WriteLine("SCENARIO : CONNECTION STAFF");
+            Console.WriteLine("*************************************************************************************");
+            scenConnectionStaff();
+            Console.WriteLine("*************************************************************************************");
+
         }
 
 
         //*******************************************************************************************************
-        // M E T H O D E S
+        // S C E N A R I O S
         //*******************************************************************************************************
         private static void scenClientPasseCommande()
         {
@@ -107,6 +117,43 @@ namespace PlateformeLivraison
             
         }
 
+         private static void scenConnectionStaff()
+        {
+            // STAFF CONNECTION
+            string smail = "esclaves.pascher@dies.irae";
+            string spass = "3337";
+            Console.WriteLine($"Connexion staff avec les identifiants : {smail} - {spass}");
+            Staff staff = staffManager.GetStaff(smail, spass);
+
+            if (staff != null)
+            {
+                Console.WriteLine($"Connexion réussie, bienvenue {staff.Prenom} {staff.Nom}");
+                Localite[] localitesArr = localiteManager.GetLocalites();
+  
+                PrintStaffLocs(staff);                     // Affiche les localitées actuelles
+                staff.Localites = new Localite[]
+                {
+                    localitesArr[5],
+                    localitesArr[6]
+                };
+                staffManager.UpdateStaff(staff); // Supprime les anciennes localités, et affiche les localitées actuelles
+                PrintStaffLocs(staff);
+
+                // Récuperer les commandes EN COURS du staff et les afficher
+                Commande[] scommandes = commandeManager.GetStaffCommandes(staff, true);
+                Console.WriteLine($"Commandes en cours du staff {staff.Nom} {staff.Prenom} : ");
+                PrintCommandes(scommandes);
+
+            }
+            else
+            {
+                Console.WriteLine($"Connexion échouée, vérifiez l'identifiant et le mot de passe.");
+            }
+        }
+
+        //*******************************************************************************************************
+        // M E T H O D E S
+        //*******************************************************************************************************
         private static void PrintStaffLocs(Staff staff)
         {
             Console.WriteLine($"{staff.Prenom} travaille dans les localités suivantes : ");
@@ -163,7 +210,7 @@ namespace PlateformeLivraison
 
             return null;
         }
-            private static void affcheRestaurantSelectionne(int userSelectedRestaurant, Restaurant[] restaurantsArr)
+        private static void affcheRestaurantSelectionne(int userSelectedRestaurant, Restaurant[] restaurantsArr)
         {
             String restoName = "";
             int posRestaurant = -1;
