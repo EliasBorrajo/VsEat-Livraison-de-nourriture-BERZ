@@ -42,9 +42,11 @@ namespace DAL
             string telephone = (string)dr["staTelephone"];
             string mail = (string)dr["staMail"];
             string password = (string)dr["staPassword"];
-            Localite[] localites = LocaliteDB.GetStaffLocalites(id);
+            Localite[] localites = new Localite[] { };
             bool status = (byte)dr["staStatus"] == 1;
-            return new Staff(id, nom, prenom, telephone, mail, password, localites, status);
+            Staff staff = new Staff(id, nom, prenom, telephone, mail, password, localites, status);
+            staff.Localites = LocaliteDB.GetStaffLocalites(staff);
+            return staff;
         }
         public Staff GetStaff(int ID)
         {
@@ -144,15 +146,17 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@staStatus", Staff.Status);
                     cn.Open();
                     int newid = Convert.ToInt32(cmd.ExecuteScalar());
-                    LocaliteDB.SetStaffLocalites(newid, Staff.Localites);
-                    return GetStaff(newid);
+                    Staff staff = GetStaff(newid);
+                    LocaliteDB.SetStaffLocalites(staff, Staff.Localites);
+                    staff.Localites = LocaliteDB.GetStaffLocalites(staff);
+                    return staff;
                 }
             }
             catch (Exception e) { throw e; }
         }
         public void UpdateStaff(Staff Staff)
         {
-            LocaliteDB.SetStaffLocalites(Staff.ID, Staff.Localites);
+            LocaliteDB.SetStaffLocalites(Staff, Staff.Localites);
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {

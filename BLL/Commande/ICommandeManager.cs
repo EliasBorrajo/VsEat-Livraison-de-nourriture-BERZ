@@ -17,17 +17,17 @@ namespace BLL
         /// <summary>
         /// Méthode permettant de récupérer les commandes dont un staff est responsable.
         /// </summary>
-        /// <param name="ID">Identifiant unique du staff.</param>
+        /// <param name="Staff">Staff dont on souhaite récupérer les commandes.</param>
         /// <param name="EnCours">Si null, retourne toutes les commandes du staff, si true retourne toutes les commandes en cours, si false retourne toutes les commandes passées.</param>
         /// <returns>Tableau de Commande contenant les commandes dont le staff est responsable.</returns>
-        Commande[] GetStaffCommandes(int ID, bool? EnCours);
+        Commande[] GetStaffCommandes(Staff Staff, bool? EnCours);
         /// <summary>
         /// Méthode permettant de récupérer les commandes passées par un client.
         /// </summary>
-        /// <param name="ID">Identifiant unique du client.</param>
+        /// <param name="Client">Client dont on souhaite récupérer les commandes.</param>
         /// <param name="EnCours">Si null, retourne toutes les commandes passées par le client, si true retourne toutes les commandes en cours, si false retourne toutes les commandes passées.</param>
         /// <returns></returns>
-        Commande[] GetClientCommandes(int ID, bool? EnCours);
+        Commande[] GetClientCommandes(Client Client, bool? EnCours);
         /// <summary>
         /// Méthode permettant d'ajouter une commande.
         /// </summary>

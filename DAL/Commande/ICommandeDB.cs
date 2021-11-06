@@ -16,15 +16,15 @@ namespace DAL
         /// <summary>
         /// Méthode permettant de récupérer les commandes dont un staff est responsable.
         /// </summary>
-        /// <param name="ID">Identifiant unique du staff.</param>
+        /// <param name="Staff">Staff dont on souhaite récupérer les commandes.</param>
         /// <returns>Tableau de Commande contenant les commandes dont le staff est responsable.</returns>
-        Commande[] GetStaffCommandes(int ID);
+        Commande[] GetStaffCommandes(Staff Staff);
         /// <summary>
         /// Méthode permettant de récupérer les commandes passées par un client.
         /// </summary>
-        /// <param name="ID">Identifiant unique du client.</param>
+        /// <param name="Client">Client dont on souhaite récupérer les commandes.</param>
         /// <returns>Tableau de Commande contenant les commandes passées par le client.</returns>
-        Commande[] GetClientCommandes(int ID);
+        Commande[] GetClientCommandes(Client Client);
         /// <summary>
         /// Méthode permettant d'ajouter une nouvelle commande.
         /// </summary>

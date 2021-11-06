@@ -45,8 +45,10 @@ namespace DAL
             Localite localite = LocaliteDB.GetLocalite((int)dr["locID"]);
             string nom = (string)dr["resNom"];
             string adresse = (string)dr["resAdresse"];
-            Plat[] plats = PlatDB.GetRestaurantPlats(id);
-            return new Restaurant(id, localite, nom, adresse, plats);
+            Plat[] plats = new Plat[] { };
+            Restaurant restaurant = new Restaurant(id, localite, nom, adresse, plats);
+            restaurant.Plats = PlatDB.GetRestaurantPlats(restaurant);
+            return restaurant;
         }
         public Restaurant[] GetRestaurants()
         {

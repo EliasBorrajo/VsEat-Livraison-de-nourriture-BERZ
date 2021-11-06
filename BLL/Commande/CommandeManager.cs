@@ -34,9 +34,9 @@ namespace BLL
         {
             return CommandeDB.GetCommande(ID);
         }
-        public Commande[] GetStaffCommandes(int ID, bool? EnCours)
+        public Commande[] GetStaffCommandes(Staff Staff, bool? EnCours)
         {
-            Commande[] commandes = CommandeDB.GetStaffCommandes(ID);
+            Commande[] commandes = CommandeDB.GetStaffCommandes(Staff);
             if (EnCours.HasValue)
             {
                 if (EnCours.Value)
@@ -66,9 +66,9 @@ namespace BLL
             }
             return commandes;
         }
-        public Commande[] GetClientCommandes(int ID, bool? EnCours)
+        public Commande[] GetClientCommandes(Client Client, bool? EnCours)
         {
-            Commande[] commandes = CommandeDB.GetClientCommandes(ID);
+            Commande[] commandes = CommandeDB.GetClientCommandes(Client);
             if (EnCours.HasValue)
             {
                 if (EnCours.Value)
@@ -109,7 +109,7 @@ namespace BLL
             Staff[] dispStaffs = StaffDB.GetStaffWorkingIn(Restaurant.Localite);
             foreach (Staff staff in dispStaffs)
             {
-                if (GetStaffCommandes(staff.ID, true).Length < 5)
+                if (GetStaffCommandes(staff, true).Length < 5)
                 {
                     commande = new Commande(-1, staff, Client, Plats, DateTime.Now, HeureLivraison, DateTime.MinValue, somme, false);
                     commande = CommandeDB.AddCommande(commande);

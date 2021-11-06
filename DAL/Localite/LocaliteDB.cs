@@ -63,7 +63,7 @@ namespace DAL
             catch (Exception e) { throw e; }
             return localite;
         }
-        public Localite[] GetStaffLocalites(int ID)
+        public Localite[] GetStaffLocalites(Staff Staff)
         {
             List<Localite> localites = new List<Localite>();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -75,7 +75,7 @@ namespace DAL
                                             from StaffLocalite 
                                             where staID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@ID", Staff.ID);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -113,10 +113,10 @@ namespace DAL
             catch (Exception e) { throw e; }
             return localites.ToArray();
         }
-        public void SetStaffLocalites(int ID, Localite[] Localites)
+        public void SetStaffLocalites(Staff Staff, Localite[] Localites)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            Localite[] currStaffLocs = GetStaffLocalites(ID);
+            Localite[] currStaffLocs = GetStaffLocalites(Staff);
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
@@ -129,7 +129,7 @@ namespace DAL
                             string query = @"delete from StaffLocalite
                                                     where staID=@sid and locID=@lid";
                             SqlCommand cmd = new SqlCommand(query, cn);
-                            cmd.Parameters.AddWithValue("@sid", ID);
+                            cmd.Parameters.AddWithValue("@sid", Staff.ID);
                             cmd.Parameters.AddWithValue("@lid", localite.ID);
                             cmd.ExecuteNonQuery();
                         }
@@ -141,7 +141,7 @@ namespace DAL
                             string query = @"insert into StaffLocalite (staID, locID) 
                                                 values (@staID, @locID)";
                             SqlCommand cmd = new SqlCommand(query, cn);
-                            cmd.Parameters.AddWithValue("@staID", ID);
+                            cmd.Parameters.AddWithValue("@staID", Staff.ID);
                             cmd.Parameters.AddWithValue("@locID", localite.ID);
                             cmd.ExecuteNonQuery();
                         }

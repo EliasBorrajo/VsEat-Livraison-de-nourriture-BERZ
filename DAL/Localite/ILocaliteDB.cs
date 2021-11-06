@@ -16,9 +16,9 @@ namespace DAL
         /// <summary>
         /// Méthode permettant de récupérer les localités dans lesquelles un staff travaille.
         /// </summary>
-        /// <param name="ID">Identifiant unique du staff.</param>
+        /// <param name="Staff">Staff dont on souhaite récupérer les localités.</param>
         /// <returns>Tableau de Localite où le staff travaille.</returns>
-        Localite[] GetStaffLocalites(int ID);
+        Localite[] GetStaffLocalites(Staff Staff);
         /// <summary>
         /// Méthode permettant de récupérer les localités.
         /// </summary>
@@ -27,8 +27,8 @@ namespace DAL
         /// <summary>
         /// Méthode permettant de définir dans quelles localités un staff travaille.
         /// </summary>
-        /// <param name="ID">Identifiant unique du staff.</param>
+        /// <param name="Staff">Staff dont on souhaite définir les localités.</param>
         /// <param name="Localites">Localités dans lesquelles le staff travaille.</param>
-        void SetStaffLocalites(int ID, Localite[] Localites);
+        void SetStaffLocalites(Staff Staff, Localite[] Localites);
     }
 }

@@ -50,14 +50,16 @@ namespace DAL
             Staff staff = null;
             if (dr["staID"] != DBNull.Value) { staff = StaffDB.GetStaff((int)dr["staID"]); }
             Client client = ClientDB.GetClient((int)dr["cliID"]);
-            CommandePlat[] cp = PlatDB.GetCommandePlats(id);
+            CommandePlat[] cp = new CommandePlat[] { };
             DateTime heure = (DateTime)dr["comHeure"];
             DateTime heureLivraison = (DateTime)dr["comHeureLivraison"];
             DateTime heurePaiement = DateTime.MinValue;
             if (dr["comHeurePaiement"] != DBNull.Value) { heurePaiement = (DateTime)dr["comHeurePaiement"]; }
             double somme = (double)dr["comSomme"];
             bool annule = (byte)dr["comAnnule"] == 1;
-            return new Commande(id, staff, client, cp, heure, heureLivraison, heurePaiement, somme, annule);
+            Commande commande = new Commande(id, staff, client, cp, heure, heureLivraison, heurePaiement, somme, annule);
+            commande.Plats = PlatDB.GetCommandePlats(commande);
+            return commande;
         }
         public Commande GetCommande(int ID)
         {
@@ -85,7 +87,7 @@ namespace DAL
             catch (Exception e) { throw e; }
             return commande;
         }
-        public Commande[] GetStaffCommandes(int ID)
+        public Commande[] GetStaffCommandes(Staff Staff)
         {
             List<Commande> commandes = new List<Commande>();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -97,7 +99,7 @@ namespace DAL
                                             from Commande 
                                             where staID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@ID", Staff.ID);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -111,7 +113,7 @@ namespace DAL
             catch (Exception e) { throw e; }
             return commandes.ToArray();
         }
-        public Commande[] GetClientCommandes(int ID)
+        public Commande[] GetClientCommandes(Client Client)
         {
             List<Commande> commandes = new List<Commande>();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -123,7 +125,7 @@ namespace DAL
                                             from Commande 
                                             where cliID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@ID", Client.ID);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -172,15 +174,17 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@comAnnule", Commande.Annule ? "1" : "0");
                     cn.Open();
                     int newid = Convert.ToInt32(cmd.ExecuteScalar());
-                    PlatDB.SetCommandePlats(newid, Commande.Plats);
-                    return GetCommande(newid);
+                    Commande commande = GetCommande(newid);
+                    PlatDB.SetCommandePlats(commande, Commande.Plats);
+                    commande.Plats = PlatDB.GetCommandePlats(commande);
+                    return commande;
                 }
             }
             catch (Exception e) { throw e; }
         }
         public void UpdateCommande(Commande Commande)
         {
-            PlatDB.SetCommandePlats(Commande.ID, Commande.Plats);
+            PlatDB.SetCommandePlats(Commande, Commande.Plats);
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {

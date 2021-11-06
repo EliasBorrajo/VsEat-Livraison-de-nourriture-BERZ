@@ -69,7 +69,7 @@ namespace DAL
             catch (Exception e) { throw e; }
             return plat;
         }
-        public Plat[] GetRestaurantPlats(int ID)
+        public Plat[] GetRestaurantPlats(Restaurant Restaurant)
         {
             List<Plat> plats = new List<Plat>();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -81,7 +81,7 @@ namespace DAL
                                             from Plat 
                                             where resID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@ID", Restaurant.ID);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -95,7 +95,7 @@ namespace DAL
             catch (Exception e) { throw e; }
             return plats.ToArray();
         }
-        public CommandePlat[] GetCommandePlats(int ID)
+        public CommandePlat[] GetCommandePlats(Commande Commande)
         {
             List<CommandePlat> plats = new List<CommandePlat>();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -107,7 +107,7 @@ namespace DAL
                                             from CommandePlat 
                                             where comID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@ID", Commande.ID);
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -121,10 +121,10 @@ namespace DAL
             catch (Exception e) { throw e; }
             return plats.ToArray();
         }
-        public void SetCommandePlats(int ID, CommandePlat[] Plats)
+        public void SetCommandePlats(Commande Commande, CommandePlat[] Plats)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            CommandePlat[] currCmdPlats = GetCommandePlats(ID);
+            CommandePlat[] currCmdPlats = GetCommandePlats(Commande);
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
@@ -137,7 +137,7 @@ namespace DAL
                             string query = @"delete from CommandePlat
                                                     where comID=@cid and platID=@pid";
                             SqlCommand cmd = new SqlCommand(query, cn);
-                            cmd.Parameters.AddWithValue("@cid", ID);
+                            cmd.Parameters.AddWithValue("@cid", Commande.ID);
                             cmd.Parameters.AddWithValue("@pid", plat.ID);
                             cmd.ExecuteNonQuery();
                         }
@@ -149,7 +149,7 @@ namespace DAL
                             string query = @"insert into CommandePlat (comID, platID, cpQuantite)
                                             values (@cid, @pid, @qty)";
                             SqlCommand cmd = new SqlCommand(query, cn);
-                            cmd.Parameters.AddWithValue("@cid", ID);
+                            cmd.Parameters.AddWithValue("@cid", Commande.ID);
                             cmd.Parameters.AddWithValue("@pid", plat.ID);
                             cmd.Parameters.AddWithValue("@qty", plat.Quantite);
                             cmd.ExecuteNonQuery();
