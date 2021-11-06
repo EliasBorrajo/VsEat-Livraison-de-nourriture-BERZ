@@ -44,7 +44,7 @@ namespace BLL
                     List<Commande> cmdEnCours = new List<Commande>();
                     foreach (Commande cmd in commandes)
                     {
-                        if (cmd.HeurePaiement > DateTime.MinValue)
+                        if (!cmd.Annule && cmd.HeurePaiement == DateTime.MinValue)
                         {
                             cmdEnCours.Add(cmd);
                         }
@@ -56,7 +56,7 @@ namespace BLL
                     List<Commande> cmdTerminees = new List<Commande>();
                     foreach (Commande cmd in commandes)
                     {
-                        if (cmd.HeurePaiement == DateTime.MinValue)
+                        if (cmd.Annule || cmd.HeurePaiement > DateTime.MinValue)
                         {
                             cmdTerminees.Add(cmd);
                         }
@@ -76,7 +76,7 @@ namespace BLL
                     List<Commande> cmdEnCours = new List<Commande>();
                     foreach (Commande cmd in commandes)
                     {
-                        if (cmd.HeurePaiement == DateTime.MinValue)
+                        if (!cmd.Annule && cmd.HeurePaiement == DateTime.MinValue)
                         {
                             cmdEnCours.Add(cmd);
                         }
@@ -88,7 +88,7 @@ namespace BLL
                     List<Commande> cmdTerminees = new List<Commande>();
                     foreach (Commande cmd in commandes)
                     {
-                        if (cmd.HeurePaiement > DateTime.MinValue)
+                        if (cmd.Annule || cmd.HeurePaiement > DateTime.MinValue)
                         {
                             cmdTerminees.Add(cmd);
                         }
