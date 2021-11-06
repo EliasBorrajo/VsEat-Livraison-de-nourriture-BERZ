@@ -95,13 +95,14 @@ namespace PlateformeLivraison
             if (clientSelection == null)
             {
                 Console.WriteLine("Aucun staff n'est disponible dans cette ville & restaurent aux heures selectinnées. Veuillez choisir UNE AUTRE HEURE.");
+                return;
             }
             else
             {
                 Console.WriteLine("La commande arrivera pour : "+heureLivraisonClient+". La somme de votre commande est de : "+clientSelection.Somme);
             }
 
-            //commandeManager.CancelCommande(clientSelection.ID, client.Nom, client.Prenom);
+            commandeManager.CancelCommande(clientSelection.ID, client.Nom, client.Prenom);
 
             // 6A) Le client reçoit la commande, la commande est confirmé par l'heure de payement. --> Commande confirmé par staff --> BLL Commande
             if (clientSelection.Annule == false)
@@ -131,11 +132,12 @@ namespace PlateformeLivraison
                 Localite[] localitesArr = localiteManager.GetLocalites();
   
                 PrintStaffLocs(staff);                     // Affiche les localitées actuelles
-                staff.Localites = new Localite[]
+                staff.Localites = localitesArr;
+              /* staff.Localites = new Localite[]
                 {
-                    localitesArr[5],
-                    localitesArr[6]
-                };
+                    localitesArr[2],
+                    localitesArr[3]
+                };*/
                 staffManager.UpdateStaff(staff); // Supprime les anciennes localités, et affiche les localitées actuelles
                 PrintStaffLocs(staff);
 
