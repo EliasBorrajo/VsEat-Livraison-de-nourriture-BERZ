@@ -25,26 +25,22 @@ namespace PlateformeLivraison
         private static IRestaurantManager      restaurantManager;
         private static IStaffManager                staffManager;
 
+        static Program()
+        {
+            clientManager = new ClientManager(Configuration);
+            restaurantManager = new RestaurantManager(Configuration);
+            commandeManager = new CommandeManager(Configuration);
+            localiteManager = new LocaliteManager(Configuration);
+            staffManager = new StaffManager(Configuration);
+        }
         //*******************************************************************************************************
         // M A I N
         //*******************************************************************************************************
         static void Main(string[] args)
         {
-            initialisation();
-
             scenClientPasseCommande( );
         }
 
-        /// <summary>
-        /// Methode qui va iitialiser toutes les variables et les managers existants.
-        /// </summary>
-        private static void initialisation()
-        {
-            clientManager = new ClientManager(Configuration);
-            restaurantManager = new RestaurantManager(Configuration);
-
-
-        }
 
         //*******************************************************************************************************
         // M E T H O D E S
@@ -52,31 +48,78 @@ namespace PlateformeLivraison
         private static void scenClientPasseCommande()
         {
             // 1)  Le client se connecte
-            Client client = clientManager.GetClient("sanglier.cornouaille@dies.irae", "4200");
-            Console.WriteLine("Bienvenue "+client.Prenom +", votre localité actuelle : "+client.Localite.ID);
+            string cmail = "sanglier.cornouaille@dies.irae";
+            string cpass = "4200";
+            Console.WriteLine($"Connexion client avec les identifiants : {cmail} - {cpass}");
+            Client client = clientManager.GetClient(cmail, cpass);
+            if (client != null)
+            {
+                Console.WriteLine($"Connexion réussie, bienvenue {client.Prenom} {client.Nom} votre localité actuelle : { client.Localite.Nom}!");
+            }
+            else
+            {
+                Console.WriteLine($"Connexion échouée, vérifiez l'identifiant et le mot de passe.");
+            }
 
             // 2) le système affiche un choix des restaurants proches
            Restaurant[] restaurantsArr =  affcheRestaurants( client.Localite.ID );
            
             // 3) Le client choisit son restaurant parmi une liste (Tri par région, plus proche au plus loin)
-            int userSelectedRestaurant = 4;
+            int userSelectedRestaurant = 2;
             affcheRestaurantSelectionne( userSelectedRestaurant , restaurantsArr);
 
             // Le client choisit la composition de sa commande.
             List<CommandePlat> platsSelectionneesParUser = userSelectsPlats(restaurantsArr, userSelectedRestaurant);
 
-            // 4) Système vérifie que il y ait un staff disponible pour cette tranche d'heure
+            // 4) Système vérifie que il y ait un staff disponible pour cette tranche d'heure --> dans AddCommande
             // Si pas dispo, proposer au client d'entrer une autre heure
+            // 5) Si Staff dispo dans même ville que restaurant, lui ajouter la commande --> Deja fait dans AddCommande
+            // Ajouter 5 commandes max toutes les 30 min max au staff. --> BLL
             DateTime heureLivraisonClient = DateTime.Now  ;
-            Commande clientSelection = commandeManager.AddCommande( client, restaurantsArr[userSelectedRestaurant],
-                                                                                                                        platsSelectionneesParUser.ToArray() , heureLivraisonClient
-                                                                                                                      );
+            Restaurant resto = restaurantsArr[userSelectedRestaurant];
+            CommandePlat[] tab = platsSelectionneesParUser.ToArray();
+            Commande clientSelection = commandeManager.AddCommande( client, resto , tab , heureLivraisonClient );
 
-            // 5) Si Staff dispo dans même ville que restaurant, lui ajouter la commande
-            // Ajouter 5 commandes max toutes les 30 min max au staff.
-            // 6A) Le client reçoit la commande, la commande est confirmé par l'heure de payement.
+            // La commande est null si le staff est pas dispo
+            if (clientSelection == null)
+            {
+                Console.WriteLine("Aucun staff n'est disponible dans cette ville & restaurent aux heures selectinnées. Veuillez choisir UNE AUTRE HEURE.");
+            }
+            else
+            {
+                Console.WriteLine("La commande arrivera pour : "+heureLivraisonClient+". La somme de votre commande est de : "+clientSelection.Somme);
+            }
+
+           
+            // 6A) Le client reçoit la commande, la commande est confirmé par l'heure de payement. --> Commande confirmé par staff --> BLL Commande
+
             // 6B) Le client annule sa commande
         }
+
+        private static void PrintStaffLocs(Staff staff)
+        {
+            Console.WriteLine($"{staff.Prenom} travaille dans les localités suivantes : ");
+            foreach (Localite loc in staff.Localites)
+            {
+                Console.WriteLine($"- {loc.NPA} {loc.Nom}");
+            }
+        }
+        private static void PrintCommandes(Commande[] commandes)
+        {
+            foreach (Commande commande in commandes)
+            {
+                Console.WriteLine("-----");
+                Console.WriteLine($"Commande no{commande.ID} :");
+                Console.WriteLine($"Attribuée à {commande.Staff.Nom} {commande.Staff.Prenom}");
+                Console.WriteLine($"Livrer à {commande.Client.Nom} {commande.Client.Prenom} - {commande.Client.Adresse} ({commande.Client.Localite.NPA} {commande.Client.Localite.Nom})");
+                foreach (CommandePlat commandePlat in commande.Plats)
+                {
+                    Console.WriteLine($" - {commandePlat.Quantite} {commandePlat.Nom}");
+                }
+                Console.WriteLine("-----");
+            }
+        }
+
         private static List<CommandePlat> userSelectsPlats(Restaurant[] restaurantsArr, int userSelectedRestaurant)
         {
             List<CommandePlat> selectedPlats = new List<CommandePlat>();
@@ -193,7 +236,7 @@ namespace PlateformeLivraison
             Staff s = sm.GetStaff("pdg@mail.com", "1234");
             if (s != null)
             {
-                Commande[] cmds = cmdm.GetStaffCommandes(s.ID, true);
+                Commande[] cmds = cmdm.GetStaffCommandes(s, true);
                 Console.WriteLine($"{s.Nom}, {s.Prenom} ({s.Telephone} - {s.Mail})");
                 Localite[] sl = s.Localites;
                 if (sl.Length > 0)
