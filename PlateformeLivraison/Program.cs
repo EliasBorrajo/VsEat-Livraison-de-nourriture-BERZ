@@ -38,17 +38,17 @@ namespace PlateformeLivraison
         //*******************************************************************************************************
         static void Main(string[] args)
         {
-            Console.WriteLine("SCENARIO : CLIENT PASSE COMMANDE");
-            Console.WriteLine("*************************************************************************************");
-            scenClientPasseCommande( );
-            Console.WriteLine("*************************************************************************************");
-
-
             Console.WriteLine("SCENARIO : CONNECTION STAFF");
             Console.WriteLine("*************************************************************************************");
             scenConnectionStaff();
             Console.WriteLine("*************************************************************************************");
 
+
+
+            Console.WriteLine("SCENARIO : CLIENT PASSE COMMANDE");
+            Console.WriteLine("*************************************************************************************");
+            scenClientPasseCommande( );
+            Console.WriteLine("*************************************************************************************");
         }
 
 
