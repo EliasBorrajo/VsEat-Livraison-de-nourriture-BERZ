@@ -75,7 +75,8 @@ namespace PlateformeLivraison
             // Si pas dispo, proposer au client d'entrer une autre heure
             // 5) Si Staff dispo dans même ville que restaurant, lui ajouter la commande --> Deja fait dans AddCommande
             // Ajouter 5 commandes max toutes les 30 min max au staff. --> BLL
-            DateTime heureLivraisonClient = DateTime.Now  ;
+            DateTime heureLivraisonClient = DateTime.Now;
+            heureLivraisonClient = heureLivraisonClient.AddHours(4);    // Viens dans 4 heures bro
             Restaurant resto = restaurantsArr[userSelectedRestaurant];
             CommandePlat[] tab = platsSelectionneesParUser.ToArray();
             Commande clientSelection = commandeManager.AddCommande( client, resto , tab , heureLivraisonClient );
@@ -90,10 +91,20 @@ namespace PlateformeLivraison
                 Console.WriteLine("La commande arrivera pour : "+heureLivraisonClient+". La somme de votre commande est de : "+clientSelection.Somme);
             }
 
-           
-            // 6A) Le client reçoit la commande, la commande est confirmé par l'heure de payement. --> Commande confirmé par staff --> BLL Commande
+            //commandeManager.CancelCommande(clientSelection.ID, client.Nom, client.Prenom);
 
-            // 6B) Le client annule sa commande
+            // 6A) Le client reçoit la commande, la commande est confirmé par l'heure de payement. --> Commande confirmé par staff --> BLL Commande
+            if (clientSelection.Annule == false)
+            {
+                Console.WriteLine("Commande validé payement !");
+                commandeManager.ValidatePayment( clientSelection );
+            }
+            else // 6B) Le client annule sa commande
+            {
+                Console.WriteLine("Comamnde annulé");
+                commandeManager.CancelCommande( clientSelection.ID, client.Nom, client.Prenom );
+            }
+            
         }
 
         private static void PrintStaffLocs(Staff staff)

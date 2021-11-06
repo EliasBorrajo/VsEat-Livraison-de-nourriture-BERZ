@@ -194,7 +194,7 @@ namespace DAL
                     string query = @"update Commande set staID=@sta, cliID=@cli, comHeure=@h, comHeureLivraison=@hl, {0}comSomme=@som, comAnnule=@ca 
                                             where comID=@ID";
                     if (Commande.HeurePaiement > DateTime.MinValue) { heurepaiement = "comHeurePaiement=@hp, "; }
-                    string.Format(query, heurepaiement);
+                    query = string.Format(query, heurepaiement);
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", Commande.ID);
                     cmd.Parameters.AddWithValue("@sta", Commande.Staff.ID);
