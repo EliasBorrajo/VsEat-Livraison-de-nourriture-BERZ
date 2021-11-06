@@ -190,15 +190,18 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = @"update Commande set staID=@sta, cliID=@cli, comHeure=@h, comHeureLivraison=@hl, comHeurePaiement=@hp, comSomme=@som, comAnnule=@ca 
+                    string heurepaiement = string.Empty;
+                    string query = @"update Commande set staID=@sta, cliID=@cli, comHeure=@h, comHeureLivraison=@hl, {0}comSomme=@som, comAnnule=@ca 
                                             where comID=@ID";
+                    if (Commande.HeurePaiement > DateTime.MinValue) { heurepaiement = "comHeurePaiement=@hp, "; }
+                    string.Format(query, heurepaiement);
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", Commande.ID);
                     cmd.Parameters.AddWithValue("@sta", Commande.Staff.ID);
                     cmd.Parameters.AddWithValue("@cli", Commande.Client.ID);
                     cmd.Parameters.AddWithValue("@h", Commande.Heure);
                     cmd.Parameters.AddWithValue("@hl", Commande.HeureLivraison);
-                    cmd.Parameters.AddWithValue("@hp", Commande.HeurePaiement);
+                    if (Commande.HeurePaiement > DateTime.MinValue) { cmd.Parameters.AddWithValue("@hp", Commande.HeurePaiement); }
                     cmd.Parameters.AddWithValue("@som", Commande.Somme);
                     cmd.Parameters.AddWithValue("@ca", Commande.Annule ? "1" : "0");
                     cn.Open();
