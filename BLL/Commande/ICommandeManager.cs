@@ -38,6 +38,11 @@ namespace BLL
         /// <returns>Commande nouvellement créée avec l'identifiant unique généré par la DB.</returns>
         Commande AddCommande(Client Client, Restaurant Restaurant, CommandePlat[] Plats, DateTime HeureLivraison);
         /// <summary>
+        /// Méthode permettant de valider le paiement d'une commande.
+        /// </summary>
+        /// <param name="Commande">Commande à valider.</param>
+        void ValidatePayment(Commande Commande);
+        /// <summary>
         /// Méthode permettant d'annuler une commande.
         /// </summary>
         /// <param name="ID">Identifiant unique de la commande.</param>

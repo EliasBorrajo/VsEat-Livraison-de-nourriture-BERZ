@@ -117,6 +117,11 @@ namespace BLL
             }
             return commande;
         }
+        public void ValidatePayment(Commande Commande)
+        {
+            Commande.HeurePaiement = DateTime.Now;
+            CommandeDB.UpdateCommande(Commande);
+        }
         public void CancelCommande(int ID, string Nom, string Prenom)
         {
             Commande commande = CommandeDB.GetCommande(ID);
