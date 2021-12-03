@@ -8,6 +8,12 @@ namespace BLL
     public interface IClientManager
     {
         /// <summary>
+        /// Méthode permettant de récupérer un client par son identifiant unique.
+        /// </summary>
+        /// <param name="ID">Identifiant unique du client.</param>
+        /// <returns>Objet de type Client contenant les informations de l'enregistrement. Retourne null si l'enregistrement n'existe pas.</returns>
+        Client GetClient(int ID);
+        /// <summary>
         /// Méthode permettant de récupérer un client par son adresse mail et son mot de passe.
         /// </summary>
         /// <param name="Mail">Mail du client.</param>

@@ -71,7 +71,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer le staff par son identifiant unique.");
+            }
             return staff;
         }
         public Staff GetStaff(string Mail, string Password)
@@ -98,7 +101,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer le staff par son adresse mail et son mot de passe.");
+            }
             return staff;
         }
         public Staff[] GetStaffWorkingIn(Localite Localite)
@@ -124,7 +130,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer les staffs travaillant dans la localité.");
+            }
             return staffs.ToArray();
         }
         public Staff AddStaff(Staff Staff)
@@ -152,7 +161,10 @@ namespace DAL
                     return staff;
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible d'ajouter le staff.");
+            }
         }
         public void UpdateStaff(Staff Staff)
         {
@@ -176,7 +188,10 @@ namespace DAL
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de mettre à jour le staff.");
+            }
         }
     }
 }

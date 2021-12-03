@@ -37,6 +37,10 @@ namespace BLL
             Staff newStaff = new Staff(-1, Nom, Prenom, Telephone, Mail, Password, Localites, true);
             return StaffDB.AddStaff(newStaff);
         }
+        public Staff GetStaff(int ID)
+        {
+            return StaffDB.GetStaff(ID);
+        }
         public Staff GetStaff(string Mail, string Password)
         {
             return StaffDB.GetStaff(Mail, Password);

@@ -60,7 +60,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer la localité par son identifiant unique.");
+            }
             return localite;
         }
         public Localite[] GetStaffLocalites(Staff Staff)
@@ -86,7 +89,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer les localités du staff.");
+            }
             return localites.ToArray();
         }
         public Localite[] GetLocalites()
@@ -110,7 +116,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer toutes les localités.");
+            }
             return localites.ToArray();
         }
         public void SetStaffLocalites(Staff Staff, Localite[] Localites)
@@ -148,7 +157,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de mettre à jour les localités du staff.");
+            }
         }
     }
 }

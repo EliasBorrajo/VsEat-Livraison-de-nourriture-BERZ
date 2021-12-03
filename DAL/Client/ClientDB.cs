@@ -71,7 +71,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer le client par son identifiant unique.");
+            }
             return client;
         }
         public Client GetClient(string Mail, string Password)
@@ -98,7 +101,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer le client par son adresse mail et son mot de passe.");
+            }
             return client;
         }
         public Client AddClient(Client Client)
@@ -127,7 +133,10 @@ namespace DAL
                     return GetClient(newid);
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible d'ajouter le client.");
+            }
         }
         public void UpdateClient(Client Client)
         {
@@ -152,7 +161,10 @@ namespace DAL
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de mettre à jour le client.");
+            }
         }
     }
 }

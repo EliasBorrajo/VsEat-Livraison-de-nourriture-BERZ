@@ -71,7 +71,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer tous les restaurants.");
+            }
             return restaurants.ToArray();
         }
         public Restaurant GetRestaurant(int ID)
@@ -96,7 +99,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer le restaurant par son identifiant unique.");
+            }
             return restaurant;
         }
     }

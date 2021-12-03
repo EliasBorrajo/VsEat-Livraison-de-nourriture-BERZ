@@ -8,6 +8,12 @@ namespace BLL
     public interface IStaffManager
     {
         /// <summary>
+        /// Méthode permettant de récupérer un staff par son identifiant unique.
+        /// </summary>
+        /// <param name="ID">Identifiant unique du staff.</param>
+        /// <returns>Objet de type Staff contenant les informations de l'enregistrement. Retourne null si l'enregistrement n'existe pas.</returns>
+        Staff GetStaff(int ID);
+        /// <summary>
         /// Méthode permettant de récupérer un staff par son adresse mail et son mot de passe.
         /// </summary>
         /// <param name="Mail">Mail du staff.</param>

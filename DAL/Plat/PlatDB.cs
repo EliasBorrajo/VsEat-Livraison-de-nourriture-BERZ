@@ -66,7 +66,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer le plat par son identifiant unique.");
+            }
             return plat;
         }
         public Plat[] GetRestaurantPlats(Restaurant Restaurant)
@@ -92,7 +95,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer les plats du restaurant.");
+            }
             return plats.ToArray();
         }
         public CommandePlat[] GetCommandePlats(Commande Commande)
@@ -118,7 +124,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer les plats de la commande.");
+            }
             return plats.ToArray();
         }
         public void SetCommandePlats(Commande Commande, CommandePlat[] Plats)
@@ -157,7 +166,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de mettre à jour les plats de la commande.");
+            }
         }
     }
 }

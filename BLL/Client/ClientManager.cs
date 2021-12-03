@@ -36,6 +36,10 @@ namespace BLL
             Client newClient = new Client(-1, Localite, Nom, Prenom, Telephone, Mail, Password, Adresse, true);
             return ClientDB.AddClient(newClient);
         }
+        public Client GetClient(int ID)
+        {
+            return ClientDB.GetClient(ID);
+        }
         public Client GetClient(string Mail, string Password)
         {
             return ClientDB.GetClient(Mail, Password);

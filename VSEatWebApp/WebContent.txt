@@ -1,0 +1,20 @@
+﻿???Controller : 
+- Page d'accueil, proposer connexion pour Client et pour Staff. (écran à tab au centre de la page)
+
+ClientController :
+- Page de connexion
+- Page de création de compte
+- Page de modification (modifier infos personnelles, supprimer le compte)
+
+StaffController : 
+- Page de connexion
+- Page de création de compte
+- Page de modification (modifier infos personnelles, supprimer le compte)
+
+RestaurantController :
+- Page d'affichage de tous les restos avec RESUME des plats + bouton par resto pour le sélectionner avant de sélectionner les plats passer une commande
+- Page d'affichage d'UN resto avec possibilité de sélectionner une quantité de plats + bouton passer une commande
+
+CommandeController : 
+- Page d'affichage des plats sélectionnés, avec résumé du détail de la commande avant de valider + annuler
+- Page d'affichage des commandes en cours, avec possibilité de valider

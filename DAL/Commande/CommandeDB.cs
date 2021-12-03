@@ -84,7 +84,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer la commande par son identifiant unique.");
+            }
             return commande;
         }
         public Commande[] GetStaffCommandes(Staff Staff)
@@ -110,7 +113,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer les commandes du staff.");
+            }
             return commandes.ToArray();
         }
         public Commande[] GetClientCommandes(Client Client)
@@ -136,7 +142,10 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer les commandes du client.");
+            }
             return commandes.ToArray();
         }
         public Commande AddCommande(Commande Commande)
@@ -180,7 +189,10 @@ namespace DAL
                     return commande;
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible d'ajouter la commande.");
+            }
         }
         public void UpdateCommande(Commande Commande)
         {
@@ -208,7 +220,10 @@ namespace DAL
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) 
+            {
+                throw new ConnectionException(e.Message, "Impossible de mettre à jour la commande.");
+            }
         }
     }
 }
