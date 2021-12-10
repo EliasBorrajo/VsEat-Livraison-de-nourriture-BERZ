@@ -1,4 +1,5 @@
 ﻿@model VSEatWebApp.Models.AddCommandeVM
+@using System.IO
 
 @{
     ViewData["Title"] = "Add";
@@ -27,7 +28,13 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(x => plat.Image)
+
+                                @{
+                                    if (!string.IsNullOrEmpty(plat.ImageBase64))
+                                    {
+                                        <img src="@string.Format("data:image/gif;base64,{0}", plat.ImageBase64)" alt="Photo du plat." border="0" height="100" />
+                                    }
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(x => plat.Nom)
@@ -52,7 +59,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Restaurant">Back to List</a>
 </div>
 
 @section Scripts {

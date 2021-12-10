@@ -94,7 +94,7 @@ namespace PlatManagementTool
                         plats.Add($"[{restaurant.ID}] : {restaurant.Nom}");
                         foreach (DTO.Plat plat in restaurant.Plats)
                         {
-                            string infoImg = plat.Image != null ? "X" : " ";
+                            string infoImg = string.IsNullOrEmpty(plat.ImageBase64) ? " " : "X";
                             plats.Add($" - [{plat.ID}] ({infoImg})\t:\t{plat.Nom}");
                         }
                     }
@@ -136,14 +136,15 @@ namespace PlatManagementTool
                         string query = @"update Plat set platImage=@img where platID=@ID";
                         SqlCommand cmd = new SqlCommand(query, cn);
                         cmd.Parameters.AddWithValue("@ID", id);
-                        cmd.Parameters.AddWithValue("@img", img == null ? DBNull.Value : ImageToByteArray(img));
+                        cmd.Parameters.Add("@img", System.Data.SqlDbType.VarBinary, -1);
+                        cmd.Parameters["@img"].Value = img == null ? DBNull.Value : ImageToByteArray(img);
                         cn.Open();
                         cmd.ExecuteNonQuery();
                     }
                 }
                 catch (Exception e) { throw e; }
                 DTO.Plat plat = GetPlat(id);
-                return string.Format(rv, plat.ID, plat.Image != null ? "(X)" : " ");
+                return string.Format(rv, plat.ID, string.IsNullOrEmpty(plat.ImageBase64) ? " " : "X", plat.Nom);
             }
             private DTO.Plat GetPlat(int ID)
             {
@@ -153,7 +154,7 @@ namespace PlatManagementTool
                 {
                     using (SqlConnection cn = new SqlConnection(connectionString))
                     {
-                        string query = @"select platID, platImage 
+                        string query = @"select platID, platNom, platImage 
                                             from Plat 
                                             where platID=@ID";
                         SqlCommand cmd = new SqlCommand(query, cn);
@@ -163,9 +164,9 @@ namespace PlatManagementTool
                         {
                             if (dr.Read())
                             {
-                                Image img = null;
-                                if (dr["platImage"] != DBNull.Value) { img = Image.FromStream(new MemoryStream((byte[])dr["platImage"])); }
-                                plat = new DTO.Plat((int)dr["platID"], string.Empty, 0, string.Empty, img);
+                                string img = null;
+                                if (dr["platImage"] != DBNull.Value) { try { img = Convert.ToBase64String(new MemoryStream((byte[])dr["platImage"]).ToArray()); } catch { } }
+                                plat = new DTO.Plat((int)dr["platID"], (string)dr["platNom"], 0, string.Empty, img);
                             }
                         }
                     }

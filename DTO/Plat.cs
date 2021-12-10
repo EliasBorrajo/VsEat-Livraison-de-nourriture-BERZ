@@ -23,7 +23,7 @@ namespace DTO
         /// <summary>
         /// Image du plat.
         /// </summary>
-        public Image Image { get; set; }
+        public string ImageBase64 { get; set; }
 
         /// <summary>
         /// Constructeur pour créer un objet Plat.
@@ -33,13 +33,13 @@ namespace DTO
         /// <param name="Prix">Prix unitaire du plat.</param>
         /// <param name="Description">Description du plat.</param>
         /// <param name="Image">Image du plat.</param>
-        public Plat(int ID, string Nom, double Prix, string Description, Image Image)
+        public Plat(int ID, string Nom, double Prix, string Description, string ImageBase64)
         {
             this.ID = ID;
             this.Nom = Nom;
             this.Prix = Prix;
             this.Description = Description;
-            this.Image = Image;
+            this.ImageBase64 = ImageBase64;
         }
     }
 
@@ -58,7 +58,7 @@ namespace DTO
         /// </summary>
         /// <param name="Plat">Plat de la commande.</param>
         /// <param name="Quantite">Quantité du plat.</param>
-        public CommandePlat(Plat Plat, int Quantite) : base(Plat.ID, Plat.Nom, Plat.Prix, Plat.Description, Plat.Image)
+        public CommandePlat(Plat Plat, int Quantite) : base(Plat.ID, Plat.Nom, Plat.Prix, Plat.Description, Plat.ImageBase64)
         {
             this.Quantite = Quantite;
         }
