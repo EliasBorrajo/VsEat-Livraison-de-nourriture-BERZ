@@ -1,20 +1,74 @@
-﻿???Controller : 
-- Page d'accueil, proposer connexion pour Client et pour Staff. (écran à tab au centre de la page)
+﻿X = Tutto bene
+F = Fonctionnel à faire
+f = éventuellement fonctionnel à ajouter
+C = Contenu à ajouter
+D = Design à améliorer
+
+HomeController : 
+CD 	1. Page d'accueil, proposer connexion pour Client et pour Staff
+X	1.a. Rediriger si client ou staff connecté
+CD	1.b. Raccourci pour atteindre la page de modification de compte (si connecté)
 
 ClientController :
-- Page de connexion
-- Page de création de compte
-- Page de modification (modifier infos personnelles, supprimer le compte)
+D	1. Page de connexion
+X	1.a. Connexion via mail et mdp
+X	1.b. Lien vers 2.
+	
+D	2. Page de création de compte
+X	2.a. Création avec toutes les informations du client, liste pour la localité
+X	2.b. Lien vers 1.
+	
+D	3. Page de modification (modifier infos personnelles, désactiver le compte)
+X	3.a. Modifier les infos du compte
+F	3.b. Désactiver le compte
+	
+CD	4. Page d'accueil
+CD	4.a. [TEXT ONLY] présenter VSEat
+CDf	4.b. [TEXT & ACITON HYPERLINK] procédure de fonctionnement du site pour les clients
 
 StaffController : 
-- Page de connexion
-- Page de création de compte
-- Page de modification (modifier infos personnelles, supprimer le compte)
+D	1. Page de connexion
+X	1.a. Connexion via mail et mdp
+X	1.b. Lien vers 2.
+	
+D	2. Page de création de compte
+X	2.a. Création avec toutes les informations du staff, checkboxes pour les localités
+X	2.b. Lien vers 1.
+	
+D	3. Page de modification
+X	3.a. Modifier les infos du compte
+F	3.b. Désactiver le compte
+	
+CD	4. Page d'accueil
+CD	4.a. [TEXT ONLY] liste des localités où il est possible de bosser
+CDf	4.b. [TEXT & ACTION HYPERLINK] procédure de fonctionnement du site pour le staff
 
 RestaurantController :
-- Page d'affichage de tous les restos avec RESUME des plats + bouton par resto pour le sélectionner avant de sélectionner les plats passer une commande
-- Page d'affichage d'UN resto avec possibilité de sélectionner une quantité de plats + bouton passer une commande
+CDF	1. Page d'affichage de tous les restos
+CDF	1.a. Liste des restos avec nom et localité
+CDF	1.b. Résumé des plats sans les photos
+CDF	1.c. Lien vers 2.
+
+CDF	2. Page d'affichage d'un resto
+CDF	2.a. Afficher toutes les infos du resto (adresse complète)
+CDF	2.b. Afficher tous les plats avec possibilité de sélectionner la quantité
+CDF	2.c. Lien vers CommandeController pour la suite de la commande.
 
 CommandeController : 
-- Page d'affichage des plats sélectionnés, avec résumé du détail de la commande avant de valider + annuler
-- Page d'affichage des commandes en cours, avec possibilité de valider
+CDF	1. Page d'affichage de résumé de la nouvelle commande
+CDF	1.a. Résumé des plats avec les quantités
+CDF	[1.b. Résumé de l'adresse du client + possibilité de corriger]
+CDF	1.c. Heure de livraison souhaitée
+CDF	1.d. Bouton pour passer la commande
+
+CDF	2. Page d'affichage de toutes les commandes d'un staff
+CDF	2.a. Possibilité de trier (EN COURS, FINI, TOUT)
+CDF	2.b. Lien vers 4.
+
+CDF	3. Page d'affichage de toutes les commandes d'un client
+CDF	3.a. Possibilité de trier (EN COURS, FINI, TOUT)
+CDF	3.b. Lien vers 5.
+
+CDF	4. Valider une commande
+
+CDF	5. Annuler une commande

@@ -1,0 +1,60 @@
+﻿@model VSEatWebApp.Models.AddCommandeVM
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+
+<h4>AddCommandeVM</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(x => x.RestaurantID)
+            <div class="form-group">
+                <label asp-for="HeureLivraison" class="control-label"></label>
+                @Html.DropDownListFor(x => x.HeureLivraison, new SelectList(Model.HeuresPossibles))
+                <span asp-validation-for="HeureLivraison" class="text-danger"></span>
+            </div>
+            <table class="table">
+                <thead>
+
+                </thead>
+                <tbody>
+                    @foreach (DTO.Plat plat in Model.Restaurant.Plats)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => plat.Image)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(x => plat.Nom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(x => plat.Prix)
+                            </td>
+                            <td>
+                                <label asp-for="PlatsQuantites" hidden="hidden"></label>
+                                <input type="text" name="PlatsQuantites[@plat.ID]" value="@Model.PlatsQuantites[plat.ID]" />
+                                <span asp-validation-for="PlatsQuantites"></span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

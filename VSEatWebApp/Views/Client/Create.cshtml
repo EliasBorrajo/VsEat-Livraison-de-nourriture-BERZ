@@ -41,9 +41,9 @@
                 <span asp-validation-for="Adresse" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Localite" class="control-label"></label><br/>
-                @Html.DropDownListFor(x => x.Localite, new SelectList(Model.AllLocalites, "NPA", "Nom"))
-                <span asp-validation-for="Localite" class="text-danger"></span>
+                <label asp-for="LocaliteID" class="control-label"></label><br/>
+                @Html.DropDownListFor(x => x.LocaliteID, new SelectList(Model.AllLocalites, "ID", "Nom"))
+                <span asp-validation-for="LocaliteID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Créer" class="btn btn-primary" />

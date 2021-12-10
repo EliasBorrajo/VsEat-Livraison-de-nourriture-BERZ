@@ -1,6 +1,5 @@
 ﻿using DAL;
 using DTO;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 
@@ -23,11 +22,12 @@ namespace BLL
         /// <summary>
         /// Constructeur pour créer un objet CommandeManager.
         /// </summary>
-        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
-        public CommandeManager(IConfiguration Configuration)
+        /// <param name="StaffDB">Objet permettant de communiquer avec la table Staff.</param>
+        /// <param name="CommandeDB">Objet permettant de communiquer avec la table Commande.</param>
+        public CommandeManager(ICommandeDB CommandeDB, IStaffDB StaffDB)
         {
-            CommandeDB = new CommandeDB(Configuration);
-            StaffDB = new StaffDB(Configuration);
+            this.CommandeDB = CommandeDB;
+            this.StaffDB = StaffDB;
         }
 
         public Commande GetCommande(int ID)
@@ -117,12 +117,13 @@ namespace BLL
             }
             return commande;
         }
-        public void ValidatePayment(Commande Commande)
+        public Commande ValidatePayment(Commande Commande)
         {
             Commande.HeurePaiement = DateTime.Now;
             CommandeDB.UpdateCommande(Commande);
+            return GetCommande(Commande.ID);
         }
-        public void CancelCommande(int ID, string Nom, string Prenom)
+        public Commande CancelCommande(int ID, string Nom, string Prenom)
         {
             Commande commande = CommandeDB.GetCommande(ID);
             if (commande != null)
@@ -133,6 +134,7 @@ namespace BLL
                     CommandeDB.UpdateCommande(commande);
                 }
             }
+            return GetCommande(ID);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace VSEatWebApp.Controllers
             IActionResult rv = RedirectToAction("Login");
             if (HttpContext.Session.GetInt32("staID").HasValue)
             {
-                var staff = StaffManager.GetStaff(HttpContext.Session.GetInt32("staID").Value);
+                DTO.Staff staff = StaffManager.GetStaff(HttpContext.Session.GetInt32("staID").Value);
                 if (staff != null)
                 {
                     suVM.Nom = staff.Nom;
@@ -48,7 +48,7 @@ namespace VSEatWebApp.Controllers
             IActionResult rv = View(loginVM);
             if (ModelState.IsValid)
             {
-                var staff = StaffManager.GetStaff(loginVM.Mail, loginVM.Password);
+                DTO.Staff staff = StaffManager.GetStaff(loginVM.Mail, loginVM.Password);
                 if (staff != null)
                 {
                     HttpContext.Session.Clear(); //déconnecter le client s'il était connecté
@@ -65,28 +65,95 @@ namespace VSEatWebApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            StaffVM staffVM = new StaffVM() { AllLocalites = LocaliteManager.GetLocalites() };
+            return View(staffVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(StaffVM staff)
+        public IActionResult Create(StaffVM staffVM)
         {
-
-            return View(staff);
+            staffVM.AllLocalites = LocaliteManager.GetLocalites();
+            IActionResult rv = View(staffVM);
+            if (ModelState.IsValid)
+            {
+                DTO.Staff staff = StaffManager.AddStaff(staffVM.Nom, staffVM.Prenom, staffVM.Telephone, staffVM.Mail, staffVM.Password, LocaliteManager.GetLocalites(staffVM.LocaliteIDs.ToArray()));
+                if (staff != null)
+                {
+                    if (staff.ID >= 0)
+                    {
+                        HttpContext.Session.Clear();
+                        HttpContext.Session.SetInt32("staID", staff.ID);
+                        rv = RedirectToAction("Index", "Staff");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Impossible de créer le compte staff.");
+                }
+            }
+            return rv;
         }
 
         public IActionResult Edit()
         {
-            return View();
+            IActionResult rv = RedirectToAction("Index", "Home");
+            if (HttpContext.Session.GetInt32("staID").HasValue)
+            {
+                DTO.Staff staff = StaffManager.GetStaff(HttpContext.Session.GetInt32("staID").Value);
+                StaffVM staffVM = new StaffVM() { AllLocalites = LocaliteManager.GetLocalites() };
+                if (staff != null)
+                {
+                    staffVM.Nom = staff.Nom;
+                    staffVM.Prenom = staff.Prenom;
+                    staffVM.Telephone = staff.Telephone;
+                    staffVM.Mail = staff.Mail;
+                    staffVM.Password = staff.Password;
+                    List<int> locIds = new List<int>();
+                    foreach (DTO.Localite localite in staff.Localites)
+                    {
+                        locIds.Add(localite.ID);
+                    }
+                    staffVM.LocaliteIDs = locIds;
+                }
+                rv = View(staffVM);
+            }
+            return rv;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(StaffVM staff)
+        public IActionResult Edit(StaffVM staffVM)
         {
+            staffVM.AllLocalites = LocaliteManager.GetLocalites();
+            IActionResult rv = View(staffVM);
+            if (ModelState.IsValid)
+            {
+                DTO.Staff staff = new DTO.Staff(HttpContext.Session.GetInt32("staID").Value, staffVM.Nom, staffVM.Prenom, staffVM.Telephone, staffVM.Mail, staffVM.Password, LocaliteManager.GetLocalites(staffVM.LocaliteIDs.ToArray()), true);
+                StaffManager.UpdateStaff(staff);
+                rv = RedirectToAction("Index", "Staff");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Impossible de mettre à jour les données staff.");
+            }
+            return rv;
+        }
 
-            return View(staff);
+        public IActionResult Disable()
+        {
+            IActionResult rv = RedirectToAction("Edit", "Staff");
+            if (HttpContext.Session.GetInt32("staID").HasValue)
+            {
+                DTO.Staff staff = StaffManager.GetStaff(HttpContext.Session.GetInt32("staID").Value);
+                if (staff != null)
+                {
+                    StaffManager.DisableStaff(staff);
+                    HttpContext.Session.Clear();
+                    rv = RedirectToAction("Index", "Home");
+                }
+            }
+            return rv;
         }
     }
 }

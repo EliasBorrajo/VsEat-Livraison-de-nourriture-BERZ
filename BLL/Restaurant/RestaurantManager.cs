@@ -1,6 +1,5 @@
 ﻿using DAL;
 using DTO;
-using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
@@ -17,10 +16,25 @@ namespace BLL
         /// <summary>
         /// Constructeur pour créer un objet RestaurantManager.
         /// </summary>
-        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
-        public RestaurantManager(IConfiguration Configuration)
+        /// <param name="RestaurantDB">Objet permettant de communiquer avec la table Restaurant.</param>
+        public RestaurantManager(IRestaurantDB RestaurantDB)
         {
-            RestaurantDB = new RestaurantDB(Configuration);
+            this.RestaurantDB = RestaurantDB;
+        }
+
+        public Restaurant GetRestaurant(int ID)
+        {
+            Restaurant[] restaurants = GetRestaurants();
+            Restaurant rv = null;
+            foreach (Restaurant restaurant in restaurants)
+            {
+                if (restaurant.ID == ID)
+                {
+                    rv = restaurant;
+                    break;
+                }
+            }
+            return rv;
         }
 
         public Restaurant[] GetRestaurants()

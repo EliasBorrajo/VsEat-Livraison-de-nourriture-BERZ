@@ -41,13 +41,13 @@ namespace BLL
         /// Méthode permettant de valider le paiement d'une commande.
         /// </summary>
         /// <param name="Commande">Commande à valider.</param>
-        void ValidatePayment(Commande Commande);
+        Commande ValidatePayment(Commande Commande);
         /// <summary>
         /// Méthode permettant d'annuler une commande.
         /// </summary>
         /// <param name="ID">Identifiant unique de la commande.</param>
         /// <param name="Nom">Nom du client qui a passé la commande.</param>
         /// <param name="Prenom">Prénom du client qui a passé la commande.</param>
-        void CancelCommande(int ID, string Nom, string Prenom);
+        Commande CancelCommande(int ID, string Nom, string Prenom);
     }
 }

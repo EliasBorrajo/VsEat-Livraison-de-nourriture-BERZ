@@ -1,6 +1,5 @@
 ﻿using DAL;
 using DTO;
-using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
@@ -13,19 +12,14 @@ namespace BLL
         /// Objet permettant d'interagir avec la table Client.
         /// </summary>
         private IClientDB ClientDB { get; }
-        /// <summary>
-        /// Objet permettant d'interagir avec la table Commande.
-        /// </summary>
-        private ICommandeDB CommandeDB { get; }
 
         /// <summary>
         /// Constructeur pour créer un objet ClientManager.
         /// </summary>
-        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
-        public ClientManager(IConfiguration Configuration)
+        /// <param name="ClientDB">Objet permettant de communiquer avec la table Client.</param>
+        public ClientManager(IClientDB ClientDB)
         {
-            ClientDB = new ClientDB(Configuration);
-            CommandeDB = new CommandeDB(Configuration);
+            this.ClientDB = ClientDB;
         }
         public Client AddClient(string Nom, string Prenom, string Mail, string Password, string Adresse, Localite Localite)
         {

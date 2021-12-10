@@ -1,0 +1,102 @@
+﻿@model IEnumerable<VSEatWebApp.Models.SimpleCommandeVM>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>Commandes</h1>
+
+<table>
+    <tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Commandes en cours", "List", "Commande", new { status = 1 }) |
+                @Html.ActionLink("Commandes terminées", "List", "Commande", new { status = -1 }) |
+                @Html.ActionLink("Toutes les commandes", "List", "Commande", new { status = 0 })
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Heure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HeureLivraison)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomRestaurant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomClient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrenomClient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomStaff)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrenomStaff)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnCours)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Heure)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HeureLivraison)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomRestaurant)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomClient)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrenomClient)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomStaff)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrenomStaff)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EnCours)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Détail", "Detail", new { id = item.ID })
+                    </td>
+                    @if (item.EnCours)
+                    {
+                        <td>
+                            @Html.ActionLink(Model.FirstOrDefault().Action, "Action", new { id = item.ID })
+                        </td>
+                    }
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" align="center">
+                    Aucune commande correspondant à ces critères.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
 using BLL;
+using DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,12 @@ namespace VSEatWebApp
             services.AddScoped<ILocaliteManager, LocaliteManager>();
             services.AddScoped<ICommandeManager, CommandeManager>();
             services.AddScoped<IRestaurantManager, RestaurantManager>();
+            services.AddScoped<IClientDB, ClientDB>();
+            services.AddScoped<ICommandeDB, CommandeDB>();
+            services.AddScoped<ILocaliteDB, LocaliteDB>();
+            services.AddScoped<IPlatDB, PlatDB>();
+            services.AddScoped<IRestaurantDB, RestaurantDB>();
+            services.AddScoped<IStaffDB, StaffDB>();
 
             services.AddSession();
             services.AddControllersWithViews();

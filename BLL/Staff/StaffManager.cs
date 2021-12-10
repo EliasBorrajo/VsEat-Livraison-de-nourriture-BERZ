@@ -1,7 +1,5 @@
 ﻿using DAL;
 using DTO;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 
 namespace BLL
 {
@@ -14,19 +12,14 @@ namespace BLL
         /// Objet permettant d'interagir avec la table Staff.
         /// </summary>
         private IStaffDB StaffDB { get; }
-        /// <summary>
-        /// Objet permettant d'interagir avec la table Localite.
-        /// </summary>
-        private ILocaliteDB LocaliteDB { get; }
 
         /// <summary>
         /// Constructeur pour créer un objet StaffManager.
         /// </summary>
-        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
-        public StaffManager(IConfiguration Configuration)
+        /// <param name="StaffDB">Objet permettant de communiquer avec la table Staff.</param>
+        public StaffManager(IStaffDB StaffDB)
         {
-            StaffDB = new StaffDB(Configuration);
-            LocaliteDB = new LocaliteDB(Configuration);
+            this.StaffDB = StaffDB;
         }
         public Staff AddStaff(string Nom, string Prenom, string Telephone, string Mail, string Password)
         {

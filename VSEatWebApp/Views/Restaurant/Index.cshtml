@@ -1,0 +1,39 @@
+﻿@model IEnumerable<VSEatWebApp.Models.RestaurantVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayFor(x => item.Nom)
+                </th>
+                <th>
+                    @Html.DisplayFor(x => item.NomLocalite)
+                </th>
+                <td>
+                    @Html.ActionLink("Détails", "Add", "Commande", new { id = item.ID })
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var plat in item.Plats)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(x => plat.Nom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => plat.Prix)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>

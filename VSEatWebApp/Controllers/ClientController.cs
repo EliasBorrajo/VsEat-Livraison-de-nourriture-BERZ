@@ -22,10 +22,10 @@ namespace VSEatWebApp.Controllers
 
         public IActionResult Index(SimpleUtilisateurVM suVM)
         {
-            IActionResult rv = RedirectToAction("Login");
+            IActionResult rv = RedirectToAction("Login", "Client");
             if (HttpContext.Session.GetInt32("cliID").HasValue)
             {
-                var client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
+                DTO.Client client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
                 if (client != null)
                 {
                     suVM.Nom = client.Nom;
@@ -48,10 +48,10 @@ namespace VSEatWebApp.Controllers
             IActionResult rv = View(loginVM);
             if (ModelState.IsValid)
             {
-                var client = ClientManager.GetClient(loginVM.Mail, loginVM.Password);
+                DTO.Client client = ClientManager.GetClient(loginVM.Mail, loginVM.Password);
                 if (client != null)
                 {
-                    HttpContext.Session.Clear(); // déconnecter le staff s'il était connecté
+                    HttpContext.Session.Clear();
                     HttpContext.Session.SetInt32("cliID", client.ID);
                     rv = RedirectToAction("Index", "Home");
                 }
@@ -65,13 +65,7 @@ namespace VSEatWebApp.Controllers
 
         public IActionResult Create()
         {
-            var localites = LocaliteManager.GetLocalites();
-            LocaliteVM[] localiteVMs = new LocaliteVM[localites.Length];
-            for (int i = 0; i < localites.Length; i++)
-            {
-                localiteVMs[i] = new LocaliteVM() { Nom = localites[i].Nom, NPA = localites[i].NPA };
-            }
-            ClientVM clientVM = new ClientVM() { AllLocalites = localiteVMs };
+            ClientVM clientVM = new ClientVM() { AllLocalites = LocaliteManager.GetLocalites() };
             return View(clientVM);
         }
 
@@ -79,14 +73,19 @@ namespace VSEatWebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(ClientVM clientVM)
         {
+            clientVM.AllLocalites = LocaliteManager.GetLocalites();
             IActionResult rv = View(clientVM);
             if (ModelState.IsValid)
             {
-                var localites = LocaliteManager.GetLocalites();
-                var client = ClientManager.AddClient(clientVM.Nom, clientVM.Prenom, clientVM.Telephone, clientVM.Mail, clientVM.Password, clientVM.Adresse, localites.FirstOrDefault(x => x.NPA == clientVM.Localite.NPA));
-                if (client.ID >= 0)
+                DTO.Client client = ClientManager.AddClient(clientVM.Nom, clientVM.Prenom, clientVM.Telephone, clientVM.Mail, clientVM.Password, clientVM.Adresse, LocaliteManager.GetLocalite(clientVM.LocaliteID));
+                if (client != null)
                 {
-                    rv = RedirectToAction("Index", "Client");
+                    if (client.ID >= 0)
+                    {
+                        HttpContext.Session.Clear();
+                        HttpContext.Session.SetInt32("cliID", client.ID);
+                        rv = RedirectToAction("Index", "Client");
+                    }
                 }
                 else
                 {
@@ -98,15 +97,59 @@ namespace VSEatWebApp.Controllers
 
         public IActionResult Edit()
         {
-            return View();
+            IActionResult rv = RedirectToAction("Index", "Home");
+            if (HttpContext.Session.GetInt32("cliID").HasValue)
+            {
+                DTO.Client client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
+                ClientVM clientVM = new ClientVM() { AllLocalites = LocaliteManager.GetLocalites() };
+                if (client != null)
+                {
+                    clientVM.Nom = client.Nom;
+                    clientVM.Prenom = client.Prenom;
+                    clientVM.Telephone = client.Telephone;
+                    clientVM.Mail = client.Mail;
+                    clientVM.Password = client.Password;
+                    clientVM.Adresse = client.Adresse;
+                    clientVM.LocaliteID = client.Localite.ID;
+                }
+                rv = View(clientVM);
+            }
+            return rv;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ClientVM clientVM)
         {
+            clientVM.AllLocalites = LocaliteManager.GetLocalites();
+            IActionResult rv = View(clientVM);
+            if (ModelState.IsValid)
+            {
+                DTO.Client client = new DTO.Client(HttpContext.Session.GetInt32("cliID").Value, LocaliteManager.GetLocalite(clientVM.LocaliteID), clientVM.Nom, clientVM.Prenom, clientVM.Telephone, clientVM.Mail, clientVM.Password, clientVM.Adresse, true);
+                ClientManager.UpdateClient(client);
+                rv = RedirectToAction("Index", "Client");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Impossible de mettre à jour les données client.");
+            }
+            return rv;
+        }
 
-            return View(clientVM);
+        public IActionResult Disable()
+        {
+            IActionResult rv = RedirectToAction("Edit", "Client");
+            if (HttpContext.Session.GetInt32("cliID").HasValue)
+            {
+                DTO.Client client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
+                if (client != null)
+                {
+                    ClientManager.DisableClient(client);
+                    HttpContext.Session.Clear();
+                    rv = RedirectToAction("Index", "Home");
+                }
+            }
+            return rv;
         }
     }
 }

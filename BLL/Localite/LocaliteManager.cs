@@ -1,6 +1,7 @@
 ﻿using DAL;
 using DTO;
-using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL
 {
@@ -17,10 +18,35 @@ namespace BLL
         /// <summary>
         /// Constructeur pour créer un objet LocaliteManager.
         /// </summary>
-        /// <param name="Configuration">Objet de configuration contenant la chaîne de connexion à la DB.</param>
-        public LocaliteManager(IConfiguration Configuration)
+        /// <param name="LocaliteDB">Objet permettant de communiquer avec la table Localite.</param>
+        public LocaliteManager(ILocaliteDB LocaliteDB)
         {
-            LocaliteDB = new LocaliteDB(Configuration);
+            this.LocaliteDB = LocaliteDB;
+        }
+
+        public Localite GetLocalite(int ID)
+        {
+            Localite[] localites = GetLocalites();
+            Localite localite = null;
+            foreach (Localite loc in localites)
+            {
+                if (loc.ID == ID) { localite = loc; break; }
+            }
+            return localite;
+        }
+
+        public Localite[] GetLocalites(int[] IDs)
+        {
+            Localite[] allLocalites = GetLocalites();
+            List<Localite> localites = new List<Localite>();
+            foreach (Localite localite in allLocalites)
+            {
+                if (IDs.Contains(localite.ID))
+                {
+                    localites.Add(localite);
+                }
+            }
+            return localites.ToArray();
         }
 
         public Localite[] GetLocalites()

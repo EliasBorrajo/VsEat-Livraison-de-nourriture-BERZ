@@ -40,7 +40,7 @@ namespace DAL
             string description = string.Empty;
             if (dr["platDescription"] != DBNull.Value) { description = (string)dr["platDescription"]; }
             Image image = null;
-            if (dr["platImage"] != DBNull.Value) { image = Image.FromStream(new MemoryStream((byte[])dr["platImage"])); }
+            if (dr["platImage"] != DBNull.Value) { try { image = Image.FromStream(new MemoryStream((byte[])dr["platImage"])); } catch { } }
             return new Plat(id, nom, prix, description, image);
         }
         public Plat GetPlat(int ID)
