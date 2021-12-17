@@ -23,13 +23,7 @@ namespace VSEatWebApp.Controllers
             IActionResult rv = RedirectToAction("Index", "Client");
             if (HttpContext.Session.GetInt32("cliID").HasValue)
             {
-                List<RestaurantVM> restaurantVMs = new List<RestaurantVM>();
-                DTO.Restaurant[] restaurants = RestaurantManager.GetRestaurants();
-                foreach (DTO.Restaurant restaurant in restaurants)
-                {
-                    restaurantVMs.Add(new RestaurantVM() { ID = restaurant.ID, Nom = restaurant.Nom, NomLocalite = restaurant.Localite.Nom, Plats = restaurant.Plats });
-                }
-                rv = View(restaurantVMs);
+                rv = View(RestaurantManager.GetRestaurants());
             }
             return rv;
         }

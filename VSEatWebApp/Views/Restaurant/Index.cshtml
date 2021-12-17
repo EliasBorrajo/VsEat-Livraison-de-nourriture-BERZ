@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VSEatWebApp.Models.RestaurantVM>
+﻿@model IEnumerable<DTO.Restaurant>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,7 +15,7 @@
                     @Html.DisplayFor(x => item.Nom)
                 </th>
                 <th>
-                    @Html.DisplayFor(x => item.NomLocalite)
+                    @Html.DisplayFor(x => item.Localite.Nom)
                 </th>
                 <td>
                     @Html.ActionLink("Détails", "Add", "Commande", new { id = item.ID })

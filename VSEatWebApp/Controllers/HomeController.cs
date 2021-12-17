@@ -47,6 +47,12 @@ namespace VSEatWebApp.Controllers
             return rv;
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult Privacy()
         {
             return View();

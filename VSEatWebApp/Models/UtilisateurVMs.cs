@@ -15,12 +15,13 @@ namespace VSEatWebApp.Models
     }
     public abstract class DetailedUtilisateurVM : SimpleUtilisateurVM
     {
-        [Phone]
+        [DataType(DataType.PhoneNumber)]
         public virtual string Telephone { get; set; }
-        [EmailAddress]
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Mail { get; set; }
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         public DTO.Localite[] AllLocalites { get; set; }
     }

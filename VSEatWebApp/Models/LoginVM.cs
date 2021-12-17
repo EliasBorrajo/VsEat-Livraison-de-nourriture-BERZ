@@ -9,8 +9,10 @@ namespace VSEatWebApp.Models
     public class LoginVM
     {
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Mail { get; set; }
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
