@@ -87,15 +87,8 @@ namespace VSEatWebApp.Controllers
                 {
                     commandeVMs.Add(new SimpleCommandeVM()
                     {
-                        ID = commande.ID,
+                        Commande = commande,
                         EnCours = commande.HeurePaiement < commande.Heure && !commande.Annule,
-                        Heure = commande.Heure,
-                        HeureLivraison = commande.HeureLivraison,
-                        NomClient = commande.Client.Nom,
-                        PrenomClient = commande.Client.Prenom,
-                        NomStaff = commande.Staff.Nom,
-                        PrenomStaff = commande.Staff.Prenom,
-                        NomRestaurant = "TODO",
                         Action = action
                     });
                 }

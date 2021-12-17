@@ -65,25 +65,11 @@ namespace VSEatWebApp.Models
     }
     public class SimpleCommandeVM
     {
-        [Required] 
-        public int ID { get; set; }
-        [Required]
-        public DateTime Heure { get; set; }
-        [Required]
-        public DateTime HeureLivraison { get; set; }
-        [Required]
-        public string NomRestaurant { get; set; }
-        [Required]
-        public string NomClient { get; set; }
-        [Required]
-        public string PrenomClient { get; set; }
-        [Required]
-        public string NomStaff { get; set; }
-        [Required]
-        public string PrenomStaff { get; set; }
+        public DTO.Commande Commande { get; set; }
         [Required]
         public bool EnCours { get; set; }
         [Required]
         public string Action { get; set; }
+        public string Restaurant = "TODO";
     }
 }

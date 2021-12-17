@@ -22,25 +22,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Heure)
+                @Html.DisplayNameFor(model => model.Commande.Heure)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HeureLivraison)
+                @Html.DisplayNameFor(model => model.Commande.HeureLivraison)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NomRestaurant)
+                @Html.DisplayNameFor(model => model.Restaurant)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NomClient)
+                @Html.DisplayNameFor(model => model.Commande.Client.Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrenomClient)
+                @Html.DisplayNameFor(model => model.Commande.Client.Prenom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NomStaff)
+                @Html.DisplayNameFor(model => model.Commande.Staff.Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrenomStaff)
+                @Html.DisplayNameFor(model => model.Commande.Staff.Prenom)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EnCours)
@@ -55,36 +55,36 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Heure)
+                        @Html.DisplayFor(modelItem => item.Commande.Heure)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.HeureLivraison)
+                        @Html.DisplayFor(modelItem => item.Commande.HeureLivraison)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NomRestaurant)
+                        @Html.DisplayFor(modelItem => item.Restaurant)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NomClient)
+                        @Html.DisplayFor(modelItem => item.Commande.Client.Nom)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PrenomClient)
+                        @Html.DisplayFor(modelItem => item.Commande.Client.Prenom)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NomStaff)
+                        @Html.DisplayFor(modelItem => item.Commande.Staff.Nom)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PrenomStaff)
+                        @Html.DisplayFor(modelItem => item.Commande.Staff.Prenom)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EnCours)
                     </td>
                     <td>
-                        @Html.ActionLink("Détail", "Detail", new { id = item.ID })
+                        @Html.ActionLink("Détail", "Detail", new { id = item.Commande.ID })
                     </td>
                     @if (item.EnCours)
                     {
                         <td>
-                            @Html.ActionLink(Model.FirstOrDefault().Action, "Action", new { id = item.ID })
+                            @Html.ActionLink(Model.FirstOrDefault().Action, "Action", new { id = item.Commande.ID })
                         </td>
                     }
                 </tr>
