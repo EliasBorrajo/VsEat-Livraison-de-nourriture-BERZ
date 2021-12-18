@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.Commande.HeureLivraison)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Restaurant)
+                @Html.DisplayNameFor(model => model.Restaurant.Nom)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Commande.Client.Nom)
@@ -61,7 +61,7 @@
                         @Html.DisplayFor(modelItem => item.Commande.HeureLivraison)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Restaurant)
+                        @Html.DisplayFor(modelItem => item.Restaurant.Nom)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Commande.Client.Nom)

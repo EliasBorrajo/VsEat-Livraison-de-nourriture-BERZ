@@ -38,6 +38,7 @@ namespace VSEatWebApp
             services.AddScoped<IStaffDB, StaffDB>();
 
             services.AddSession();
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
         }
 

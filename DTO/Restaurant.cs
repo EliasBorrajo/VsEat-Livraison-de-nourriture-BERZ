@@ -22,6 +22,10 @@
         /// Plats du restaurant.
         /// </summary>
         public Plat[] Plats { get; set; }
+        /// <summary>
+        /// Image du restaurant.
+        /// </summary>
+        public string ImageBase64 { get; set; }
         
         /// <summary>
         /// Constructeur pour créer un objet restaurant.
@@ -31,13 +35,15 @@
         /// <param name="Nom">Nom du restaurant.</param>
         /// <param name="Adresse">Adresse du restaurant.</param>
         /// <param name="Plats">Plats du restaurant.</param>
-        public Restaurant(int ID, Localite Localite, string Nom, string Adresse, Plat[] Plats)
+        /// <param name="ImageBase64">Image du restaurant.</param>
+        public Restaurant(int ID, Localite Localite, string Nom, string Adresse, Plat[] Plats, string ImageBase64)
         {
             this.ID = ID;
             this.Localite = Localite;
             this.Nom = Nom;
             this.Adresse = Adresse;
             this.Plats = Plats;
+            this.ImageBase64 = ImageBase64;
         }
     }
 }

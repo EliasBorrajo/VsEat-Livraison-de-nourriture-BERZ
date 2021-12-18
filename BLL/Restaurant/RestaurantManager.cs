@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DTO;
+using System.Linq;
 
 namespace BLL
 {
@@ -40,6 +41,20 @@ namespace BLL
         public Restaurant[] GetRestaurants()
         {
             return RestaurantDB.GetRestaurants();
+        }
+
+        public Restaurant GetRestaurantByPlat(Plat plat)
+        {
+            Restaurant[] restaurants = GetRestaurants();
+            Restaurant rv = null;
+            foreach (Restaurant restaurant in restaurants)
+            {
+                foreach (Plat p in restaurant.Plats)
+                {
+                    if (p.ID == plat.ID) { rv = restaurant; break;  }
+                }
+            }
+            return rv;
         }
     }
 }

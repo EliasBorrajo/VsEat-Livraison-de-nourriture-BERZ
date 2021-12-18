@@ -21,7 +21,6 @@ namespace VSEatWebApp.Models
         [DataType(DataType.EmailAddress)]
         public string Mail { get; set; }
         [Required]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
         public DTO.Localite[] AllLocalites { get; set; }
     }

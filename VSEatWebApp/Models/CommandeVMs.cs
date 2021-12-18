@@ -66,10 +66,10 @@ namespace VSEatWebApp.Models
     public class SimpleCommandeVM
     {
         public DTO.Commande Commande { get; set; }
+        public DTO.Restaurant Restaurant { get; set; }
         [Required]
         public bool EnCours { get; set; }
         [Required]
         public string Action { get; set; }
-        public string Restaurant = "TODO";
     }
 }

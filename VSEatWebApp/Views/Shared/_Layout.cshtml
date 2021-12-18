@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,15 +22,41 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MyAccount">Mon compte</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Confidentialité</a>
-                        </li>
+                        @{
+                            bool clientConnected = HttpContextAccessor.HttpContext.Session.GetInt32("cliID").HasValue;
+                            bool staffConnected = HttpContextAccessor.HttpContext.Session.GetInt32("staID").HasValue;
+                            if (clientConnected || staffConnected)
+                            {
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Déconnexion</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MyAccount">Mon compte</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Commande" asp-action="List" asp-route-id="1">Mes commandes</a>
+                                </li>
+                                if (clientConnected)
+                                {
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Index">Restaurants</a>
+                                    </li>
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Accueil</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Confidentialité</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

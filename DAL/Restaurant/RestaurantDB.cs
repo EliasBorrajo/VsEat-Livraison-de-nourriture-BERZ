@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace DAL
 {
@@ -46,7 +47,9 @@ namespace DAL
             string nom = (string)dr["resNom"];
             string adresse = (string)dr["resAdresse"];
             Plat[] plats = new Plat[] { };
-            Restaurant restaurant = new Restaurant(id, localite, nom, adresse, plats);
+            string image = null;
+            if (dr["resImage"] != DBNull.Value) { try { image = Convert.ToBase64String(new MemoryStream((byte[])dr["resImage"]).ToArray()); } catch { } }
+            Restaurant restaurant = new Restaurant(id, localite, nom, adresse, plats, image);
             restaurant.Plats = PlatDB.GetRestaurantPlats(restaurant);
             return restaurant;
         }
@@ -58,7 +61,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = @"select resID, locID, resNom, resAdresse 
+                    string query = @"select resID, locID, resNom, resAdresse, resImage 
                                             from Restaurant";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cn.Open();
@@ -85,7 +88,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = @"select resID, locID, resNom, resAdresse 
+                    string query = @"select resID, locID, resNom, resAdresse, resImage 
                                             from Restaurant where resID=@ID";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", ID);

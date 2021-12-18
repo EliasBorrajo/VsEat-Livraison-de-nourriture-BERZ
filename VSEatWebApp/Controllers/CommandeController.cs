@@ -88,6 +88,7 @@ namespace VSEatWebApp.Controllers
                     commandeVMs.Add(new SimpleCommandeVM()
                     {
                         Commande = commande,
+                        Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
                         EnCours = commande.HeurePaiement < commande.Heure && !commande.Annule,
                         Action = action
                     });
