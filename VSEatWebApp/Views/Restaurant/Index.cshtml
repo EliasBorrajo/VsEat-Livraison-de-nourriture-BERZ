@@ -4,24 +4,53 @@
     ViewData["Title"] = "Index";
 }
 
-@section Styles
-{
+@section Styles{
     <link rel="stylesheet" href="~/css/restaurants.css" />
 }
 
-@section Scripts
-{
+@section Scripts{
     <script type="text/javascript" src="~/js/Restaurants.js"></script>
 }
 
-
-
-
 <h1>Index</h1>
-
+<!-- ça va ajouter un objet HTML caché qui s'apelle AddCommande. 
+    En valeur, on lui donne le lien qui va rediriger la ou on voudra après, et en ID, 
+    ce sera un placeHolder, qui sera remplacé par après 
+    MDR c'est une variable HTML en vrai bg
+    -->
+@Html.Hidden("AddCommande", Url.Action("Add", "Commande", new { id = "__id__" }))
 
 <div class="options bodyRestaurant">
-    <div class="option active" style="--optionBackground:url(https://66.media.tumblr.com/6fb397d822f4f9f4596dff2085b18f2e/tumblr_nzsvb4p6xS1qho82wo1_1280.jpg);">
+    @{
+        bool firstRestaurantToShow = true;
+        foreach (var item in Model)
+        {
+
+            string classToShow = "option";
+            if (firstRestaurantToShow)
+            {
+                classToShow = "option active";
+                firstRestaurantToShow = false;
+            }
+            <div class="@classToShow"
+                 style="--optionBackground:url(@string.Format("data:image/gif;base64,{0}", item.ImageBase64));"
+                 onclick="RedirectToDetails(@item.ID)">
+                <div class="shadow"></div>
+                <div class="label">
+                    <div class="icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <div class="info">
+                        <div class="main">@item.Nom</div>
+                        <div class="sub">@item.Localite.Nom</div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <!--
+    <div onclick="myhref('http://www.parkourvalais.com');" class="option active" style="--optionBackground:url(https://66.media.tumblr.com/6fb397d822f4f9f4596dff2085b18f2e/tumblr_nzsvb4p6xS1qho82wo1_1280.jpg);">
         <div class="shadow"></div>
         <div class="label">
             <div class="icon">
@@ -81,6 +110,7 @@
             </div>
         </div>
     </div>
+        -->
 </div>
 
 
