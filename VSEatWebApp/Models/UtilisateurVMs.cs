@@ -13,7 +13,7 @@ namespace VSEatWebApp.Models
         [Required]
         public string Prenom { get; set; }
     }
-    public abstract class DetailedUtilisateurVM : SimpleUtilisateurVM
+    public class DetailedUtilisateurVM : SimpleUtilisateurVM
     {
         [DataType(DataType.PhoneNumber)]
         public virtual string Telephone { get; set; }

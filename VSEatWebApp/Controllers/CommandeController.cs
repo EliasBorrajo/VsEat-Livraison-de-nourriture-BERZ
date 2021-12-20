@@ -140,7 +140,7 @@ namespace VSEatWebApp.Controllers
                     commande = CommandeManager.ValidatePayment(commande);
                     if (commande.HeurePaiement > DateTime.MinValue)
                     {
-                        rv = RedirectToAction("StaffCommande", "Commande");
+                        rv = RedirectToAction("StaffCommande", "Commande");//rediriger sur quelque chose qui EXISTE !
                     }
                     else
                     {
@@ -153,7 +153,7 @@ namespace VSEatWebApp.Controllers
 
         public IActionResult Cancel(int ID)
         {
-            IActionResult rv = RedirectToAction("List", "Commande");
+            IActionResult rv = RedirectToAction("List", "Commande", new { status = 1 });
             if (HttpContext.Session.GetInt32("cliID").HasValue)
             {
                 DTO.Commande commande = CommandeManager.GetCommande(ID);

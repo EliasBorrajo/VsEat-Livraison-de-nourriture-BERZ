@@ -5,37 +5,16 @@
 }
 
 <h1>Edit</h1>
-
-<h4>StaffVM</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nom" class="control-label"></label>
-                <input asp-for="Nom" class="form-control" />
-                <span asp-validation-for="Nom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Prenom" class="control-label"></label>
-                <input asp-for="Prenom" class="form-control" />
-                <span asp-validation-for="Prenom" class="text-danger"></span>
-            </div>
+            @{await Html.RenderPartialAsync("_UtilisateurBaseForm", new DetailedUtilisateurVM() { Nom = Model.Nom, Prenom = Model.Prenom, Mail = Model.Mail, Password = Model.Password, Telephone = Model.Telephone, AllLocalites = Model.AllLocalites });}
             <div class="form-group">
                 <label asp-for="Telephone" class="control-label"></label>
                 <input asp-for="Telephone" class="form-control" />
                 <span asp-validation-for="Telephone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Mail" class="control-label"></label>
-                <input asp-for="Mail" class="form-control" />
-                <span asp-validation-for="Mail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LocaliteIDs" class="control-label"></label>
@@ -43,12 +22,11 @@
                 {
                     <div class="custom-checkbox">
                         <label>
-                            <input type="checkbox" name="LocaliteIDs" value="@localite.ID" 
-                                   @if (Model.LocaliteIDs.Contains(localite.ID))
-                                   {
-                                       <text>checked</text>
-                                   }
-                                   />
+                            <input type="checkbox" name="LocaliteIDs" value="@localite.ID"
+                                   @if (Model.LocaliteIDs.Contains(localite.ID)) 
+                                   { 
+                                       <text> checked</text>
+                                   } />
                             @localite.Nom
                         </label>
                     </div>

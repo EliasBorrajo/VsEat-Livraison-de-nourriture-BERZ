@@ -44,7 +44,7 @@
                             </td>
                             <td>
                                 <label asp-for="PlatsQuantites" hidden="hidden"></label>
-                                <input type="text" name="PlatsQuantites[@plat.ID]" value="@Model.PlatsQuantites[plat.ID]" />
+                                <input type="number" min="0" max="99" name="PlatsQuantites[@plat.ID]" value="@Model.PlatsQuantites[plat.ID]" />
                                 <span asp-validation-for="PlatsQuantites"></span>
                             </td>
                         </tr>
