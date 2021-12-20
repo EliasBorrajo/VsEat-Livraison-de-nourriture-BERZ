@@ -1,4 +1,6 @@
-﻿X = Tutto bene
+﻿SI ON FAIT UNE MODIFICATION EN SCSS, IL FAUT RE-COMPILER LE FICHIER "COMPILERCONFIG.JSON"
+
+X = Tutto bene
 F = Fonctionnel à faire
 f = éventuellement fonctionnel à ajouter
 C = Contenu à ajouter
