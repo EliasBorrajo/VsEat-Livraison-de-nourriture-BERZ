@@ -10,6 +10,11 @@
     <title>@ViewData["Title"] - VSEat</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <!-- Permet de récuperer le scripte&style modifié,
+        si quelquepart dans la page que on charge il y a une balise que on a crée nous même, il ne la chargera que pour ICI-->
+    @await RenderSectionAsync("Styles", required: false)
+
 </head>
 <body>
     <header>
