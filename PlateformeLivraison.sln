@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VSEatWebApp", "VSEatWebApp\VSEatWebApp.csproj", "{3E060673-686C-4BA8-9385-526BB60B790E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatManagementTool", "PlatManagementTool\PlatManagementTool.csproj", "{494338D2-D1BB-4A6F-892A-370E08AD5573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlatManagementTool", "PlatManagementTool\PlatManagementTool.csproj", "{494338D2-D1BB-4A6F-892A-370E08AD5573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

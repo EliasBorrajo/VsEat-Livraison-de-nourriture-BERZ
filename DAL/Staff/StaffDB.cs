@@ -87,7 +87,7 @@ namespace DAL
                 {
                     string query = @"select staID, staNom, staPrenom, staTelephone, staMail, staPassword, staStatus 
                                             from Staff 
-                                            where staMail=@staMail and staPassword=@staPassword";
+                                            where staMail=@staMail and staPassword=@staPassword and staStatus=1";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@staMail", Mail);
                     cmd.Parameters.AddWithValue("@staPassword", Password);
@@ -117,7 +117,7 @@ namespace DAL
                 {
                     string query = @"select staID, locID
                                             from StaffLocalite
-                                            where locID=@ID";
+                                            where locID=@ID and staStatus=1";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", Localite.ID);
                     cn.Open();

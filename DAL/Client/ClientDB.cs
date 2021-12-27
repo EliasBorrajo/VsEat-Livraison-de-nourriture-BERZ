@@ -87,7 +87,7 @@ namespace DAL
                 {
                     string query = @"select cliID, locID, cliNom, cliPrenom, cliTelephone, cliMail, cliAdresse, cliPassword, cliStatus 
                                             from Client 
-                                            where cliMail=@cliMail and cliPassword=@cliPass";
+                                            where cliMail=@cliMail and cliPassword=@cliPass and cliStatus=1" ;
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@cliMail", Mail);
                     cmd.Parameters.AddWithValue("@cliPass", Password);
