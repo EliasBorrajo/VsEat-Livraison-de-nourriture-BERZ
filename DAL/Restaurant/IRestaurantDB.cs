@@ -18,5 +18,11 @@ namespace DAL
         /// <param name="ID">Identifiant unique du restaurant.</param>
         /// <returns>Objet de type Restaurant contenant les informations de l'enregistrement. Retourne null si l'enregistrement n'existe pas.</returns>
         Restaurant GetRestaurant(int ID);
+        /// <summary>
+        /// Méthode permettant de récupérer un restaurant par l'identifiant unique d'un plat.
+        /// </summary>
+        /// <param name="ID">Identifiant unique du plat.</param>
+        /// <returns>Objet de type Restaurant contenant les informations de l'enregistrement. Retourne null si l'enregistrement n'existe pas.</returns>
+        Restaurant GetRestaurantByPlat(int ID);
     }
 }

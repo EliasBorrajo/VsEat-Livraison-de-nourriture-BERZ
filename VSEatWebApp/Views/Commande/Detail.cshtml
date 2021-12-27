@@ -30,7 +30,7 @@
 <div>
     @if (Model.Action.Display)
     {
-        @Html.ActionLink(Model.Action.Action, "Action", new { id = Model.Commande.ID })
+        <a class="btn btn-primary" asp-action="Action" asp-controller="Commande" asp-route-id="@Model.Commande.ID">@Model.Action.Action</a>
     }
 </div>
 

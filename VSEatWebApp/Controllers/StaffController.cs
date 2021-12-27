@@ -101,7 +101,7 @@ namespace VSEatWebApp.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Mail ou mot de passe invalide.");
+                        ModelState.AddModelError(string.Empty, "Mail / mot de passe invalide ou compte désactivé.");
                     }
                 }
                 catch (ConnectionException e)
@@ -135,19 +135,26 @@ namespace VSEatWebApp.Controllers
             {
                 try
                 {
-                    Staff staff = StaffManager.AddStaff(staffVM.Nom, staffVM.Prenom, staffVM.Telephone, staffVM.Mail, staffVM.Password, LocaliteManager.GetLocalites(staffVM.LocaliteIDs.ToArray()));
-                    if (staff != null)
+                    if (StaffManager.IsMailAvailable(staffVM.Mail))
                     {
-                        if (staff.ID >= 0)
+                        Staff staff = StaffManager.AddStaff(staffVM.Nom, staffVM.Prenom, staffVM.Telephone, staffVM.Mail, staffVM.Password, LocaliteManager.GetLocalites(staffVM.LocaliteIDs.ToArray()));
+                        if (staff != null)
                         {
-                            HttpContext.Session.Clear();
-                            HttpContext.Session.SetInt32("staID", staff.ID);
-                            rv = RedirectToAction("Index", "Staff");
+                            if (staff.ID >= 0)
+                            {
+                                HttpContext.Session.Clear();
+                                HttpContext.Session.SetInt32("staID", staff.ID);
+                                rv = RedirectToAction("Index", "Staff");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Impossible de créer le compte staff.");
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Impossible de créer le compte staff.");
+                        ModelState.AddModelError(string.Empty, "Adresse email déjà utilisée.");
                     }
                 }
                 catch (ConnectionException e)

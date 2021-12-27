@@ -100,7 +100,7 @@ namespace VSEatWebApp.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Mail ou mot de passe invalide.");
+                        ModelState.AddModelError(string.Empty, "Mail / mot de passe invalide ou compte désactivé.");
                     }
                 }
                 catch (ConnectionException e)
@@ -134,19 +134,34 @@ namespace VSEatWebApp.Controllers
             {
                 try
                 {
-                    Client client = ClientManager.AddClient(clientVM.Nom, clientVM.Prenom, clientVM.Telephone, clientVM.Mail, clientVM.Password, clientVM.Adresse, LocaliteManager.GetLocalite(clientVM.LocaliteID));
-                    if (client != null)
+                    if (ClientManager.IsMailAvailable(clientVM.Mail))
                     {
-                        if (client.ID >= 0)
+                        Client client = null;
+                        if (!string.IsNullOrEmpty(clientVM.Telephone))
                         {
-                            HttpContext.Session.Clear();
-                            HttpContext.Session.SetInt32("cliID", client.ID);
-                            rv = RedirectToAction("Index", "Client");
+                            client = ClientManager.AddClient(clientVM.Nom, clientVM.Prenom, clientVM.Telephone, clientVM.Mail, clientVM.Password, clientVM.Adresse, LocaliteManager.GetLocalite(clientVM.LocaliteID));
+                        }
+                        else
+                        {
+                            client = ClientManager.AddClient(clientVM.Nom, clientVM.Prenom, clientVM.Mail, clientVM.Password, clientVM.Adresse, LocaliteManager.GetLocalite(clientVM.LocaliteID));
+                        }
+                        if (client != null)
+                        {
+                            if (client.ID >= 0)
+                            {
+                                HttpContext.Session.Clear();
+                                HttpContext.Session.SetInt32("cliID", client.ID);
+                                rv = RedirectToAction("Index", "Client");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Impossible de créer le compte client.");
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Impossible de créer le compte client.");
+                        ModelState.AddModelError(string.Empty, "Adresse email déjà utilisée.");
                     }
                 }
                 catch (ConnectionException e)

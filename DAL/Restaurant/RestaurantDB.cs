@@ -108,5 +108,34 @@ namespace DAL
             }
             return restaurant;
         }
+        public Restaurant GetRestaurantByPlat(int ID)
+        {
+            Restaurant restaurant = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = @"select resID
+                                        from Plat
+                                        where platID=@ID";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            restaurant = GetRestaurant((int)dr["resID"]);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ConnectionException(e.Message, "Impossible de récupérer le restaurant de la commmande.");
+            }
+            return restaurant;
+        }
     }
 }

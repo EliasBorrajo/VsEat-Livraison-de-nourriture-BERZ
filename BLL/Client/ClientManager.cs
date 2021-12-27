@@ -47,5 +47,9 @@ namespace BLL
             Client.Status = false;
             UpdateClient(Client);
         }
+        public bool IsMailAvailable(string Mail)
+        {
+            return ClientDB.IsMailAvailable(Mail);
+        }
     }
 }

@@ -115,9 +115,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = @"select staID, locID
-                                            from StaffLocalite
-                                            where locID=@ID and staStatus=1";
+                    string query = @"select sl.staID, sl.locID 
+                                        from StaffLocalite as sl 
+                                        inner join Staff as s on s.staID = sl.staID 
+                                        where sl.locID=@ID and s.staStatus=1";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID", Localite.ID);
                     cn.Open();
@@ -192,6 +193,35 @@ namespace DAL
             {
                 throw new ConnectionException(e.Message, "Impossible de mettre à jour le staff.");
             }
+        }
+        public bool IsMailAvailable(string Mail)
+        {
+            bool rv = false;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = @"select count(*) as nb
+                                        from Staff
+                                        where staMail=@mail";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@mail", Mail);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            rv = (int)dr["nb"] == 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ConnectionException(e.Message, "Impossible de vérifier si l'adresse mail est utilisée par un autre compte.");
+            }
+            return rv;
         }
     }
 }

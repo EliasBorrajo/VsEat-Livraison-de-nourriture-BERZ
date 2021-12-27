@@ -47,5 +47,9 @@ namespace BLL
             Staff.Status = false;
             UpdateStaff(Staff);
         }
+        public bool IsMailAvailable(string Mail)
+        {
+            return StaffDB.IsMailAvailable(Mail);
+        }
     }
 }

@@ -134,13 +134,12 @@ namespace VSEatWebApp.Controllers
                         {
                             displayAction = displayAction && CommandeManager.CanBeCancelled(commande);
                         }
-                        commandeVMs.Add(new CommandeVM()
-                        {
-                            Commande = commande,
-                            Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
-                            EnCours = CommandeManager.IsEnCours(commande),
-                            Action = new CommandeAction() { Action = action, Display = displayAction }
-                        });
+                        CommandeVM commandeVM = new CommandeVM();
+                        commandeVM.Commande = commande;
+                        commandeVM.Restaurant = RestaurantManager.GetRestaurantByCommande(commande);
+                        commandeVM.EnCours = CommandeManager.IsEnCours(commande);
+                        commandeVM.Action = new CommandeAction() { Action = action, Display = displayAction };
+                        commandeVMs.Add(commandeVM);
                     }
                     rv = View(commandeVMs);
                 }
@@ -175,7 +174,7 @@ namespace VSEatWebApp.Controllers
                         CommandeVM commandeVM = new CommandeVM()
                         {
                             Commande = commande,
-                            Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
+                            Restaurant = RestaurantManager.GetRestaurantByCommande(commande),
                             Action = new CommandeAction() { Action = action, Display = displayAction },
                             EnCours = CommandeManager.IsEnCours(commande)
                         };
@@ -254,7 +253,7 @@ namespace VSEatWebApp.Controllers
                         {
                             CommandeID = commande.ID,
                             Commande = commande,
-                            Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
+                            Restaurant = RestaurantManager.GetRestaurantByCommande(commande),
                             EnCours = CommandeManager.IsEnCours(commande)
                         };
                         rv = View(commandeVM);
@@ -277,7 +276,7 @@ namespace VSEatWebApp.Controllers
             try
             {
                 commandeVM.Commande = CommandeManager.GetCommande(commandeVM.CommandeID);
-                commandeVM.Restaurant = RestaurantManager.GetRestaurantByPlat(commandeVM.Commande.Plats[0]);
+                commandeVM.Restaurant = RestaurantManager.GetRestaurantByCommande(commandeVM.Commande);
             }
             catch { }
             IActionResult rv = View(commandeVM);
@@ -294,7 +293,7 @@ namespace VSEatWebApp.Controllers
                         Commande commande = CommandeManager.CancelCommande(commandeVM.ControleID, commandeVM.Nom, commandeVM.Prenom);
                         if (commande != null && commande.Annule)
                         {
-                            rv = RedirectToAction("List", "Commande", new { status = -1 });
+                            rv = RedirectToAction("Detail", "Commande", new { id = commande.ID });
                         }
                         else
                         {

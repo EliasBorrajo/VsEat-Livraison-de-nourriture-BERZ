@@ -166,5 +166,34 @@ namespace DAL
                 throw new ConnectionException(e.Message, "Impossible de mettre à jour le client.");
             }
         }
+        public bool IsMailAvailable(string Mail)
+        {
+            bool rv = false;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = @"select count(*) as nb
+                                        from Client
+                                        where cliMail=@mail";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@mail", Mail);
+                    cn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            rv = (int)dr["nb"] == 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ConnectionException(e.Message, "Impossible de vérifier si l'adresse mail est utilisée par un autre compte.");
+            }
+            return rv;
+        }
     }
 }

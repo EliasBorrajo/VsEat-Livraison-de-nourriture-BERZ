@@ -19,10 +19,10 @@ namespace BLL
         /// <returns>Tableau de Restaurant contenant tous les restaurants.</returns>
         Restaurant[] GetRestaurants();
         /// <summary>
-        /// Méthode permettant de récupérer un restaurant par un plat.
+        /// Méthode permettant de récupérer un restaurant par une commande.
         /// </summary>
-        /// <param name="plat">Plat dont le restaurant doit être récupéré.</param>
+        /// <param name="Commande">Commande dont le restaurant doit être récupéré.</param>
         /// <returns>Enregistrement correspondant, retourne null si l'enregistrement n'existe pas.</returns>
-        Restaurant GetRestaurantByPlat(Plat plat);
+        Restaurant GetRestaurantByCommande(Commande Commande);
     }
 }

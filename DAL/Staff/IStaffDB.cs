@@ -37,5 +37,11 @@ namespace DAL
         /// </summary>
         /// <param name="Staff">Staff à modifier, doit contenir les informations modifiées.</param>
         void UpdateStaff(Staff Staff);
+        /// <summary>
+        /// Méthode permettant de savoir si une adresse mail est déjà utilisée pour un compte staff.
+        /// </summary>
+        /// <param name="Mail">Adresse mail à vérifier.</param>
+        /// <returns>True si l'adresse mail est disponible, false autrement.</returns>
+        bool IsMailAvailable(string Mail);
     }
 }

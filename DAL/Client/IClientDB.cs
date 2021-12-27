@@ -31,5 +31,11 @@ namespace DAL
         /// </summary>
         /// <param name="Client">Client à mettre à jour.</param>
         void UpdateClient(Client Client);
+        /// <summary>
+        /// Méthode permettant de savoir si une adresse mail est déjà utilisée pour un compte staff.
+        /// </summary>
+        /// <param name="Mail">Adresse mail à vérifier.</param>
+        /// <returns>True si l'adresse mail est disponible, false autrement.</returns>
+        bool IsMailAvailable(string Mail);
     }
 }

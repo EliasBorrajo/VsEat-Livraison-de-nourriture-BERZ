@@ -43,18 +43,9 @@ namespace BLL
             return RestaurantDB.GetRestaurants();
         }
 
-        public Restaurant GetRestaurantByPlat(Plat plat)
+        public Restaurant GetRestaurantByCommande(Commande Commande)
         {
-            Restaurant[] restaurants = GetRestaurants();
-            Restaurant rv = null;
-            foreach (Restaurant restaurant in restaurants)
-            {
-                foreach (Plat p in restaurant.Plats)
-                {
-                    if (p.ID == plat.ID) { rv = restaurant; break;  }
-                }
-            }
-            return rv;
+            return RestaurantDB.GetRestaurantByPlat(Commande.Plats[0].ID);
         }
     }
 }
