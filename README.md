@@ -54,7 +54,7 @@ Voici une liste des STAFF existants pour tenter une connection :
         <tr>
             <td>Orcanie, Loth</td>
             <td>traitre@dies.irae</td>
-            <td>7754<td>
+            <td>7754</td>
             <td>Non</td> 
         </tr>
 </table>
