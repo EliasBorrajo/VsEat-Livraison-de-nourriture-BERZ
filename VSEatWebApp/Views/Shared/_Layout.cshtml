@@ -20,7 +20,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VSEatWebApp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VSEat</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,17 +39,13 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MyAccount">Mon compte</a>
                                 </li>
                                 <li>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Commande" asp-action="List" asp-route-id="1">Mes commandes</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Commande" asp-action="List" asp-route-status="1">Mes commandes</a>
                                 </li>
                                 if (clientConnected)
                                 {
                                     <li>
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Index">Restaurants</a>
                                     </li>
-                                }
-                                else
-                                {
-
                                 }
                             }
                             else
@@ -75,7 +71,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - VSEat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - VSEat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Confidentialité</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

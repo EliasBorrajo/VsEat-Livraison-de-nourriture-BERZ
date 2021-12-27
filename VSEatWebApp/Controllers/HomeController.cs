@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using VSEatWebApp.Models;
 
 namespace VSEatWebApp.Controllers
@@ -18,7 +14,10 @@ namespace VSEatWebApp.Controllers
         {
             _logger = logger;
         }
-
+        /// <summary>
+        /// Action affichant l'accueil du site ou redirigeant sur l'accueil de l'utilisateur connecté.
+        /// </summary>
+        /// <returns>Vue accueil du site, du staff ou du client.</returns>
         public IActionResult Index()
         {
             IActionResult rv = View();
@@ -32,7 +31,10 @@ namespace VSEatWebApp.Controllers
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action permettant d'accéder aux informations du compte connecté.
+        /// </summary>
+        /// <returns>Vue "mon compte" du client ou du staff.</returns>
         public IActionResult MyAccount()
         {
             IActionResult rv = RedirectToAction("Login", "Client");
@@ -46,13 +48,19 @@ namespace VSEatWebApp.Controllers
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action permettant de déconnecter l'utilisateur connecté.
+        /// </summary>
+        /// <returns>Vue accueil du site.</returns>
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
-
+        /// <summary>
+        /// Action permettant de retourner la vue confidentialité.
+        /// </summary>
+        /// <returns>Vue confidentialité</returns>
         public IActionResult Privacy()
         {
             return View();

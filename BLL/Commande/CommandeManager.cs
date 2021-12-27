@@ -66,6 +66,30 @@ namespace BLL
             }
             return commandes;
         }
+        public Commande[] GetStaffCommandes(Staff Staff, DateTime HeureLivraison)
+        {
+            List<Commande> commandes = new List<Commande>();
+            Commande[] staffCommandes = GetStaffCommandes(Staff, null);
+            DateTime start, end;
+            if (HeureLivraison.Minute < 30)
+            {
+                start = new DateTime(HeureLivraison.Year, HeureLivraison.Month, HeureLivraison.Day, HeureLivraison.Hour, 0, 0);
+                end = new DateTime(HeureLivraison.Year, HeureLivraison.Month, HeureLivraison.Day, HeureLivraison.Hour, 29, 59);
+            }
+            else
+            {
+                start = new DateTime(HeureLivraison.Year, HeureLivraison.Month, HeureLivraison.Day, HeureLivraison.Hour, 30, 0);
+                end = new DateTime(HeureLivraison.Year, HeureLivraison.Month, HeureLivraison.Day, HeureLivraison.Hour, 59, 59);
+            }
+            foreach (Commande commande in staffCommandes)
+            {
+                if (!commande.Annule && commande.HeureLivraison >= start && commande.HeureLivraison <= end)
+                {
+                    commandes.Add(commande);
+                }
+            }
+            return commandes.ToArray();
+        }
         public Commande[] GetClientCommandes(Client Client, bool? EnCours)
         {
             Commande[] commandes = CommandeDB.GetClientCommandes(Client);
@@ -109,7 +133,7 @@ namespace BLL
             Staff[] dispStaffs = StaffDB.GetStaffWorkingIn(Restaurant.Localite);
             foreach (Staff staff in dispStaffs)
             {
-                if (GetStaffCommandes(staff, true).Length < 5)
+                if (GetStaffCommandes(staff, HeureLivraison).Length < 5)
                 {
                     commande = new Commande(-1, staff, Client, Plats, DateTime.Now, HeureLivraison, DateTime.MinValue, somme, false);
                     commande = CommandeDB.AddCommande(commande);
@@ -128,13 +152,23 @@ namespace BLL
             Commande commande = CommandeDB.GetCommande(ID);
             if (commande != null)
             {
-                if (commande.Client.Nom == Nom && commande.Client.Prenom == Prenom && commande.HeureLivraison.AddHours(-3) > DateTime.Now)
+                if (commande.Client.Nom == Nom && commande.Client.Prenom == Prenom && CanBeCancelled(commande))
                 {
                     commande.Annule = true;
                     CommandeDB.UpdateCommande(commande);
                 }
             }
             return GetCommande(ID);
+        }
+
+        public bool IsEnCours(Commande Commande)
+        {
+            return !Commande.Annule && Commande.HeurePaiement < Commande.HeureLivraison;
+        }
+
+        public bool CanBeCancelled(Commande Commande)
+        {
+            return DateTime.Now < Commande.HeureLivraison.AddHours(-3);
         }
     }
 }

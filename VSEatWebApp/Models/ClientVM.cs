@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VSEatWebApp.Models
 {
+    /// <summary>
+    /// Classe vue-modèle utilisée pour le formulaire client.
+    /// </summary>
     public class ClientVM : DetailedUtilisateurVM
     {
-        [Required]
+        /// <summary>
+        /// Adresse du client.
+        /// </summary>
+        [Required(ErrorMessage = "Veuillez entrer votre adresse.")]
         public string Adresse { get; set; }
-        [Required]
+        /// <summary>
+        /// Identifiant unique de la localité du client.
+        /// </summary>
+        [Required(ErrorMessage = "Veuillez sélectionner une localité.")]
         public int LocaliteID { get; set; }
     }
 }

@@ -1,21 +1,37 @@
 ﻿using BLL;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using VSEatWebApp.Models;
 
 namespace VSEatWebApp.Controllers
 {
+    /// <summary>
+    /// Classe controller pour tout ce qui concerne les commandes.
+    /// </summary>
     public class CommandeController : Controller
     {
+        /// <summary>
+        /// Objet permettant d'intéragir avec les méthodes commande.
+        /// </summary>
         private ICommandeManager CommandeManager { get; }
+        /// <summary>
+        /// Objet permettant d'intéragir avec les méthodes client.
+        /// </summary>
         private IClientManager ClientManager { get; }
+        /// <summary>
+        /// Objet permettant d'intéragir avec les méthodes staff.
+        /// </summary>
         private IStaffManager StaffManager { get; }
+        /// <summary>
+        /// Objet permettant d'intéragir avec les méthodes restaurant.
+        /// </summary>
         private IRestaurantManager RestaurantManager { get; }
-
+        /// <summary>
+        /// Propriété permettant de récupérer les heures de livraison disponibles.
+        /// </summary>
         private List<DateTime> HeuresLivraisonDisponibles
         {
             get
@@ -38,6 +54,7 @@ namespace VSEatWebApp.Controllers
                     addMin = 60 - DateTime.Now.Minute;
                 }
                 DateTime first = DateTime.Now.AddMinutes(addMin);
+                first = first.AddSeconds(-first.Second);
                 List<DateTime> rv = new List<DateTime>();
                 rv.Add(first);
                 for (int i = 1; i < 47; i++)
@@ -47,7 +64,17 @@ namespace VSEatWebApp.Controllers
                 return rv;
             } 
         }
-
+        /// <summary>
+        /// Propriété permettant de récupérer le format pour les champs DateTime dans les vues.
+        /// </summary>
+        private string DateTimeFormat { get { return "HH:mm - dd.MM.yyyy"; } }
+        /// <summary>
+        /// Constructeur du CommandeController.
+        /// </summary>
+        /// <param name="CommandeManager">Instance du CommandeManager.</param>
+        /// <param name="ClientManager">Instance du ClientManager.</param>
+        /// <param name="RestaurantManager">Instance du RestaurantManager.</param>
+        /// <param name="StaffManager">Instance du StaffManager.</param>
         public CommandeController(ICommandeManager CommandeManager, IClientManager ClientManager, IRestaurantManager RestaurantManager, IStaffManager StaffManager)
         {
             this.CommandeManager = CommandeManager;
@@ -55,66 +82,115 @@ namespace VSEatWebApp.Controllers
             this.RestaurantManager = RestaurantManager;
             this.StaffManager = StaffManager;
         }
-
+        /// <summary>
+        /// Action affichant la liste des commandes.
+        /// </summary>
+        /// <param name="status">1 pour les commandes en cours, 0 pour toutes les commandes et -1 pour les commandes terminées.</param>
+        /// <returns>Vue liste des commandes.</returns>
         public IActionResult List(int status)
         {
+            ViewData["DateTimeFormat"] = DateTimeFormat;
             IActionResult rv = RedirectToAction("Index", "Home");
-            DTO.Commande[] commandes = null;
+            Commande[] commandes = null;
             string action = string.Empty;
+            bool checkCancel = false;
             bool? orderStatus = status == 0 ? null : status == 1;
             if (HttpContext.Session.GetInt32("staID").HasValue)
             {
-                DTO.Staff staff = StaffManager.GetStaff(HttpContext.Session.GetInt32("staID").Value);
-                if (staff != null)
+                try
                 {
-                    action = "Valider";
-                    commandes = CommandeManager.GetStaffCommandes(staff, orderStatus);
+                    Staff staff = StaffManager.GetStaff(HttpContext.Session.GetInt32("staID").Value);
+                    if (staff != null)
+                    {
+                        action = "Valider";
+                        commandes = CommandeManager.GetStaffCommandes(staff, orderStatus);
+                    }
                 }
+                catch { }
             }
             else if (HttpContext.Session.GetInt32("cliID").HasValue)
             {
-                DTO.Client client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
-                if (client != null)
+                try
                 {
-                    action = "Annuler";
-                    commandes = CommandeManager.GetClientCommandes(client, orderStatus);
+                    Client client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
+                    if (client != null)
+                    {
+                        action = "Annuler";
+                        checkCancel = true;
+                        commandes = CommandeManager.GetClientCommandes(client, orderStatus);
+                    }
                 }
+                catch { }
             }
             if (commandes != null)
             {
-                List<SimpleCommandeVM> commandeVMs = new List<SimpleCommandeVM>();
-                foreach (DTO.Commande commande in commandes)
+                try
                 {
-                    commandeVMs.Add(new SimpleCommandeVM()
+                    List<CommandeVM> commandeVMs = new List<CommandeVM>();
+                    foreach (Commande commande in commandes)
                     {
-                        Commande = commande,
-                        Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
-                        EnCours = commande.HeurePaiement < commande.Heure && !commande.Annule,
-                        Action = action
-                    });
+                        bool displayAction = CommandeManager.IsEnCours(commande);
+                        if (checkCancel)
+                        {
+                            displayAction = displayAction && CommandeManager.CanBeCancelled(commande);
+                        }
+                        commandeVMs.Add(new CommandeVM()
+                        {
+                            Commande = commande,
+                            Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
+                            EnCours = CommandeManager.IsEnCours(commande),
+                            Action = new CommandeAction() { Action = action, Display = displayAction }
+                        });
+                    }
+                    rv = View(commandeVMs);
                 }
-                rv = View(commandeVMs);
+                catch { }
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action affichant le détail d'une commande.
+        /// </summary>
+        /// <param name="ID">Identifiant unique de la commande.</param>
+        /// <returns>Vue détail d'une commande.</returns>
         public IActionResult Detail(int ID)
         {
-            IActionResult rv = RedirectToAction("List", "Commande", new { id = 1 });
+            ViewData["DateTimeFormat"] = DateTimeFormat;
+            IActionResult rv = RedirectToAction("List", "Commande", new { status = 1 });
             bool clientConnected = HttpContext.Session.GetInt32("cliID").HasValue;
             bool staffConnected = HttpContext.Session.GetInt32("staID").HasValue;
+            string action = clientConnected ? "Annuler" : "Valider";
             if (clientConnected || staffConnected)
             {
-                DTO.Commande commande = CommandeManager.GetCommande(ID);
-                if (commande != null)
+                try
                 {
-                    CommandeVM commandeVM = new CommandeVM() { Commande = commande, Action = clientConnected ? "Annuler" : "Valider" };
-                    rv = View(commandeVM); ;
+                    Commande commande = CommandeManager.GetCommande(ID);
+                    if (commande != null)
+                    {
+                        bool displayAction = CommandeManager.IsEnCours(commande);
+                        if (clientConnected)
+                        {
+                            displayAction = displayAction && CommandeManager.CanBeCancelled(commande);
+                        }
+                        CommandeVM commandeVM = new CommandeVM()
+                        {
+                            Commande = commande,
+                            Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
+                            Action = new CommandeAction() { Action = action, Display = displayAction },
+                            EnCours = CommandeManager.IsEnCours(commande)
+                        };
+                        rv = View(commandeVM); ;
+                    }
                 }
+                catch { }
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action redirigeant sur l'action possible depuis une commande en fonction du type d'utilisateur connecté.
+        /// </summary>
+        /// <param name="ID">Identifiant unique de la commmande.</param>
+        /// <returns>Vue liste ou vue annulation d'une commande.</returns>
         public IActionResult Action(int ID)
         {
             IActionResult rv = RedirectToAction("List", "Commande");
@@ -128,110 +204,190 @@ namespace VSEatWebApp.Controllers
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action confirmant le paiement d'une commande.
+        /// </summary>
+        /// <param name="ID">Identifiant unique de la commande.</param>
+        /// <returns>Vue liste des commmandes.</returns>
         public IActionResult Confirm(int ID)
         {
-            IActionResult rv = RedirectToAction("List", "Commande");
+            IActionResult rv = RedirectToAction("List", "Commande", new { status = 1 });
             if (HttpContext.Session.GetInt32("staID").HasValue)
             {
-                DTO.Commande commande = CommandeManager.GetCommande(ID);
-                if (commande != null)
+                try
                 {
-                    commande = CommandeManager.ValidatePayment(commande);
-                    if (commande.HeurePaiement > DateTime.MinValue)
+                    Commande commande = CommandeManager.GetCommande(ID);
+                    if (commande != null)
                     {
-                        rv = RedirectToAction("StaffCommande", "Commande");//rediriger sur quelque chose qui EXISTE !
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Impossible de valider la commande.");
+                        commande = CommandeManager.ValidatePayment(commande);
+                        if (commande.HeurePaiement > commande.Heure)
+                        {
+                            rv = RedirectToAction("List", "Commande", new { status = 1 });
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Impossible de valider la commande.");
+                        }
                     }
                 }
+                catch { }
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action redirigeant sur la vue annulation d'une commande.
+        /// </summary>
+        /// <param name="ID">Identifiant unique de la commande.</param>
+        /// <returns>Vue d'annulation de la commande.</returns>
         public IActionResult Cancel(int ID)
         {
+            ViewData["DateTimeFormat"] = DateTimeFormat;
             IActionResult rv = RedirectToAction("List", "Commande", new { status = 1 });
             if (HttpContext.Session.GetInt32("cliID").HasValue)
             {
-                DTO.Commande commande = CommandeManager.GetCommande(ID);
-                if (commande != null)
+                try
                 {
-                    CancelCommandeVM commandeVM = new CancelCommandeVM() { Commande = commande };
-                    rv = View(commandeVM);
+                    Commande commande = CommandeManager.GetCommande(ID);
+                    if (commande != null)
+                    {
+                        CancelCommandeVM commandeVM = new CancelCommandeVM()
+                        {
+                            CommandeID = commande.ID,
+                            Commande = commande,
+                            Restaurant = RestaurantManager.GetRestaurantByPlat(commande.Plats[0]),
+                            EnCours = CommandeManager.IsEnCours(commande)
+                        };
+                        rv = View(commandeVM);
+                    }
                 }
+                catch { }
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action validant l'annulation d'une commande.
+        /// </summary>
+        /// <param name="commandeVM">Objet contenant les informations nécessaires à l'annulation d'une commande.</param>
+        /// <returns>Vue liste des commandes.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Cancel(CancelCommandeVM commandeVM)
         {
+            ViewData["DateTimeFormat"] = DateTimeFormat;
+            try
+            {
+                commandeVM.Commande = CommandeManager.GetCommande(commandeVM.CommandeID);
+                commandeVM.Restaurant = RestaurantManager.GetRestaurantByPlat(commandeVM.Commande.Plats[0]);
+            }
+            catch { }
             IActionResult rv = View(commandeVM);
             if (ModelState.IsValid)
             {
-                DTO.Commande commande = CommandeManager.CancelCommande(commandeVM.CommandeID, commandeVM.Nom, commandeVM.Prenom);
-                if (commande != null && commande.Annule)
+                if (commandeVM.ControleID != commandeVM.CommandeID)
                 {
-                    rv = RedirectToAction("List", "Commande");
+                    ModelState.AddModelError(string.Empty, "Veuillez vérifier le numéro de la commmande.");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Impossible d'annuler la commande.");
+                    try
+                    {
+                        Commande commande = CommandeManager.CancelCommande(commandeVM.ControleID, commandeVM.Nom, commandeVM.Prenom);
+                        if (commande != null && commande.Annule)
+                        {
+                            rv = RedirectToAction("List", "Commande", new { status = -1 });
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Impossible d'annuler la commande. Veuillez vérifier votre nom et prénom.");
+                        }
+                    }
+                    catch (ConnectionException e)
+                    {
+                        ModelState.AddModelError(string.Empty, e.Details);
+                    }
                 }
             }
             return rv;
         }
-
+        /// <summary>
+        /// Action redirigeant vers la vue ajout d'une commande.
+        /// </summary>
+        /// <param name="ID">Identifiant unique du restaurant.</param>
+        /// <returns>Vue ajout d'une commande.</returns>
         public IActionResult Add(int ID)
         {
-            DTO.Restaurant restaurant = RestaurantManager.GetRestaurant(ID);
-            Dictionary<int, int> plats = new Dictionary<int, int>();
-            foreach (DTO.Plat plat in restaurant.Plats)
+            try
             {
-                plats.Add(plat.ID, 0);
+                Restaurant restaurant = RestaurantManager.GetRestaurant(ID);
+                Dictionary<int, int> plats = new Dictionary<int, int>();
+                foreach (Plat plat in restaurant.Plats)
+                {
+                    plats.Add(plat.ID, 0);
+                }
+                AddCommandeVM commandeVM = new AddCommandeVM()
+                {
+                    RestaurantID = ID,
+                    Restaurant = restaurant,
+                    HeuresPossibles = HeuresLivraisonDisponibles,
+                    PlatsQuantites = plats
+                };
+                return View(commandeVM);
             }
-            AddCommandeVM commandeVM = new AddCommandeVM() { RestaurantID = ID, Restaurant = restaurant, HeuresPossibles = HeuresLivraisonDisponibles, PlatsQuantites = plats };
-            return View(commandeVM);
+            catch
+            {
+                return RedirectToAction("Index", "Restaurant");
+            }
         }
-
+        /// <summary>
+        /// Action validant l'ajout d'une commande.
+        /// </summary>
+        /// <param name="commandeVM">Objet contenant toutes les informations nécessaires à la création de la commande.</param>
+        /// <returns>Vue détail de la commande si elle a pu être ajoutée.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add(AddCommandeVM commandeVM)
         {
-            DTO.Restaurant restaurant = RestaurantManager.GetRestaurant(commandeVM.RestaurantID);
-            if (restaurant != null)
-            {
-                commandeVM.Restaurant = restaurant;
-            }
             IActionResult rv = View(commandeVM);
-            if (ModelState.IsValid)
+            try
             {
-                DTO.Client client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
-                List<DTO.CommandePlat> plats = new List<DTO.CommandePlat>();
-                foreach (DTO.Plat plat in restaurant.Plats)
+                Restaurant restaurant = RestaurantManager.GetRestaurant(commandeVM.RestaurantID);
+                commandeVM.Restaurant = restaurant;
+                commandeVM.HeuresPossibles = HeuresLivraisonDisponibles;
+                if (ModelState.IsValid)
                 {
-                    if (commandeVM.PlatsQuantites.ContainsKey(plat.ID))
+                    Client client = ClientManager.GetClient(HttpContext.Session.GetInt32("cliID").Value);
+                    List<CommandePlat> plats = new List<CommandePlat>();
+                    foreach (Plat plat in restaurant.Plats)
                     {
-                        if (commandeVM.PlatsQuantites[plat.ID] > 0)
+                        if (commandeVM.PlatsQuantites.ContainsKey(plat.ID))
                         {
-                            plats.Add(new DTO.CommandePlat(plat, commandeVM.PlatsQuantites[plat.ID]));
+                            if (commandeVM.PlatsQuantites[plat.ID] > 0)
+                            {
+                                plats.Add(new CommandePlat(plat, commandeVM.PlatsQuantites[plat.ID]));
+                            }
                         }
                     }
-                }
-                DTO.Commande commande = CommandeManager.AddCommande(client, commandeVM.Restaurant, plats.ToArray(), commandeVM.HeureLivraison);
-                if (commande != null)
-                {
-
-                    rv = RedirectToAction("NEXTSTEP");
+                    if (plats.Count > 0)
+                    {
+                        Commande commande = CommandeManager.AddCommande(client, commandeVM.Restaurant, plats.ToArray(), commandeVM.HeureLivraison);
+                        if (commande != null)
+                        {
+                            rv = RedirectToAction("Detail", "Commande", new { id = commande.ID });
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, $"Aucun staff disponible à {commandeVM.Restaurant.Localite.Nom} pour l'heure de livraison sélectionnée.");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Impossible de passer une commande sans plat.");
+                    }
                 }
             }
-            else
+            catch (ConnectionException e)
             {
-
+                ModelState.AddModelError(string.Empty, e.Details);
             }
             return rv;
         }

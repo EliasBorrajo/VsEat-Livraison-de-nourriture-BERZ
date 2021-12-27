@@ -1,10 +1,10 @@
 ﻿@model VSEatWebApp.Models.StaffVM
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Mon compte";
 }
 
-<h1>Edit</h1>
+<h1>Modifier mon compte</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -12,12 +12,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @{await Html.RenderPartialAsync("_UtilisateurBaseForm", new DetailedUtilisateurVM() { Nom = Model.Nom, Prenom = Model.Prenom, Mail = Model.Mail, Password = Model.Password, Telephone = Model.Telephone, AllLocalites = Model.AllLocalites });}
             <div class="form-group">
-                <label asp-for="Telephone" class="control-label"></label>
+                <label asp-for="Telephone" class="control-label">Téléphone</label>
                 <input asp-for="Telephone" class="form-control" />
                 <span asp-validation-for="Telephone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LocaliteIDs" class="control-label"></label>
+                <label asp-for="LocaliteIDs" class="control-label">Localités de travail</label>
                 @foreach (DTO.Localite localite in Model.AllLocalites)
                 {
                     <div class="custom-checkbox">
@@ -34,14 +34,18 @@
                 <span asp-validation-for="LocaliteIDs" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Appliquer les modifications" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Logout" asp-controller="Home">Déconnexion</a>
+    <a class="btn btn-danger" asp-action="Disable" asp-controller="Staff">Désactiver mon compte</a>
+</div>
+<br />
+<div>
+    <a asp-action="Index" asp-controller="Home">Retour à l'accueil</a>
 </div>
 
 @section Scripts {

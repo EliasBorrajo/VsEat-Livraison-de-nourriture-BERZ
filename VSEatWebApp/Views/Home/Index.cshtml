@@ -1,12 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Accueil";
 }
 
 <div class="text-center">
     <h1 class="display-4">BIENVENUE SUR BERZ</h1>
-    <p>Description brève....</p>
+    <p>
+        Ce site est une application permettant à des utilisateurs de se connecter en tant que client ou en tant que staff de VSEat.<br />
+        Vous pouvez vous connecter dans le rôle que vous souhaitez avec les deux boutons ci-dessous.<br />
+        Si vous ne possédez pas de compte, vous avez la possibilité d'en créer un en tant que <a asp-action="Create" asp-controller="Client">client</a> ou en tant que <a asp-action="Create" asp-controller="Staff">staff</a>.<br />
+        Sur la page d'accueil de votre compte vous trouverez les informations nécessaires à l'utilisation de ce site.
+    </p>
+    <h4>L'équipe VSEat BERZ vous souhaite un bon appétit !</h4>
 </div>
-
+<br />
 <div class="text-center">
     <a asp-action="Login" asp-controller="Client" class="btn btn-primary">CONNEXION CLIENT</a>
     <a asp-action="Login" asp-controller="Staff" class="btn btn-primary">CONNEXION STAFF</a>

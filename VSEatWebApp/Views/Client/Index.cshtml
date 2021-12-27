@@ -7,10 +7,11 @@
 <h1>Bienvenue @Model.Prenom @Model.Nom</h1>
 
 <div>
-    Description du fonctionnement du site, point de vue CLIENT.
-</div>
-
-<div>
-    <a asp-action="Index" asp-controller="Restaurant">Restaurants.</a>
-    <a asp-action="List" asp-controller="Commande" asp-route-status="1">Commandes.</a>
+    Vous êtes actuellement connectés en tant que <em>client</em>.<br />
+    <br />
+    Pour consulter ou modifier les informations de votre compte, accédez à la page <a asp-action="MyAccount" asp-controller="Home">mon compte</a>. Vous pourrez également désactiver votre compte si vous le souhaitez depuis cette page.
+    <br /><br />
+    La page <a asp-action="List" asp-controller="Commande" asp-route-status="1">mes commandes</a> vous permet de consulter la liste de vos commandes actives, terminées ou indépendamment de leur statut. Si une annulation est possible, vous pourrez le faire depuis cette page.
+    <br /><br />
+    La dernière page, <a asp-action="Index" asp-controller="Restaurant">restaurants</a>, vous présentera la liste des restaurants disponibles depuis VSEat. Il vous suffira d'en sélectionner un pour ensuite sélectionner les plats que vous désirez vous faire livrer. La commande sera créée lorsque vous aurez indiqué une heure de livraison souhaitée, ceci bien sûr si un staff est disponible pour la prendre en charge.
 </div>

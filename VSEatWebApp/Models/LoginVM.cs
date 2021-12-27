@@ -1,20 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VSEatWebApp.Models
 {
+    /// <summary>
+    /// Classe vue-modèle utilisée pour la connexion client et staff.
+    /// </summary>
     public class LoginVM
     {
-        [Required]
-        [DataType(DataType.EmailAddress)]
+        /// <summary>
+        /// Email de l'utilisateur.
+        /// </summary>
+        [Required(ErrorMessage = "Veuillez entrer votre adresse email.")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Veuillez entrer une adresse email valide.")]
         public string Mail { get; set; }
 
-
-        [Required]
-        [DataType(DataType.Password)]
+        /// <summary>
+        /// Mot de passe de l'utilisateur.
+        /// </summary>
+        [Required(ErrorMessage = "Veuillez entrer votre mot de passe.")]
+        [DataType(DataType.Password, ErrorMessage = "")]
         public string Password { get; set; }
     }
 }

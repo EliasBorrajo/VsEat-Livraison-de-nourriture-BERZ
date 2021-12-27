@@ -1,50 +1,42 @@
-﻿@model IEnumerable<VSEatWebApp.Models.SimpleCommandeVM>
+﻿@model IEnumerable<VSEatWebApp.Models.CommandeVM>
 
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "Liste des commandes";
 }
 
 <h1>Commandes</h1>
 
-<table>
-    <tbody>
-        <tr>
-            <td>
-                @Html.ActionLink("Commandes en cours", "List", "Commande", new { status = 1 }) |
-                @Html.ActionLink("Commandes terminées", "List", "Commande", new { status = -1 }) |
-                @Html.ActionLink("Toutes les commandes", "List", "Commande", new { status = 0 })
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="text-left">
+    @Html.ActionLink("Commandes en cours", "List", "Commande", new { status = 1 }) |
+    @Html.ActionLink("Commandes terminées", "List", "Commande", new { status = -1 }) |
+    @Html.ActionLink("Toutes les commandes", "List", "Commande", new { status = 0 })
+</div>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Commande.Heure)
+                Numéro
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Commande.HeureLivraison)
+                Heure de la commande
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Restaurant.Nom)
+                Heure de livraison
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Commande.Client.Nom)
+                Restaurant
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Commande.Client.Prenom)
+                Client
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Commande.Staff.Nom)
+                Staff
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Commande.Staff.Prenom)
+                Statut
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EnCours)
-            </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -54,46 +46,57 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Commande.Heure)
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Commande.ID)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Commande.HeureLivraison)
+                        @(item.Commande.Heure.ToString(ViewData["DateTimeFormat"].ToString()))
+                    </td>
+                    <td>
+                        @if (item.EnCours || item.Commande.Annule)
+                        {
+                            @(item.Commande.HeureLivraison.ToString(ViewData["DateTimeFormat"].ToString()))
+                        }
+                        else
+                        {
+                            @(item.Commande.HeurePaiement.ToString(ViewData["DateTimeFormat"].ToString()))
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Restaurant.Nom)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Commande.Client.Nom)
+                        @($"{item.Commande.Client.Prenom} {item.Commande.Client.Nom}")
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Commande.Client.Prenom)
+                        @($"{item.Commande.Staff.Prenom} {item.Commande.Staff.Nom}")
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Commande.Staff.Nom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Commande.Staff.Prenom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EnCours)
+                        @if (item.EnCours)
+                        {
+                            @("En cours")
+                        }
+                        else
+                        {
+                            @("Terminée")
+                        }
                     </td>
                     <td>
                         @Html.ActionLink("Détail", "Detail", new { id = item.Commande.ID })
                     </td>
-                    @if (item.EnCours)
-                    {
-                        <td>
-                            @Html.ActionLink(Model.FirstOrDefault().Action, "Action", new { id = item.Commande.ID })
-                        </td>
-                    }
+                    <td>
+                        @if (item.Action.Display)
+                        {
+                            @Html.ActionLink(Model.FirstOrDefault().Action.Action, "Action", new { id = item.Commande.ID })
+                        }
+                    </td>
                 </tr>
             }
         }
         else
         {
             <tr>
-                <td colspan="5" align="center">
+                <td colspan="9" align="center">
                     Aucune commande correspondant à ces critères.
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 ﻿@model VSEatWebApp.Models.StaffVM
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Créer un compte staff";
 }
 
 <h1>Créer un compte staff</h1>
@@ -12,12 +12,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @{await Html.RenderPartialAsync("_UtilisateurBaseForm", new DetailedUtilisateurVM() { Nom = Model.Nom, Prenom = Model.Prenom, Mail = Model.Mail, Password = Model.Password, Telephone = Model.Telephone, AllLocalites = Model.AllLocalites });}
             <div class="form-group">
-                <label asp-for="Telephone" class="control-label"></label>
+                <label asp-for="Telephone" class="control-label">Téléphone</label>
                 <input asp-for="Telephone" class="form-control" />
                 <span asp-validation-for="Telephone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LocaliteIDs" class="control-label"></label>
+                <label asp-for="LocaliteIDs" class="control-label">Localités de travail</label>
                 @foreach (DTO.Localite localite in Model.AllLocalites)
                 {
                     <div class="custom-checkbox">
@@ -30,7 +30,7 @@
                 <span asp-validation-for="LocaliteIDs" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Créer le compte" class="btn btn-primary" />
             </div>
         </form>
     </div>

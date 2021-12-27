@@ -1,60 +1,39 @@
 ﻿@model VSEatWebApp.Models.CommandeVM
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails de la commande";
 }
 
-<h1>Details</h1>
+<h1>Détails de la commande @Model.Commande.ID</h1>
+
+<hr />
+
+<h4>
+    @if (Model.EnCours)
+    {
+        @("En cours")
+    }
+    else if (Model.Commande.Annule)
+    {
+        @("Annulée")
+    }
+    else
+    {
+        @("Terminée")
+    }
+</h4>
+
+<hr />
+
+@{await Html.RenderPartialAsync("_Commande", Model);}
 
 <div>
-    <h4>Commande</h4>
-    <h4>@Html.DisplayFor(model => model.Status)</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Commande.ID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Commande.ID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Commande.Heure)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Commande.Heure)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Commande.HeureLivraison)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Commande.HeureLivraison)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Commande.HeurePaiement)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Commande.HeurePaiement)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Commande.Somme)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Commande.Somme)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Commande.Annule)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Commande.Annule)
-        </dd>
-    </dl>
-</div>
-<div>
-    @if (Model.Status) 
+    @if (Model.Action.Display)
     {
-        @Html.ActionLink(Model.Action, "Action", new { id = Model.Commande.ID })
+        @Html.ActionLink(Model.Action.Action, "Action", new { id = Model.Commande.ID })
     }
 </div>
+
 <div>
     <a asp-action="List" asp-controller="Commande" asp-route-status="1">Back to List</a>
 </div>

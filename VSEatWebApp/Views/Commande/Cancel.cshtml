@@ -1,69 +1,45 @@
 ﻿@model VSEatWebApp.Models.CancelCommandeVM
 
 @{
-    ViewData["Title"] = "Cancel";
+    ViewData["Title"] = "Annulation d'une commande";
 }
 
-<h1>Cancel</h1>
+<h1>Annulation de la commande @Model.CommandeID</h1>
 
-<h4>CancelCommandeVM</h4>
 <hr />
 
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Commande.ID)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Commande.ID)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Commande.Heure)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Commande.Heure)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Commande.HeureLivraison)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Commande.HeureLivraison)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Commande.Somme)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Commande.Somme)
-    </dd>
-</dl>
+@{await Html.RenderPartialAsync("_Commande", Model);}
 
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Cancel">
+            @Html.HiddenFor(x => x.CommandeID)
+            @Html.HiddenFor(x => x.EnCours)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CommandeID" class="control-label"></label>
-                <input asp-for="CommandeID" class="form-control" />
-                <span asp-validation-for="CommandeID" class="text-danger"></span>
+                <label class="control-label">Numéro de la commande</label>
+                <input asp-for="ControleID" class="form-control" />
+                <span asp-validation-for="ControleID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Nom" class="control-label"></label>
+                <label class="control-label">Votre nom</label>
                 <input asp-for="Nom" class="form-control" />
                 <span asp-validation-for="Nom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Prenom" class="control-label"></label>
+                <label class="control-label">Votre prénom</label>
                 <input asp-for="Prenom" class="form-control" />
                 <span asp-validation-for="Prenom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Confirmer l'annulation" class="btn btn-danger" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="List" asp-controller="Commande">Annuler</a>
+    <a asp-action="List" asp-controller="Commande">Revenir à la liste</a>
 </div>
 
 @section Scripts {
