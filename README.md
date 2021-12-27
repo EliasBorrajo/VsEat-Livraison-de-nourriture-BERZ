@@ -15,13 +15,48 @@ Une fois l'accès à la page principale de la webapp, il faut choisir si l'on ve
 <h4>Comptes staff</h4>
 Voici une liste des STAFF existants pour tenter une connection : 
 <table>
-<tr><th>Nom, Prénom</th><th>Email</th><th>Mot de passe</th><th>Compte Actif</th></tr>
-<tr><td>Le Bandit, Venec</td><td>esclaves.pascher@dies.irae</td><td>3337</td><td>Oui</td></tr>
-<tr><td>Le Caillou, Kadoc</td><td>la.pouette@dies.irae</td><td>0996</td><td>Oui</td></tr>
-<tr><td>De la Villa, Aconia</td><td>fidele.romaine@dies.irae</td><td>3844</td><td>Oui</td></tr>
-<tr><td>Le Viking, Sven</td><td>valhalla.awayts@dies.irae</td><td>8765</td><td>Oui</td></tr>
-<tr><td>Du Château, Demetra</td><td>favorite@dies.irae</td><td>2964</td><td>Oui</td></tr>
-<tr><td>Orcanie, Loth</td><td>traitre@dies.irae</td><td>7754<td><td>Non</td></tr>
+        <tr>
+            <th>Nom, Prénom</th>
+            <th>Email</th>
+            <th>Mot de passe</th>
+            <th>Compte Actif</th>
+        </tr>
+        <tr>
+            <td>Le Bandit, Venec</td>
+            <td>esclaves.pascher@dies.irae</td>
+            <td>3337</td>
+            <td>Oui</td>
+        </tr>
+        <tr>
+            <td>Le Caillou, Kadoc</td>
+            <td>la.pouette@dies.irae</td>
+            <td>0996</td>
+            <td>Oui</td>
+        </tr>
+        <tr>
+            <td>De la Villa, Aconia</td>
+            <td>fidele.romaine@dies.irae</td>
+            <td>3844</td>
+            <td>Oui</td>
+        </tr>
+        <tr>
+            <td>Le Viking, Sven</td>
+            <td>valhalla.awayts@dies.irae</td>
+            <td>8765</td>
+            <td>Oui</td>
+        </tr>
+        <tr>
+            <td>Du Château, Demetra</td>
+            <td>favorite@dies.irae</td>
+            <td>2964</td>
+            <td>Oui</td>
+        </tr>
+        <tr>
+            <td>Orcanie, Loth</td>
+            <td>traitre@dies.irae</td>
+            <td>7754<td>
+            <td>Non</td>
+        </tr>
 </table>
 
 
