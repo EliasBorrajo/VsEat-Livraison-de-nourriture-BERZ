@@ -2,12 +2,49 @@
 <h2>Description</h2>
 Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>software development<b>.
 
-
-
-
-<h2>Sommaire</h2>
 <h2>Installation & Lancement</h2>
+<h3>Version deployé</h3>
+Pour commencer, le projet est deployé sur le serveur de la HES du professeur, donc il faut se connecter au réseau du prof pour y acceder, via le réseau de l'école, ou le VPN de l'école.
+
+L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.109.124.35:81/BERZ)
+
 <h2>Manuel d'utilisation</h2>
+Une fois l'accès à la page principale de la webapp, il faut choisir si l'on veut se connecter en tant que client, ou staff(qui seront les livreurs).
+
+Voici une liste des STAFF existants pour tenter une connection : 
+<h4>Comptes staff</h4>
+<table>
+<tr><th>Nom, Prénom</th><th>Email</th><th>Mot de passe</th></tr>
+<tr><td>Le Bandit, Venec</td><td>esclaves.pascher@dies.irae</td><td>3337</td></tr>
+<tr><td>Le Caillou, Kadoc</td><td>la.pouette@dies.irae</td><td>0996</td></tr>
+<tr><td>De la Villa, Aconia</td><td>fidele.romaine@dies.irae</td><td>3844</td></tr>
+<tr><td>Le Viking, Sven</td><td>valhalla.awayts@dies.irae</td><td>8765</td></tr>
+<tr><td>Du Château, Demetra</td><td>favorite@dies.irae</td><td>2964</td></tr>
+<tr><td>Orcanie, Loth</td><td>traitre@dies.irae</td><td>7754<td></tr>
+</table>
+
+Voici une liste des CLIENTS existants pour tenter une connection : 
+<h4>Comptes client</h4>
+<table>
+<tr><th>Nom, Prénom</th><th>Email</th><th>Mot de passe</th></tr>
+<tr><td>Renna, Zacharie</td><td>rz@dies.irae</td><td>1234</td></tr><tr>
+<td>Pendragon, Arthur</td><td>sanglier.cornouaille@dies.irae</td><td>4200</td></tr>
+<tr><td>Du Lac, Lancelot</td><td>chevalier.errant@dies.irae</td><td>1922</td></tr>
+<tr><td>Blaise, Père</td><td>quinte.juste@dies.irae</td><td>6669</td></tr>
+<tr><td>Du Lac, Dame</td><td>invisible.aux.mortels@dies.irae</td><td>2119</td></tr>
+<tr><td>Druide, Merlin</td><td>coco.asticot@dies.irae</td><td>2500</td></tr>
+<tr><td>Carmélide, Léodagan</td><td>chevalier.sanguinaire@dies.irae</td><td>3024</td></tr>
+<tr><td>Chevalier au Lion, Yvain</td><td>petit.pedestre@dies.irae</td><td>7843</td></tr>
+<tr><td>Le Gallois, Perceval</td><td>pas.faux@dies.irae</td><td>6597</td></tr>
+<tr><td>De Vannes, Karadoc</td><td>semi.croustillant@dies.irae</td><td>874</td></tr>
+<tr><td>De Gaunes, Bohort</td><td>mecreants@dieas.irae</td><td>5591</td></tr>
+<tr><td>De Kelliwich, Elias</td><td>enchanteur.du.nord@dies.irae</td><td>6660</td></tr>
+</table>
+
+
+
+
+
 <h2>Crédits</h2>
 <h2>Licence</h2>
 
