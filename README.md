@@ -11,8 +11,9 @@ L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.1
 <h2>Manuel d'utilisation</h2>
 Une fois l'accès à la page principale de la webapp, il faut choisir si l'on veut se connecter en tant que client, ou staff(qui seront les livreurs).
 
-Voici une liste des STAFF existants pour tenter une connection : 
+
 <h4>Comptes staff</h4>
+Voici une liste des STAFF existants pour tenter une connection : 
 <table>
 <tr><th>Nom, Prénom</th><th>Email</th><th>Mot de passe</th></tr>
 <tr><td>Le Bandit, Venec</td><td>esclaves.pascher@dies.irae</td><td>3337</td></tr>
@@ -23,8 +24,9 @@ Voici une liste des STAFF existants pour tenter une connection :
 <tr><td>Orcanie, Loth</td><td>traitre@dies.irae</td><td>7754<td></tr>
 </table>
 
-Voici une liste des CLIENTS existants pour tenter une connection : 
+
 <h4>Comptes client</h4>
+Voici une liste des CLIENTS existants pour tenter une connection : 
 <table>
 <tr><th>Nom, Prénom</th><th>Email</th><th>Mot de passe</th></tr>
 <tr><td>Renna, Zacharie</td><td>rz@dies.irae</td><td>1234</td></tr><tr>
