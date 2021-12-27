@@ -63,19 +63,24 @@ Voici une liste des STAFF existants pour tenter une connection :
 <h4>Comptes client</h4>
 Voici une liste des CLIENTS existants pour tenter une connection : 
 <table>
-<tr><th>Nom, Prénom</th><th>Email</th><th>Mot de passe</th<th>Compte Actif</th>></tr>
-<tr><td>Renna, Zacharie</td><td>rz@dies.irae</td><td>1234</td><td>Oui</td></tr>
-<tr><td>Pendragon, Arthur</td><td>sanglier.cornouaille@dies.irae</td><td>4200</td><td>Oui</td></tr>
-<tr><td>Du Lac, Lancelot</td><td>chevalier.errant@dies.irae</td><td>1922</td><td>Oui</td></tr>
-<tr><td>Blaise, Père</td><td>quinte.juste@dies.irae</td><td>6669</td><td>Non</td></tr>
-<tr><td>Du Lac, Dame</td><td>invisible.aux.mortels@dies.irae</td><td>2119</td><td>Oui</td></tr>
-<tr><td>Druide, Merlin</td><td>coco.asticot@dies.irae</td><td>2500</td><td>Oui</td></tr>
-<tr><td>Carmélide, Léodagan</td><td>chevalier.sanguinaire@dies.irae</td><td>3024</td><td>Oui</td></tr>
-<tr><td>Chevalier au Lion, Yvain</td><td>petit.pedestre@dies.irae</td><td>7843</td><td>Oui</td></tr>
-<tr><td>Le Gallois, Perceval</td><td>pas.faux@dies.irae</td><td>6597</td><td>Oui</td></tr>
-<tr><td>De Vannes, Karadoc</td><td>semi.croustillant@dies.irae</td><td>874</td><td>Oui</td></tr>
-<tr><td>De Gaunes, Bohort</td><td>mecreants@dieas.irae</td><td>5591</td><td>Oui</td></tr>
-<tr><td>De Kelliwich, Elias</td><td>enchanteur.du.nord@dies.irae</td><td>6660</td><td>Oui</td></tr>
+        <tr>
+            <th>Nom, Prénom</th>
+            <th>Email</th>
+            <th>Mot de passe</th>
+            <th>Compte Actif</th>
+        </tr>
+        <tr><td>Renna, Zacharie</td><td>rz@dies.irae</td><td>1234</td><td>Oui</td></tr>
+        <tr><td>Pendragon, Arthur</td><td>sanglier.cornouaille@dies.irae</td><td>4200</td><td>Oui</td></tr>
+        <tr><td>Du Lac, Lancelot</td><td>chevalier.errant@dies.irae</td><td>1922</td><td>Oui</td></tr>
+        <tr><td>Blaise, Père</td><td>quinte.juste@dies.irae</td><td>6669</td><td>Non</td></tr>
+        <tr><td>Du Lac, Dame</td><td>invisible.aux.mortels@dies.irae</td><td>2119</td><td>Oui</td></tr>
+        <tr><td>Druide, Merlin</td><td>coco.asticot@dies.irae</td><td>2500</td><td>Oui</td></tr>
+        <tr><td>Carmélide, Léodagan</td><td>chevalier.sanguinaire@dies.irae</td><td>3024</td><td>Oui</td></tr>
+        <tr><td>Chevalier au Lion, Yvain</td><td>petit.pedestre@dies.irae</td><td>7843</td><td>Oui</td></tr>
+        <tr><td>Le Gallois, Perceval</td><td>pas.faux@dies.irae</td><td>6597</td><td>Oui</td></tr>
+        <tr><td>De Vannes, Karadoc</td><td>semi.croustillant@dies.irae</td><td>874</td><td>Oui</td></tr>
+        <tr><td>De Gaunes, Bohort</td><td>mecreants@dieas.irae</td><td>5591</td><td>Oui</td></tr>
+        <tr><td>De Kelliwich, Elias</td><td>enchanteur.du.nord@dies.irae</td><td>6660</td><td>Oui</td></tr>
 </table>
 
 
