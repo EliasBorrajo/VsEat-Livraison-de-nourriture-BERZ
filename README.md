@@ -28,7 +28,7 @@ Voici une liste des CLIENTS existants pour tenter une connection :
 <table>
 <tr><th>Nom, Prénom</th><th>Email</th><th>Mot de passe</th></tr>
 <tr><td>Renna, Zacharie</td><td>rz@dies.irae</td><td>1234</td></tr><tr>
-<td>Pendragon, Arthur</td><td>sanglier.cornouaille@dies.irae</td><td>4200</td></tr>
+<tr><td>Pendragon, Arthur</td><td>sanglier.cornouaille@dies.irae</td><td>4200</td></tr>
 <tr><td>Du Lac, Lancelot</td><td>chevalier.errant@dies.irae</td><td>1922</td></tr>
 <tr><td>Blaise, Père</td><td>quinte.juste@dies.irae</td><td>6669</td></tr>
 <tr><td>Du Lac, Dame</td><td>invisible.aux.mortels@dies.irae</td><td>2119</td></tr>
