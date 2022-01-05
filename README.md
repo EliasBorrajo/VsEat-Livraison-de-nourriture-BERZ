@@ -14,14 +14,16 @@ Bootstrap a l'avantage  d'avoir du razorcode qui interprêtera du code C# et le 
 L'autre avantage de bootstrap qui peut sembler pareil que le razorcode, c'est les ASP commands qui seront aussi utilisées lors du projet.
     * HTML / CSS / SCSS / JavaScript 
 - Framework .NET Core 5.0 : Les differentes couches (DAL/ BLL / DTO / ConsoleApp / MVC) utilisent ce framework
-    * De plus, l'installation de l'extension "NuGet" est nécessaire.
+    * De plus, l'installation de l'extension "NuGet" est nécessaire, c'est un gestionnaire de package pour la solution.
+      * NuGet s'installe depuis : Barre d'outils --> Outils --> gestionnaire de package NuGet --> Gerer les packets. Puis installer :
+        * 
 
 Les professeurs sont nos clients lors de la remise du projet, il ne faut donc pas que le projet plante durant son utilisation.
 
 <h3>Database :</h3>
 La base de données est de type : SQL Server de Microsoft.
 
-La base de données stockue des données à gérer :
+La base de données stocke des données à gérer :
 - les plats vendus par les restaurants
 - les commandes des clients
 - le personnel de BERZ responsable de la livraison dans les villes
@@ -31,7 +33,7 @@ La base de données stockue des données à gérer :
 <h3>User Stories principales :</h3>
 
 - Login : Un client doit créer un compte avec son adresse avant d'utiliser le site web
-- Commande : Un client connecté peut choisir des plats dans une liste donnée par chaque restaurant disponible sur le site web pour former une commande. 
+- Commande : Un client connecté peut choisir des plats dans une liste donnée pour chaque restaurant disponible sur le site web pour former une commande. 
 Il (le client) ajoutera le délai de livraison (toutes les 15 minutes) pour sa commande. A la fin de la commande, le prix que le client doit payer au coursier sera affiché.
 
 - Gestion des livraisons : Le système attribue la livraison d'une commande à un coursier disponible dans la même ville que le restaurant où la commande est passée. Un coursier ne peut pas avoir plus de 5 commandes à livrer toutes les 30 minutes.
@@ -40,8 +42,8 @@ Il (le client) ajoutera le délai de livraison (toutes les 15 minutes) pour sa c
 
 
 <h2>Installation & Lancement</h2>
-<h3>Version deployé :</h3>
-Pour commencer, le projet est deployé sur le serveur de la HES du professeur. Pour pouvoir y acceder, il est nécessaire d'être connecté au réseau de la HES en étant sur place ou via le VPN de l'école.
+<h3>Version deployée :</h3>
+Pour commencer, le projet est deployé sur le serveur de la HES du professeur. Pour pouvoir y accéder, il est nécessaire d'être connecté au réseau de la HES en étant sur place ou via le VPN de l'école.
 
 L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.109.124.35:81/BERZ)
 
@@ -81,7 +83,7 @@ L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.1
 
 
 <h2>Manuel d'utilisation</h2>
-Une fois l'accès à la page principale de la webapp, il faut choisir si l'on veut se connecter en tant que client, ou staff(qui seront les livreurs).
+Une fois l'accès à la page principale de la webapp, il faut choisir si l'on veut se connecter en tant que client, ou staff (qui seront les livreurs).
 
 
 <h4>Comptes staff</h4>
@@ -216,64 +218,44 @@ Voici une liste des CLIENTS existants pour tenter une connection :
 </table>
 
 
-<h2>Scenarios</h2>
+<h2>Scénarios</h2>
 
 - Les clients peuvent donc se connecter puis :
-    * Acceder à leur profil afin de modifier leurs informations, leur localité & désactiver leur compte.
-    * Voir les restaurants existant, et créer une nouvelle commande pour une date & heure voulue.
+    * Accéder à leur profil afin de modifier leurs informations, leur localité & désactiver leur compte.
+    * Voir les restaurants existants, et créer une nouvelle commande pour une date & heure voulue.
     * Voir la l'historique des commandes.
-    * Annuler une commande en cours qui n'a pas encore été validée par le livreur.
+    * Annuler une commande en cours au moins 3h à l'avance & qui n'a pas encore été validé par le livreur.
 
 - Les staffs peuvent donc se connecter puis : 
-    * Acceder à leur profil afin de modifier leurs informations, leur localité de livraisons & désactiver leur compte.
+    * Accéder à leur profil afin de modifier leurs informations, leur localité de livraisons & désactiver leur compte.
     * Voir la l'historique des commandes.
-    * Valider une commande passé par un client.
+    * Valider une commande passée par un client.
 
-Un client va donc passer une commande, et un staff s'occupera de celle-ci. Le client peut annuler sa commande tant qu'aucun staff ne la valide. 
-Le client paye sa commande au staff lorsque le staff arrive au lieu de livraison. 
-On part du prinipe que le client veut se faire livrer à son domicile, donc à son adresse.
+Un client va donc passer une commande, et un staff s'occupera de celle-ci. Le client peut annuler sa commande 3h à l'avance et tant qu'aucun staff ne la valide. 
+Le client paie sa commande au staff lorsque le staff arrive au lieu de livraison. 
+On part du principe que le client veut se faire livrer à son domicile, donc à son adresse.
 
 <h2>Notes </h2>
 <h3>Images :</h3>
-Etant donné que nous possedons une petite DB, et que le projet reste relativement petit, nous avons décidé de stocker les images directement dans la DB sous forme de "VarBinary". Ce sera donc une string de bytes stocké que nous convertissons lors de l'affichage.
-Ces images sont en format .png afin d'être moins lourd que du .jpeg. Et par souci d'optimisation, les images ont été compressés d'environ 65% avant d'entre ajoutées à la DB. Ainsi, nous n'avons aps de pertes de performances.
+Etant donné que nous possédons une petite DB, et que le projet reste relativement petit, nous avons décidé de stocker les images directement dans la DB sous forme de "VarBinary". Ce sera donc un tabelau de bytes stocké que nous convertissons lors de la récuperation de l'enregistrement. Ce tableau de bytes sera converti en StringBase64 pour l'affichage.
+Ces images sont en format .png afin d'être moins lourd que du .jpeg. Et par souci d'optimisation, les images ont été compressés d'environ 65% avant d'entre ajoutées à la DB. Ainsi, nous n'avons pas de pertes de performances.
 
 Un projet a été crée s'apellant : [PlatManagementTool](https://gitlab.com/EliasKelliwich/livraisonnourriture/-/tree/master/PlatManagementTool). 
-C'est un outil permettant de visualiser quel restaurant et ses plats possedent des images, et de pouvoir aller chercher des images sur le disue du PC de l'utilisateur facilement, et de les upload dans la DB.
+C'est un outil permettant de visualiser quel restaurant et quels plats possèdent des images, et de pouvoir aller chercher des images sur le disque du PC de l'utilisateur facilement, et de les upload dans la DB.
 
 <h3>Requêtes SQL</h3>
-Les requêtes SQL écrites dans la DAL ont aussi été optimisées. Nous ne faisons pas un "SELECT *" qui prendrait toutes les données de la table, mais un "SELECT name ...." avec chaque élément voulu. C'est plus efficace.
+Les requêtes SQL écrites dans la DAL ont aussi été optimisées. Nous ne faisons pas un " SELECT * " qui prendrait toutes les données de la table, mais un " SELECT name .... " avec chaque élément voulu. C'est plus efficace parce que la requête sait directement quelle colonne récuperér.
 
 <h2>Améliorations futures</h2>
+A cause de la durée du projet qui est limtié, nous n'avons pas pu implementér toutes les fonctionnalitées voulues.
 
 - AJOUTER MPD AU PROJET
-- AJOUTER SCIPTE MPD AU PROJET
 - Ajouter un horaire aux restaurants, pour éviter les commandes hors horaires.
-- Ajouter des catégories pours les plats : Viande / Poisson / Burger / Boissons / Vegan
-- Ajouter une taxe à chaque commande pour le revenu des dev de la plateforme
+- Ajouter des catégories pours les plats : Viande / Poisson / Burger / Boissons / Vegan.
+- Ajouter une taxe à chaque commande pour le revenu des dev de la plateforme.
 - Dans la gestion des exceptions, si une erreur survient et nous ramène sur une autre page, afficher l'erreur dans une pop-up de l'app.
 - Améliorer le design des pages.
 
 <h2>Crédits</h2>
 Projet réalisé par : 
-[Rennaz Zacharie](https://gitlab.com/renna.zacharie) & [Borrajo Elias](https://gitlab.com/EliasKelliwich)
-
-
-
-<h2>Licence</h2>
-
-
-
-4. How to Install and Run the Project
-If you are working on a project that a user needs to install or run locally in a machine like a "POS", you should include the steps required to install your project and also the required dependencies if any.
-
-Provide a step-by-step description of how to get the development environment set and running.
-
-5. How to Use the Project
-Provide instructions and examples so users/contributors can use the project. This will make it easy for them in case they encounter a problem – they will always have a place to reference what is expected.
-
-You can also make use of visual aids by including materials like screenshots to show examples of the running project and also the structure and design principles used in your project.
-
-Also if your project will require authentication like passwords or usernames, this is a good section to include the credentials.
-
-
+[Renna Zacharie](https://gitlab.com/renna.zacharie) & [Borrajo Elias](https://gitlab.com/EliasKelliwich)
