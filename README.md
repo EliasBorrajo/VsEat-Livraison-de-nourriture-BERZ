@@ -14,9 +14,15 @@ Bootstrap a l'avantage  d'avoir du razorcode qui interprêtera du code C# et le 
 L'autre avantage de bootstrap qui peut sembler pareil que le razorcode, c'est les ASP commands qui seront aussi utilisées lors du projet.
     * HTML / CSS / SCSS / JavaScript 
 - Framework .NET Core 5.0 : Les differentes couches (DAL/ BLL / DTO / ConsoleApp / MVC) utilisent ce framework
-    * De plus, l'installation de l'extension "NuGet" est nécessaire, c'est un gestionnaire de package pour la solution.
-      * NuGet s'installe depuis : Barre d'outils --> Outils --> gestionnaire de package NuGet --> Gerer les packets. Puis installer :
-        * 
+    * De plus, l'installation depuis "NuGet" des extensions suivantes ont été nécessaires, c'est un gestionnaire de package pour la solution.
+      * Les extensions de "NuGet" s'installent depuis : 
+        * Barre d'outils --> Outils --> gestionnaire de package NuGet --> Gerer les packets. 
+      * Puis installer :
+        * Microsoft.Extensions.Configuration
+        * Microsoft.Extensions.Configuration.Abstractions
+        * Microsoft.Extensions.Configuration.FileExtensions
+        * Microsoft.Extensions.Configuration.Json
+        * System.Data.SqlClient
 
 Les professeurs sont nos clients lors de la remise du projet, il ne faut donc pas que le projet plante durant son utilisation.
 
