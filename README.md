@@ -1,7 +1,7 @@
 <h1>Plateforme de livraison de nourriture - BERZ</h1> 
 <h2>Description</h2>
 <h3>Vue d'ensemble :</h3>
-Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>software development<b>.
+Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>Software Development - SI - Implémentation du système d'information<b>.
 
 Au cours du semestre, nous aprennons à développer une application en utilisant plusieurs couches. 
 On implemente une couche de données (DAL), une couche métier (BLL) et enfin on apprend à utiliser ASP.NET MVC (model View Controller) comme interface utilisateur.
@@ -20,6 +20,7 @@ La base de données stockue des données à gérer :
 - login des clients
 
 <h3>User Stories principales :</h3>
+
 - Login : Un client doit créer un compte avec son adresse avant d'utiliser le site web
 - Commande : Un client connecté peut choisir des plats dans une liste donnée par chaque restaurant disponible sur le site web pour former une commande. 
 Il (le client) ajoutera le délai de livraison (toutes les 15 minutes) pour sa commande. A la fin de la commande, le prix que le client doit payer au coursier sera affiché.
