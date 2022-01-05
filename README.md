@@ -1,7 +1,13 @@
 <h1>Plateforme de livraison de nourriture - BERZ</h1> 
 <h2>Description</h2>
+<h3>Vue d'ensemble</h3>
 Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>software development<b>.
 
+Au cours du semestre, nous aprennons à développer une application en utilisant plusieurs couches. 
+On implemente une couche de données (DAL), une couche métier (BLL) et enfin on apprend à utiliser ASP.NET MVC (model View Controller) comme interface utilisateur.
+L'idée du projet est de modifier le DAL et le BLL créés pendant les leçons et de créer une nouvelle interface utilisateur développée comme une application MVC. 
+
+Les professeurs sont nos clients lors de la remise du projet.
 
 <h2>Installation & Lancement</h2>
 <h3>Version deployé</h3>
