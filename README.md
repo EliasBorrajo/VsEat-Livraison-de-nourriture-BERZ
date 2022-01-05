@@ -1,12 +1,84 @@
 <h1>Plateforme de livraison de nourriture - BERZ</h1> 
 <h2>Description</h2>
-Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>software development<b>.
+<h3>Vue d'ensemble :</h3>
+Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>Software Development - SI - Implémentation du système d'information<b>.
+
+Au cours du semestre, nous aprennons à développer une application en utilisant plusieurs couches. 
+On implemente une couche de données (DAL), une couche métier (BLL) et enfin on apprend à utiliser ASP.NET MVC (model View Controller) comme interface utilisateur.
+L'idée du projet est de modifier le DAL et le BLL créés pendant les leçons et de créer une nouvelle interface utilisateur développée comme une application MVC. 
+
+Les technologies utilisées durant le projet sont :
+- C# :  Car c'est un langage proche du Java que nous conaissons déja. Environ 70% de l'application.
+- BootStrap 4 : Nous permet de créer des vues grâce à des templates déja existant et d'avoir une web-app esthetique et agréable à l'utisation. C'est un gain de temps énorme sur la partie front end du projet. 
+Bootstrap a l'avantage  d'avoir du razorcode qui interprêtera du code C# et le traduira en adequation. 
+L'autre avantage de bootstrap qui peut sembler pareil que le razorcode, c'est les ASP commands qui seront aussi utilisées lors du projet.
+    * HTML / CSS / SCSS / JavaScript 
+- Framework .NET Core 5.0 : Les differentes couches (DAL/ BLL / DTO / ConsoleApp / MVC) utilisent ce framework
+    * De plus, l'installation de l'extension "NuGet" est nécessaire.
+
+Les professeurs sont nos clients lors de la remise du projet, il ne faut donc pas que le projet plante durant son utilisation.
+
+<h3>Database :</h3>
+La base de données est de type : SQL Server de Microsoft.
+
+La base de données stockue des données à gérer :
+- les plats vendus par les restaurants
+- les commandes des clients
+- le personnel de BERZ responsable de la livraison dans les villes
+- login du personnel
+- login des clients
+
+<h3>User Stories principales :</h3>
+
+- Login : Un client doit créer un compte avec son adresse avant d'utiliser le site web
+- Commande : Un client connecté peut choisir des plats dans une liste donnée par chaque restaurant disponible sur le site web pour former une commande. 
+Il (le client) ajoutera le délai de livraison (toutes les 15 minutes) pour sa commande. A la fin de la commande, le prix que le client doit payer au coursier sera affiché.
+
+- Gestion des livraisons : Le système attribue la livraison d'une commande à un coursier disponible dans la même ville que le restaurant où la commande est passée. Un coursier ne peut pas avoir plus de 5 commandes à livrer toutes les 30 minutes.
+
+- Interface de livraison : chaque coursier peut se connecter au système pour voir ses prochaines livraisons. Lorsqu'une livraison est effectuée, le livreur l'archive en appuyant sur un bouton de l'interface de livraison.
+
 
 <h2>Installation & Lancement</h2>
-<h3>Version deployé</h3>
-Pour commencer, le projet est deployé sur le serveur de la HES du professeur, donc il faut se connecter au réseau du prof pour y acceder, via le réseau de l'école, ou le VPN de l'école.
+<h3>Version deployé :</h3>
+Pour commencer, le projet est deployé sur le serveur de la HES du professeur. Pour pouvoir y acceder, il est nécessaire d'être connecté au réseau de la HES en étant sur place ou via le VPN de l'école.
 
 L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.109.124.35:81/BERZ)
+
+<h3>Cloner le projet :</h3>
+
+* Afin de pouvoir se connecter au serveur du professeur, il faut avoir un fichier de configuration, apellé : _appsettings.json_ placé à la racine du projet console ou MVC.
+  Dans ce fichier, nous avons une "ConnectionStrings", il faut y donner l'adresse IP du serveur du professeur, le nom de la DBO à laquelle l'on veut se connecter, un ID & Password pour avoir accès au serveur. 
+  
+  1 : Voici l'exemple simplifié de l'accès avec l'application _console_ : 
+
+        ```
+        {
+        "ConnectionStrings": {
+            "DefaultConnection": "Data Source=153.109.124.35;Initial Catalog=VSEAT_BERZ;Persist Security Info=True;User ID=6231db;Password=Pwd46231."
+        }
+        }
+        ```
+
+  2 : Et voici ce même fichier, mais dans le _MVC de la web-app_ : 
+
+            ```
+            {
+            "ConnectionStrings": {
+                "DefaultConnection": "Data Source=153.109.124.35;Initial Catalog=VSEAT_BERZ;Persist Security Info=True;User ID=6231db;Password=Pwd46231."
+            },
+            "Logging": {
+                "LogLevel": {
+                "Default": "Information",
+                "Microsoft": "Warning",
+                "Microsoft.Hosting.Lifetime": "Information"
+                }
+            },
+            "AllowedHosts": "*"
+            }
+
+            ```
+
 
 <h2>Manuel d'utilisation</h2>
 Une fois l'accès à la page principale de la webapp, il faut choisir si l'on veut se connecter en tant que client, ou staff(qui seront les livreurs).
@@ -29,7 +101,7 @@ Voici une liste des STAFF existants pour tenter une connection :
         </tr>
         <tr>
             <td>Le Caillou, Kadoc</td>
-            <td>la.pouette@dies.irae</td>
+            <td>la.poulette@dies.irae</td>
             <td>0996</td>
             <td>Oui</td>
         </tr>
@@ -71,7 +143,7 @@ Voici une liste des CLIENTS existants pour tenter une connection :
         </tr>
         <tr>
             <td>Renna, Zacharie</td>
-            <td>rz@dies.irae</td
+            <td>rz@dies.irae</td>
             <td>1234</td>
             <td>Oui</td>
         </tr>
@@ -146,25 +218,40 @@ Voici une liste des CLIENTS existants pour tenter une connection :
 
 <h2>Scenarios</h2>
 
+- Les clients peuvent donc se connecter puis :
+    * Acceder à leur profil afin de modifier leurs informations, leur localité & désactiver leur compte.
+    * Voir les restaurants existant, et créer une nouvelle commande pour une date & heure voulue.
+    * Voir la l'historique des commandes.
+    * Annuler une commande en cours qui n'a pas encore été validée par le livreur.
+
+- Les staffs peuvent donc se connecter puis : 
+    * Acceder à leur profil afin de modifier leurs informations, leur localité de livraisons & désactiver leur compte.
+    * Voir la l'historique des commandes.
+    * Valider une commande passé par un client.
+
+Un client va donc passer une commande, et un staff s'occupera de celle-ci. Le client peut annuler sa commande tant qu'aucun staff ne la valide. 
+Le client paye sa commande au staff lorsque le staff arrive au lieu de livraison. 
+On part du prinipe que le client veut se faire livrer à son domicile, donc à son adresse.
+
+<h2>Notes </h2>
+<h3>Images :</h3>
+Etant donné que nous possedons une petite DB, et que le projet reste relativement petit, nous avons décidé de stocker les images directement dans la DB sous forme de "VarBinary". Ce sera donc une string de bytes stocké que nous convertissons lors de l'affichage.
+Ces images sont en format .png afin d'être moins lourd que du .jpeg. Et par souci d'optimisation, les images ont été compressés d'environ 65% avant d'entre ajoutées à la DB. Ainsi, nous n'avons aps de pertes de performances.
+
+Un projet a été crée s'apellant : [PlatManagementTool](https://gitlab.com/EliasKelliwich/livraisonnourriture/-/tree/master/PlatManagementTool). 
+C'est un outil permettant de visualiser quel restaurant et ses plats possedent des images, et de pouvoir aller chercher des images sur le disue du PC de l'utilisateur facilement, et de les upload dans la DB.
 
 <h2>Crédits</h2>
+Projet réalisé par : 
+[Rennaz Zacharie](https://gitlab.com/renna.zacharie)
+[Borrajo Elias](https://gitlab.com/EliasKelliwich)
+
+<h3>Requêtes SQL</h3>
+Les requêtes SQL écrites dans la DAL ont aussi été optimisées. Nous ne faisons pas un "SELECT *" qui prendrait toutes les données de la table, mais un "SELECT name ...." avec chaque élément voulu. C'est plus efficace.
+
 <h2>Licence</h2>
 
-1. Project's Title
-This is the name of the project. It describes the whole project in one sentence, and helps people understand what the main goal and aim of the project is.
 
-2. Project Description
-This is an important component of your project that many new developers often overlook.
-
-Your description is an extremely important aspect of your project. A well-crafted description allows you to show off your work to other developers as well as potential employers.
-
-The quality of a README description often differentiates a good project from a bad project. A good one takes advantage of the opportunity to explain and showcase:
-
-What your application does,
-Why you used the technologies you used,
-Some of the challenges you faced and features you hope to implement in the future.
-3. Table of Contents (Optional)
-If your README is very long, you might want to add a table of contents to make it easy for users to navigate to different sections easily. It will make it easier for readers to move around the project with ease.
 
 4. How to Install and Run the Project
 If you are working on a project that a user needs to install or run locally in a machine like a "POS", you should include the steps required to install your project and also the required dependencies if any.
@@ -178,18 +265,4 @@ You can also make use of visual aids by including materials like screenshots to 
 
 Also if your project will require authentication like passwords or usernames, this is a good section to include the credentials.
 
-6. Include Credits
-If you worked on the project as a team or an organization, list your collaborators/team members. You should also include links to their GitHub profiles and social media too.
 
-Also, if you followed tutorials or referenced a certain material that might help the user to build that particular project, include links to those here as well.
-
-This is just a way to show your appreciation and also to help others get a first hand copy of the project.
-
-7. Add a License
-For most README files, this is usually considered the last part. It lets other developers know what they can and cannot do with your project.
-
-We have different types of licenses depending on the kind of project you are working on. Depending on the one you will choose it will determine the contributions your project gets.
-
-The most common one is the GPL License which allows other to make modification to your code and use it for commercial purposes. If you need help choosing a license, use check out this link: https://choosealicense.com/
-
-Up to this point what we have covered are the minimum requirements for a good README. But you might also want to consider adding the following sections to make it more eye catching and interactive.
