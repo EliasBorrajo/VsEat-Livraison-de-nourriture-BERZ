@@ -245,6 +245,7 @@ C'est un outil permettant de visualiser quel restaurant et ses plats possedent d
 Les requêtes SQL écrites dans la DAL ont aussi été optimisées. Nous ne faisons pas un "SELECT *" qui prendrait toutes les données de la table, mais un "SELECT name ...." avec chaque élément voulu. C'est plus efficace.
 
 <h2>Améliorations futures</h2>
+
 - AJOUTER MPD AU PROJET
 - AJOUTER SCIPTE MPD AU PROJET
 - Ajouter un horaire aux restaurants, pour éviter les commandes hors horaires.
