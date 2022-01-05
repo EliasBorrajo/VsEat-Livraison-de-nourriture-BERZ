@@ -47,10 +47,10 @@ L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.1
 
 <h3>Cloner le projet :</h3>
 
-* Afin de pouvoir se connecter au serveur du professeur, il faut avoir un fichier de configuration, apellé : _appsettings.json_
+* Afin de pouvoir se connecter au serveur du professeur, il faut avoir un fichier de configuration, apellé : _appsettings.json_ placé à la racine du projet console ou MVC.
   Dans ce fichier, nous avons une "ConnectionStrings", il faut y donner l'adresse IP du serveur du professeur, le nom de la DBO à laquelle l'on veut se connecter, un ID & Password pour avoir accès au serveur. 
   
-  1 : Voici l'exemple simplifié de l'accès avec l'application console : 
+  1 : Voici l'exemple simplifié de l'accès avec l'application _console_ : 
 
         ```
         {
@@ -60,7 +60,7 @@ L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.1
         }
         ```
 
-  2 : Et voici ce même fichier, mais dans le MVC de la web-app 
+  2 : Et voici ce même fichier, mais dans le _MVC de la web-app_ : 
 
             ```
             {
