@@ -143,7 +143,7 @@ Voici une liste des CLIENTS existants pour tenter une connection :
         </tr>
         <tr>
             <td>Renna, Zacharie</td>
-            <td>rz@dies.irae</td
+            <td>rz@dies.irae</td>
             <td>1234</td>
             <td>Oui</td>
         </tr>
