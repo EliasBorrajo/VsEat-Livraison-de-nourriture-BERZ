@@ -2,6 +2,7 @@
 <h2>Description</h2>
 Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>software development<b>.
 
+
 <h2>Installation & Lancement</h2>
 <h3>Version deployé</h3>
 Pour commencer, le projet est deployé sur le serveur de la HES du professeur, donc il faut se connecter au réseau du prof pour y acceder, via le réseau de l'école, ou le VPN de l'école.
