@@ -101,7 +101,7 @@ Voici une liste des STAFF existants pour tenter une connection :
         </tr>
         <tr>
             <td>Le Caillou, Kadoc</td>
-            <td>la.pouette@dies.irae</td>
+            <td>la.poulette@dies.irae</td>
             <td>0996</td>
             <td>Oui</td>
         </tr>
@@ -218,13 +218,37 @@ Voici une liste des CLIENTS existants pour tenter une connection :
 
 <h2>Scenarios</h2>
 
+- Les clients peuvent donc se connecter puis :
+    * Acceder à leur profil afin de modifier leurs informations, leur localité & désactiver leur compte.
+    * Voir les restaurants existant, et créer une nouvelle commande pour une date & heure voulue.
+    * Voir la l'historique des commandes.
+    * Annuler une commande en cours qui n'a pas encore été validée par le livreur.
+
+- Les staffs peuvent donc se connecter puis : 
+    * Acceder à leur profil afin de modifier leurs informations, leur localité de livraisons & désactiver leur compte.
+    * Voir la l'historique des commandes.
+    * Valider une commande passé par un client.
+
+Un client va donc passer une commande, et un staff s'occupera de celle-ci. Le client peut annuler sa commande tant qu'aucun staff ne la valide. 
+Le client paye sa commande au staff lorsque le staff arrive au lieu de livraison. 
+On part du prinipe que le client veut se faire livrer à son domicile, donc à son adresse.
+
+<h2>Notes </h2>
+<h3>Images :</h3>
+Etant donné que nous possedons une petite DB, et que le projet reste relativement petit, nous avons décidé de stocker les images directement dans la DB sous forme de "VarBinary". Ce sera donc une string de bytes stocké que nous convertissons lors de l'affichage.
+Ces images sont en format .png afin d'être moins lourd que du .jpeg. Et par souci d'optimisation, les images ont été compressés d'environ 65% avant d'entre ajoutées à la DB. Ainsi, nous n'avons aps de pertes de performances.
+
+Un projet a été crée s'apellant : [PlatManagementTool](https://gitlab.com/EliasKelliwich/livraisonnourriture/-/tree/master/PlatManagementTool). 
+C'est un outil permettant de visualiser quel restaurant et ses plats possedent des images, et de pouvoir aller chercher des images sur le disue du PC de l'utilisateur facilement, et de les upload dans la DB.
 
 <h2>Crédits</h2>
+Projet réalisé par : 
+[Rennaz Zacharie](https://gitlab.com/renna.zacharie)
+[Borrajo Elias](https://gitlab.com/EliasKelliwich)
+
 <h2>Licence</h2>
 
 
-3. Table of Contents (Optional)
-If your README is very long, you might want to add a table of contents to make it easy for users to navigate to different sections easily. It will make it easier for readers to move around the project with ease.
 
 4. How to Install and Run the Project
 If you are working on a project that a user needs to install or run locally in a machine like a "POS", you should include the steps required to install your project and also the required dependencies if any.
@@ -238,18 +262,4 @@ You can also make use of visual aids by including materials like screenshots to 
 
 Also if your project will require authentication like passwords or usernames, this is a good section to include the credentials.
 
-6. Include Credits
-If you worked on the project as a team or an organization, list your collaborators/team members. You should also include links to their GitHub profiles and social media too.
 
-Also, if you followed tutorials or referenced a certain material that might help the user to build that particular project, include links to those here as well.
-
-This is just a way to show your appreciation and also to help others get a first hand copy of the project.
-
-7. Add a License
-For most README files, this is usually considered the last part. It lets other developers know what they can and cannot do with your project.
-
-We have different types of licenses depending on the kind of project you are working on. Depending on the one you will choose it will determine the contributions your project gets.
-
-The most common one is the GPL License which allows other to make modification to your code and use it for commercial purposes. If you need help choosing a license, use check out this link: https://choosealicense.com/
-
-Up to this point what we have covered are the minimum requirements for a good README. But you might also want to consider adding the following sections to make it more eye catching and interactive.
