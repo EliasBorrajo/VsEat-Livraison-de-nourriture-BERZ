@@ -1,6 +1,6 @@
 <h1>Plateforme de livraison de nourriture - BERZ</h1> 
 <h2>Description</h2>
-<h3>Vue d'ensemble</h3>
+<h3>Vue d'ensemble :</h3>
 Ce projet est fait dans le cadre de notre 3ème semestre d'études en tempa spartiel à la HES-So - Informatique de gestion pour le module de <b>software development<b>.
 
 Au cours du semestre, nous aprennons à développer une application en utilisant plusieurs couches. 
@@ -8,6 +8,26 @@ On implemente une couche de données (DAL), une couche métier (BLL) et enfin on
 L'idée du projet est de modifier le DAL et le BLL créés pendant les leçons et de créer une nouvelle interface utilisateur développée comme une application MVC. 
 
 Les professeurs sont nos clients lors de la remise du projet.
+
+<h3>Database :</h3>
+La base de données est de type : SQL Server de Microsoft.
+
+La base de données stockue des données à gérer :
+- les plats vendus par les restaurants
+- les commandes des clients
+- le personnel de BERZ responsable de la livraison dans les villes
+- login du personnel
+- login des clients
+
+<h3>User Stories principales :</h3>
+- Login : Un client doit créer un compte avec son adresse avant d'utiliser le site web
+- Commande : Un client connecté peut choisir des plats dans une liste donnée par chaque restaurant disponible sur le site web pour former une commande. 
+Il (le client) ajoutera le délai de livraison (toutes les 15 minutes) pour sa commande. A la fin de la commande, le prix que le client doit payer au coursier sera affiché.
+
+- Gestion des livraisons : Le système attribue la livraison d'une commande à un coursier disponible dans la même ville que le restaurant où la commande est passée. Un coursier ne peut pas avoir plus de 5 commandes à livrer toutes les 30 minutes.
+
+- Interface de livraison : chaque coursier peut se connecter au système pour voir ses prochaines livraisons. Lorsqu'une livraison est effectuée, le livreur l'archive en appuyant sur un bouton de l'interface de livraison.
+
 
 <h2>Installation & Lancement</h2>
 <h3>Version deployé</h3>
