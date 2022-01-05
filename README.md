@@ -241,13 +241,14 @@ Ces images sont en format .png afin d'être moins lourd que du .jpeg. Et par sou
 Un projet a été crée s'apellant : [PlatManagementTool](https://gitlab.com/EliasKelliwich/livraisonnourriture/-/tree/master/PlatManagementTool). 
 C'est un outil permettant de visualiser quel restaurant et ses plats possedent des images, et de pouvoir aller chercher des images sur le disue du PC de l'utilisateur facilement, et de les upload dans la DB.
 
-<h2>Crédits</h2>
-Projet réalisé par : 
-[Rennaz Zacharie](https://gitlab.com/renna.zacharie)
-[Borrajo Elias](https://gitlab.com/EliasKelliwich)
-
 <h3>Requêtes SQL</h3>
 Les requêtes SQL écrites dans la DAL ont aussi été optimisées. Nous ne faisons pas un "SELECT *" qui prendrait toutes les données de la table, mais un "SELECT name ...." avec chaque élément voulu. C'est plus efficace.
+
+<h2>Crédits</h2>
+Projet réalisé par : 
+[Rennaz Zacharie](https://gitlab.com/renna.zacharie) & [Borrajo Elias](https://gitlab.com/EliasKelliwich)
+
+
 
 <h2>Licence</h2>
 
