@@ -7,7 +7,16 @@ Au cours du semestre, nous aprennons à développer une application en utilisant
 On implemente une couche de données (DAL), une couche métier (BLL) et enfin on apprend à utiliser ASP.NET MVC (model View Controller) comme interface utilisateur.
 L'idée du projet est de modifier le DAL et le BLL créés pendant les leçons et de créer une nouvelle interface utilisateur développée comme une application MVC. 
 
-Les professeurs sont nos clients lors de la remise du projet.
+Les technologies utilisées durant le projet sont :
+- C# :  Car c'est un langage proche du Java que nous conaissons déja. Environ 70% de l'application.
+- BootStrap 4 : Nous permet de créer des vues grâce à des templates déja existant et d'avoir une web-app esthetique et agréable à l'utisation. C'est un gain de temps énorme sur la partie front end du projet. 
+Bootstrap a l'avantage  d'avoir du razorcode qui interprêtera du code C# et le traduira en adequation. 
+L'autre avantage de bootstrap qui peut sembler pareil que le razorcode, c'est les ASP commands qui seront aussi utilisées lors du projet.
+    * HTML / CSS / SCSS / JavaScript 
+- Framework .NET Core 5.0 : Les differentes couches (DAL/ BLL / DTO / ConsoleApp / MVC) utilisent ce framework
+    * De plus, l'installation de l'extension "NuGet" est nécessaire.
+
+Les professeurs sont nos clients lors de la remise du projet, il ne faut donc pas que le projet plante durant son utilisation.
 
 <h3>Database :</h3>
 La base de données est de type : SQL Server de Microsoft.
@@ -31,10 +40,13 @@ Il (le client) ajoutera le délai de livraison (toutes les 15 minutes) pour sa c
 
 
 <h2>Installation & Lancement</h2>
-<h3>Version deployé</h3>
-Pour commencer, le projet est deployé sur le serveur de la HES du professeur, donc il faut se connecter au réseau du prof pour y acceder, via le réseau de l'école, ou le VPN de l'école.
+<h3>Version deployé :</h3>
+Pour commencer, le projet est deployé sur le serveur de la HES du professeur. Pour pouvoir y acceder, il est nécessaire d'être connecté au réseau de la HES en étant sur place ou via le VPN de l'école.
 
 L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.109.124.35:81/BERZ)
+
+<h3>Cloner le projet :</h3>
+
 
 <h2>Manuel d'utilisation</h2>
 Une fois l'accès à la page principale de la webapp, il faut choisir si l'on veut se connecter en tant que client, ou staff(qui seront les livreurs).
@@ -178,8 +190,7 @@ Voici une liste des CLIENTS existants pour tenter une connection :
 <h2>Crédits</h2>
 <h2>Licence</h2>
 
-1. Project's Title
-This is the name of the project. It describes the whole project in one sentence, and helps people understand what the main goal and aim of the project is.
+
 
 2. Project Description
 This is an important component of your project that many new developers often overlook.
@@ -191,6 +202,7 @@ The quality of a README description often differentiates a good project from a b
 What your application does,
 Why you used the technologies you used,
 Some of the challenges you faced and features you hope to implement in the future.
+
 3. Table of Contents (Optional)
 If your README is very long, you might want to add a table of contents to make it easy for users to navigate to different sections easily. It will make it easier for readers to move around the project with ease.
 
