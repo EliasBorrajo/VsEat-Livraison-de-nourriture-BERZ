@@ -47,6 +47,38 @@ L'adresse du site déployé sur le serveur est : [WebApp - BerzEat](http://153.1
 
 <h3>Cloner le projet :</h3>
 
+* Afin de pouvoir se connecter au serveur du professeur, il faut avoir un fichier de configuration, apellé : _appsettings.json_
+  Dans ce fichier, nous avons une "ConnectionStrings", il faut y donner l'adresse IP du serveur du professeur, le nom de la DBO à laquelle l'on veut se connecter, un ID & Password pour avoir accès au serveur. 
+  
+  1 : Voici l'exemple simplifié de l'accès avec l'application console : 
+
+        ```
+        {
+        "ConnectionStrings": {
+            "DefaultConnection": "Data Source=153.109.124.35;Initial Catalog=VSEAT_BERZ;Persist Security Info=True;User ID=6231db;Password=Pwd46231."
+        }
+        }
+        ```
+
+  2 : Et voici ce même fichier, mais dans le MVC de la web-app 
+
+            ```
+            {
+            "ConnectionStrings": {
+                "DefaultConnection": "Data Source=153.109.124.35;Initial Catalog=VSEAT_BERZ;Persist Security Info=True;User ID=6231db;Password=Pwd46231."
+            },
+            "Logging": {
+                "LogLevel": {
+                "Default": "Information",
+                "Microsoft": "Warning",
+                "Microsoft.Hosting.Lifetime": "Information"
+                }
+            },
+            "AllowedHosts": "*"
+            }
+
+            ```
+
 
 <h2>Manuel d'utilisation</h2>
 Une fois l'accès à la page principale de la webapp, il faut choisir si l'on veut se connecter en tant que client, ou staff(qui seront les livreurs).
@@ -190,18 +222,6 @@ Voici une liste des CLIENTS existants pour tenter une connection :
 <h2>Crédits</h2>
 <h2>Licence</h2>
 
-
-
-2. Project Description
-This is an important component of your project that many new developers often overlook.
-
-Your description is an extremely important aspect of your project. A well-crafted description allows you to show off your work to other developers as well as potential employers.
-
-The quality of a README description often differentiates a good project from a bad project. A good one takes advantage of the opportunity to explain and showcase:
-
-What your application does,
-Why you used the technologies you used,
-Some of the challenges you faced and features you hope to implement in the future.
 
 3. Table of Contents (Optional)
 If your README is very long, you might want to add a table of contents to make it easy for users to navigate to different sections easily. It will make it easier for readers to move around the project with ease.
