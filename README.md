@@ -244,6 +244,15 @@ C'est un outil permettant de visualiser quel restaurant et ses plats possedent d
 <h3>Requêtes SQL</h3>
 Les requêtes SQL écrites dans la DAL ont aussi été optimisées. Nous ne faisons pas un "SELECT *" qui prendrait toutes les données de la table, mais un "SELECT name ...." avec chaque élément voulu. C'est plus efficace.
 
+<h2>Améliorations futures</h2>
+- AJOUTER MPD AU PROJET
+- AJOUTER SCIPTE MPD AU PROJET
+- Ajouter un horaire aux restaurants, pour éviter les commandes hors horaires.
+- Ajouter des catégories pours les plats : Viande / Poisson / Burger / Boissons / Vegan
+- Ajouter une taxe à chaque commande pour le revenu des dev de la plateforme
+- Dans la gestion des exceptions, si une erreur survient et nous ramène sur une autre page, afficher l'erreur dans une pop-up de l'app.
+- Améliorer le design des pages.
+
 <h2>Crédits</h2>
 Projet réalisé par : 
 [Rennaz Zacharie](https://gitlab.com/renna.zacharie) & [Borrajo Elias](https://gitlab.com/EliasKelliwich)
