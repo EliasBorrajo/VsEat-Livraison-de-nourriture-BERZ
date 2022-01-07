@@ -9,11 +9,9 @@ L'idée du projet est de modifier le DAL et le BLL créés pendant les leçons e
 
 Les technologies utilisées durant le projet sont :
 - C# :  Car c'est un langage proche du Java que nous conaissons déja. Environ 70% de l'application.
-- BootStrap 4 : Nous permet de créer des vues grâce à des templates déja existant et d'avoir une web-app esthetique et agréable à l'utisation. C'est un gain de temps énorme sur la partie front end du projet. 
-Bootstrap a l'avantage  d'avoir du razorcode qui interprêtera du code C# et le traduira en adequation. 
-L'autre avantage de bootstrap qui peut sembler pareil que le razorcode, c'est les ASP commands qui seront aussi utilisées lors du projet.
-    * HTML / CSS / SCSS / JavaScript 
-- Framework .NET Core 5.0 : Les differentes couches (DAL/ BLL / DTO / ConsoleApp / MVC) utilisent ce framework
+
+- Framework .NET Core 5.0 : Le framework CORE permet lancer l'application sur differents OS.
+ Les differentes couches (DAL/ BLL / DTO / ConsoleApp / MVC) utilisent ce framework
     * De plus, l'installation depuis "NuGet" des extensions suivantes ont été nécessaires, c'est un gestionnaire de package pour la solution.
       * Les extensions de "NuGet" s'installent depuis : 
         * Barre d'outils --> Outils --> gestionnaire de package NuGet --> Gerer les packets. 
@@ -24,6 +22,10 @@ L'autre avantage de bootstrap qui peut sembler pareil que le razorcode, c'est le
         * Microsoft.Extensions.Configuration.Json
         * System.Data.SqlClient
 
+- BootStrap 4 : Nous permet de créer des vues grâce à des templates déja existant et d'avoir une web-app esthetique et agréable à l'utisation. C'est un gain de temps énorme sur la partie front end du projet. 
+Bootstrap a l'avantage  d'avoir du razorcode qui interprêtera du code C# et le traduira en adequation. 
+L'autre avantage de bootstrap qui peut sembler pareil que le razorcode, c'est les ASP commands qui seront aussi utilisées lors du projet.
+    * HTML / CSS / SCSS / JavaScript 
 Les professeurs sont nos clients lors de la remise du projet, il ne faut donc pas que le projet plante durant son utilisation.
 
 <h3>Database :</h3>
