@@ -58,9 +58,20 @@ html {
   min-height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+body:not(.restaurant) {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-image: url('../img/Backgroud.jpg');
+    height: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.maisOuiCestClair {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.maisOuiCestEncorePlusClair {
+    background-color: white;
 }
 .footer {
   position: absolute;

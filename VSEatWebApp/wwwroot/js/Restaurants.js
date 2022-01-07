@@ -13,4 +13,4 @@ function RedirectToDetails(id)
     window.location.href = $("#AddCommande").val().replace('__id__', id);
 };
 
-
+$("body").addClass("restaurant");
