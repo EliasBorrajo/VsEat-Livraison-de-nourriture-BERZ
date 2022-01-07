@@ -137,6 +137,7 @@ namespace BLL
                 {
                     commande = new Commande(-1, staff, Client, Plats, DateTime.Now, HeureLivraison, DateTime.MinValue, somme, false);
                     commande = CommandeDB.AddCommande(commande);
+                    break;
                 }
             }
             return commande;
