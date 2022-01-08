@@ -207,6 +207,12 @@ namespace VSEatWebApp.Controllers
         public IActionResult Edit(StaffVM staffVM)
         {
             staffVM.AllLocalites = LocaliteManager.GetLocalites();
+            List<int> locIds = new List<int>();
+            foreach (Localite localite in StaffManager.GetStaff(HttpContext.Session.GetInt32("staID").Value).Localites)
+            {
+                locIds.Add(localite.ID);
+            }
+            staffVM.LocaliteIDs = locIds;
             IActionResult rv = View(staffVM);
             if (ModelState.IsValid)
             {
