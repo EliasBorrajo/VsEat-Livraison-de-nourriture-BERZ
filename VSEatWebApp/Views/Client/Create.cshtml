@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="LocaliteID" class="control-label">Localité</label><br />
-                @Html.DropDownListFor(x => x.LocaliteID, new SelectList(Model.AllLocalites, "ID", "Nom"))
+                @Html.DropDownListFor(x => x.LocaliteID, new SelectList(Model.AllLocalites, "ID", "Nom"), new { @class="form-control" })
                 <span asp-validation-for="LocaliteID" class="text-danger"></span>
             </div>
             <div class="form-group">

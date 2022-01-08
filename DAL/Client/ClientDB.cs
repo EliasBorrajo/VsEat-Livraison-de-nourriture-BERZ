@@ -122,7 +122,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@locID", Client.Localite.ID);
                     cmd.Parameters.AddWithValue("@cliNom", Client.Nom);
                     cmd.Parameters.AddWithValue("@cliPrenom", Client.Prenom);
-                    cmd.Parameters.AddWithValue("@cliTelephone", Client.Telephone);
+                    cmd.Parameters.AddWithValue("@cliTelephone", string.IsNullOrEmpty(Client.Telephone) ? (object)DBNull.Value : Client.Telephone);
                     cmd.Parameters.AddWithValue("@cliMail", Client.Mail);
                     cmd.Parameters.AddWithValue("@cliAdresse", Client.Adresse);
                     cmd.Parameters.AddWithValue("@cliPassword", Client.Password);
@@ -152,7 +152,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@loc", Client.Localite.ID);
                     cmd.Parameters.AddWithValue("@nom", Client.Nom);
                     cmd.Parameters.AddWithValue("@pre", Client.Prenom);
-                    cmd.Parameters.AddWithValue("@tel", Client.Telephone);
+                    cmd.Parameters.AddWithValue("@tel", string.IsNullOrEmpty(Client.Telephone) ? (object)DBNull.Value : Client.Telephone);
                     cmd.Parameters.AddWithValue("@mai", Client.Mail);
                     cmd.Parameters.AddWithValue("@add", Client.Adresse);
                     cmd.Parameters.AddWithValue("@pas", Client.Password);
