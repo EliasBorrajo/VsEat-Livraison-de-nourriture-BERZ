@@ -257,7 +257,6 @@ Les requêtes SQL écrites dans la DAL ont aussi été optimisées. Nous ne fais
 <h2>Améliorations futures</h2>
 A cause de la durée du projet qui est limtié, nous n'avons pas pu implementér toutes les fonctionnalitées voulues.
 
-- AJOUTER MPD AU PROJET
 - Ajouter un horaire aux restaurants, pour éviter les commandes hors horaires.
 - Ajouter des catégories pours les plats : Viande / Poisson / Burger / Boissons / Vegan.
 - Ajouter une taxe à chaque commande pour le revenu des dev de la plateforme.
@@ -267,3 +266,4 @@ A cause de la durée du projet qui est limtié, nous n'avons pas pu implementér
 <h2>Crédits</h2>
 Projet réalisé par : 
 [Renna Zacharie](https://gitlab.com/renna.zacharie) & [Borrajo Elias](https://gitlab.com/EliasKelliwich)
+et testé avec amour par [Céline Vialard](https://gitlab.com/celine.vialard1)
