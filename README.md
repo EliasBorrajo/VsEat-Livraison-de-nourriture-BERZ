@@ -1,3 +1,180 @@
+# VsEat — Food Delivery Platform (BERZ)
+
+> Web & CLI application for managing restaurant food deliveries in Valais, Switzerland, built with **ASP.NET Core 5 MVC** and an **N‑Tier** architecture.
+
+---
+
+## 📚 Project Description
+
+VsEat lets end‑users order dishes from partner restaurants and have them delivered by BERZ couriers.
+The solution is organised as three layers **DAL → BLL → MVC** on top of a **Microsoft SQL Server** database. A secondary branch contains a **CLI client** that re‑uses the same business logic.
+
+## 🧪 Technologies Used
+
+| Layer        | Technology / Tool     | Version |
+| ------------ | --------------------- | ------- |
+| Language     | C#                    | 9.0     |
+| Framework    | .NET Core MVC         | 5.0     |
+| ORM          | Entity Framework Core | 5.0     |
+| Database     | Microsoft SQL Server  | 2019    |
+| Front‑End    | Bootstrap             | 4.6     |
+| Architecture | N‑Tier, MVC           | —       |
+
+## 🎯 Learning Objectives
+
+* Design and implement a layered architecture (DAL/BLL/MVC).
+* Configure EF Core migrations against SQL Server.
+* Secure an ASP.NET Core application (authentication & role management).
+* Build Razor views and REST‑like controllers.
+* Deploy both the Web UI and the CLI client.
+
+## 🔧 Features
+
+* **User registration & login** (client or staff).
+* **Restaurant & menu browsing** with images.
+* **Order creation** (15‑minute delivery windows, price calculated).
+* **Delivery assignment** (maximum 5 orders per courier every 30 minutes).
+* **Courier dashboard** to archive deliveries.
+* **Profile management** (edit details, change location, deactivate account).
+
+### 🔧 Bonus Features
+
+* **Image storage**: compressed PNG (\~ 65 %) stored as `varbinary(MAX)`.
+* **CLI client** available in the `SaveConsoleApp` branch.
+
+## 🧠 Coding Principles
+
+* ✅ Clear separation of concerns across layers.
+* ✅ Dependency Injection everywhere.
+
+### Error Handling
+
+Global ASP.NET Core middleware plus local `try/catch`.
+
+## 🏗 Project Structure
+
+```
+VsEat-Livraison-de-nourriture-BERZ/
+├── DAL/                # Data Access Layer
+├── BLL/                # Business Logic Layer
+├── DTO/                # Data Transfer Objects
+├── VSEatWebApp/        # ASP.NET Core MVC UI
+└── PlatManagementTool/ # CLI Helper to upload images
+```
+
+## 📘 Documentation & Diagrams
+
+* **ER (Entity‑Relationship) Diagram**: [`MPD_VSEat.pdf`](https://github.com/EliasBorrajo/VsEat-Livraison-de-nourriture-BERZ/blob/master/Annexes/MPD_VSEat.pdf)
+* **Requirements document**: [`Annexes/623‑1 Project - MVC - VSEat.docx`](https://github.com/EliasBorrajo/VsEat-Livraison-de-nourriture-BERZ/blob/master/Annexes/623-1%20Project%20-%20MVC%20-%20VSEat.docx)
+
+## 📌 Success Criteria
+
+| Criterion                                             | Status     | Notes                                                |
+| ----------------------------------------------------- | ---------- | ---------------------------------------------------- |
+| Core functionalities working (login, order, delivery) | ✅ Done     | All mandatory user stories implemented               |
+| Deployment on school server (production)              | ✅ Done     | Deployed Jan 2022; link now offline                  |
+| Clean code & correct MVC / N‑Tier design              | ✅ Done | Meets course guidelines but some refactoring needed  |
+| SQL schema & commands quality                         | ✅ Done     | Normalised schema and explicit queries               |
+| UI/UX (CSS "look & feel")                             | 🟡 Partial | Functional but design could be improved              |
+| Bug‑free operation                                    | 🟡 Partial | Minor known issues, no blocking bugs                 |
+| Documentation (README + ER diagram + logbook)         | ✅ Done | README, ER present and logbook                       |
+|                                                       |            |                                                      |
+
+## 🔒 Security Note 🔒 Security Note
+
+`ConnectionStrings.DefaultConnection` contains the IP, user id and password for the school test server.
+This was acceptable for the practical assignment, **but it is not good practice** in production.
+Secrets should be stored in *dotnet user‑secrets*, environment variables or a `appsettings.Development.json` file ignored by Git.
+
+## 🌐 Branches
+
+| Branch           | Content               |
+| ---------------- | --------------------- |
+| `master`         | MVC web application   |
+| `SaveConsoleApp` | Historical CLI client |
+
+## 👥 Test Accounts
+
+> Accounts were seeded directly into the database and are **not** part of the SQL script.
+
+### Staff
+
+| Name               | Email                                                           | Password | Active |
+| ------------------ | --------------------------------------------------------------- | -------- | ------ |
+| Venec Le Bandit    | [esclaves.pascher@dies.irae](mailto:esclaves.pascher@dies.irae) | 3337     | ✅      |
+| Kadoc Le Caillou   | [la.poulette@dies.irae](mailto:la.poulette@dies.irae)           | 0996     | ✅      |
+| Aconia De la Villa | [fidele.romaine@dies.irae](mailto:fidele.romaine@dies.irae)     | 3844     | ✅      |
+| Sven Le Viking     | [valhalla.awayts@dies.irae](mailto:valhalla.awayts@dies.irae)   | 8765     | ✅      |
+| Demetra Du Château | [favorite@dies.irae](mailto:favorite@dies.irae)                 | 2964     | ✅      |
+| Loth Orcanie       | [traitre@dies.irae](mailto:traitre@dies.irae)                   | 7754     | ❌      |
+
+### Clients
+
+| Name                    | Email                                                                     | Password | Active |
+| ----------------------- | ------------------------------------------------------------------------- | -------- | ------ |
+| Zacharie Renna          | [rz@dies.irae](mailto:rz@dies.irae)                                       | 1234     | ✅      |
+| Arthur Pendragon        | [sanglier.cornouaille@dies.irae](mailto:sanglier.cornouaille@dies.irae)   | 4200     | ✅      |
+| Lancelot Du Lac         | [chevalier.errant@dies.irae](mailto:chevalier.errant@dies.irae)           | 1922     | ✅      |
+| Père Blaise             | [quinte.juste@dies.irae](mailto:quinte.juste@dies.irae)                   | 6669     | ❌      |
+| Dame Du Lac             | [invisible.aux.mortels@dies.irae](mailto:invisible.aux.mortels@dies.irae) | 2119     | ✅      |
+| Merlin Druide           | [coco.asticot@dies.irae](mailto:coco.asticot@dies.irae)                   | 2500     | ✅      |
+| Léodagan Carmélide      | [chevalier.sanguinaire@dies.irae](mailto:chevalier.sanguinaire@dies.irae) | 3024     | ✅      |
+| Yvain Chevalier au Lion | [petit.pedestre@dies.irae](mailto:petit.pedestre@dies.irae)               | 7843     | ✅      |
+| Perceval Le Gallois     | [pas.faux@dies.irae](mailto:pas.faux@dies.irae)                           | 6597     | ✅      |
+| Karadoc De Vannes       | [semi.croustillant@dies.irae](mailto:semi.croustillant@dies.irae)         | 0874     | ✅      |
+| Bohort De Gaunes        | [mecreants@dieas.irae](mailto:mecreants@dieas.irae)                       | 5591     | ✅      |
+| Elias De Kelliwich      | [enchanteur.du.nord@dies.irae](mailto:enchanteur.du.nord@dies.irae)       | 6660     | ✅      |
+
+## 📈 Scenarios
+
+* **Clients** can:
+
+  * Access their profile to edit details, address and deactivate the account.
+  * Browse restaurants and create orders for a chosen date & time.
+  * View past orders.
+  * Cancel an order at least 3 hours in advance, as long as no courier has accepted it.
+
+* **Staff** can:
+
+  * Edit their profile, delivery area and deactivate the account.
+  * See the order history.
+  * Accept / validate a customer order.
+
+A customer places an order, a courier handles it. The customer can cancel 3 hours in advance while the order is still pending. Payment happens on delivery at the customer’s address.
+
+## 📝 Notes
+
+### Images
+
+Given the small DB size, product & restaurant pictures are stored directly in the database as `varbinary(MAX)`. The PNG files are compressed (\~ 65 %) beforehand to keep performance acceptable.
+A helper project called [PlatManagementTool](https://github.com/EliasBorrajo/VsEat-Livraison-de-nourriture-BERZ/tree/SaveConsoleApp/PlateformeLivraison) makes it easy to upload or change images.
+
+### SQL Queries
+
+Queries in the DAL are written explicitly (`SELECT column1, column2 …`) rather than `SELECT *`, to improve performance.
+
+## 👥 Credits
+
+Project by **Zacharie Renna** and **Elias Borrajo**.
+Tested with care by **Céline Vialard**.
+
+
+
+
+
+
+
+---
+
+<details>
+ <summary>
+  <h2>
+   Original Readme archive (FR)
+  </h2>
+ </summary>
+
+
+
 <h1>Plateforme de livraison de nourriture - BERZ</h1> 
 <h2>Description</h2>
 <h3>Vue d'ensemble :</h3>
@@ -267,3 +444,8 @@ A cause de la durée du projet qui est limtié, nous n'avons pas pu implementér
 Projet réalisé par : 
 [Renna Zacharie](https://gitlab.com/renna.zacharie) & [Borrajo Elias](https://gitlab.com/EliasKelliwich)
 et testé avec amour par [Céline Vialard](https://gitlab.com/celine.vialard1)
+
+
+
+ 
+</details>
